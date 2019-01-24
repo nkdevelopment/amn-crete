@@ -57,13 +57,15 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
+        deleteTables();
+        loadGenreTable();
+        getMovies();
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
 
-        deleteTables();
-        loadGenreTable();
-        getMovies();
+
+        
 //        CommonMethods.getNewCurrentWeather(); //Διάβασε απο το Api για τον τρέχων καιρό
 
     }
@@ -276,15 +278,19 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("Not connected to DB");
             System.exit(1);
         }
-
     }
 
     private void getMovies() {
 
+        
         String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439");
 
         try {
             JSONObject response = new JSONObject(result);
+            
+            int numberOfPages = response.getInt("total_pages");
+            System.out.println("numberOfPages= "+numberOfPages);
+            
             JSONArray results = response.optJSONArray("results");
             Movie item;
 
@@ -295,21 +301,14 @@ public class MainFrame extends javax.swing.JFrame {
                 item.setTitle(aMovieObject.getString("title"));
 
                 JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
-                int thisGenreId;
                 for (int k = 0; k < genre_ids.length(); k++) {
                     if (genre_ids.getInt(k) == 28) {
-                        System.out.println("GENREID = " + genre_ids.getInt(k));
-//                            k = genre_ids.length();
                         item.setGenreId(new Genre(28));
                         break;
                     } else if (genre_ids.getInt(k) == 10749) {
-                        System.out.println("GENREID = " + genre_ids.getInt(k));
-//                            k = genre_ids.length();
                         item.setGenreId(new Genre(10749));
                         break;
                     } else if (genre_ids.getInt(k) == 878) {
-                        System.out.println("GENREID = " + genre_ids.getInt(k));
-//                            k = genre_ids.length();
                         item.setGenreId(new Genre(878));
                         break;
                     }
@@ -320,8 +319,8 @@ public class MainFrame extends javax.swing.JFrame {
                 Date releaseDate = new Date();
                 try {
                     releaseDate = df.parse(releaseDateString);
-                    String newDateString = df.format(releaseDate);
-                    System.out.println(newDateString);
+//                    String newDateString = df.format(releaseDate);
+//                    System.out.println(newDateString);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -336,7 +335,7 @@ public class MainFrame extends javax.swing.JFrame {
 //                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
 //                mGridData.add(item);
 
-                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
+//                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
 
                 if (!em.getTransaction().isActive()) {
                     em.getTransaction().begin();
@@ -389,14 +388,11 @@ public class MainFrame extends javax.swing.JFrame {
             JSONObject response = new JSONObject(resultGenres);
             JSONArray genres = response.optJSONArray("genres");
             Genre genre;
-
             for (int i = 0; i < genres.length(); i++) {
                 JSONObject aGenreObject = genres.optJSONObject(i);
                 genre = new Genre();
-
                 genre.setId(aGenreObject.getInt("id"));
                 genre.setName(aGenreObject.getString("name"));
-
                 if (aGenreObject.getInt("id") == 28 || aGenreObject.getInt("id") == 10749 || aGenreObject.getInt("id") == 878) {
                     if (!em.getTransaction().isActive()) {
                         em.getTransaction().begin();
@@ -404,12 +400,9 @@ public class MainFrame extends javax.swing.JFrame {
                     em.merge(genre);
                     em.flush();
                     em.getTransaction().commit();
-
-                    System.out.println("id= " + genre.getId() + ", name= " + genre.getName());
+//                    System.out.println("id= " + genre.getId() + ", name= " + genre.getName());
                 }
-
             }
-
         } catch (JSONException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
