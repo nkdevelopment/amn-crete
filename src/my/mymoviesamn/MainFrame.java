@@ -56,9 +56,13 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        connectToDb(); // Σύνδεση με την βάση δεδομένων
+
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
-        connectToDb(); // Σύνδεση με την βάση δεδομένων
+
+        deleteTables();
+        loadGenreTable();
         getMovies();
 //        CommonMethods.getNewCurrentWeather(); //Διάβασε απο το Api για τον τρέχων καιρό
 
@@ -277,79 +281,78 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void getMovies() {
 
-            String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439");
+        String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439");
 
-            try {
-                JSONObject response = new JSONObject(result);
-                JSONArray results = response.optJSONArray("results");
-                Movie item;
+        try {
+            JSONObject response = new JSONObject(result);
+            JSONArray results = response.optJSONArray("results");
+            Movie item;
 
-                Date date = new Date();
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject aMovieObject = results.optJSONObject(i);
-                    item = new Movie();
-                    item.setId(aMovieObject.getInt("id"));
-                    item.setTitle(aMovieObject.getString("title"));
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject aMovieObject = results.optJSONObject(i);
+                item = new Movie();
+                item.setId(aMovieObject.getInt("id"));
+                item.setTitle(aMovieObject.getString("title"));
 
-                    JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
-                    int thisGenreId;
-                    for (int k = 0; k < genre_ids.length(); k++) {
-                        if (genre_ids.getInt(k) == 28) {
-                            System.out.println("GENREID = " + genre_ids.getInt(k));
+                JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
+                int thisGenreId;
+                for (int k = 0; k < genre_ids.length(); k++) {
+                    if (genre_ids.getInt(k) == 28) {
+                        System.out.println("GENREID = " + genre_ids.getInt(k));
 //                            k = genre_ids.length();
-                            item.setGenreId(new Genre(28));
-                            break;
-                        } else if (genre_ids.getInt(k) == 10749) {
-                            System.out.println("GENREID = " + genre_ids.getInt(k));
+                        item.setGenreId(new Genre(28));
+                        break;
+                    } else if (genre_ids.getInt(k) == 10749) {
+                        System.out.println("GENREID = " + genre_ids.getInt(k));
 //                            k = genre_ids.length();
-                            item.setGenreId(new Genre(10749));
-                            break;
-                        } else if (genre_ids.getInt(k) == 878) {
-                            System.out.println("GENREID = " + genre_ids.getInt(k));
+                        item.setGenreId(new Genre(10749));
+                        break;
+                    } else if (genre_ids.getInt(k) == 878) {
+                        System.out.println("GENREID = " + genre_ids.getInt(k));
 //                            k = genre_ids.length();
-                            item.setGenreId(new Genre(878));
-                            break;
-                        }
+                        item.setGenreId(new Genre(878));
+                        break;
                     }
+                }
 
-                    String releaseDateString = aMovieObject.getString("release_date");
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    Date releaseDate = new Date();
-                    try {
-                        releaseDate = df.parse(releaseDateString);
-                        String newDateString = df.format(releaseDate);
-                        System.out.println(newDateString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    item.setReleaseDate(releaseDate);
-                    item.setRating(aMovieObject.getDouble("vote_average"));
-                    String s = aMovieObject.getString("overview");
-                    if (s.length() >= 500) {
-                        s = s.substring(0, 499);
-                    }
+                String releaseDateString = aMovieObject.getString("release_date");
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date releaseDate = new Date();
+                try {
+                    releaseDate = df.parse(releaseDateString);
+                    String newDateString = df.format(releaseDate);
+                    System.out.println(newDateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                item.setReleaseDate(releaseDate);
+                item.setRating(aMovieObject.getDouble("vote_average"));
+                String s = aMovieObject.getString("overview");
+                if (s.length() >= 500) {
+                    s = s.substring(0, 499);
+                }
 
-                    item.setOverview(s);
+                item.setOverview(s);
 //                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
 //                mGridData.add(item);
 
-                    System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
+                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
 
-                    if (!em.getTransaction().isActive()) {
-                        em.getTransaction().begin();
-                    }
-                    em.merge(item);
-                    em.flush();
-                    em.getTransaction().commit();
-
+                if (!em.getTransaction().isActive()) {
+                    em.getTransaction().begin();
                 }
+                em.merge(item);
+                em.flush();
+                em.getTransaction().commit();
 
-            } catch (JSONException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        } catch (JSONException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
+
+    }
+    //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
 
     public static String readFromURL(String webPage) {
         StringBuffer sb = new StringBuffer();
@@ -378,4 +381,56 @@ public class MainFrame extends javax.swing.JFrame {
         return sb.toString();
     }
 
+    private void loadGenreTable() {
+        
+        String resultGenres = readFromURL("http://api.themoviedb.org/3/genre/movie/list?api_key=52cae95ba786564836e9d738e0a0f439");
+
+        try {
+            JSONObject response = new JSONObject(resultGenres);
+            JSONArray genres = response.optJSONArray("genres");
+            Genre genre;
+
+            for (int i = 0; i < genres.length(); i++) {
+                JSONObject aGenreObject = genres.optJSONObject(i);
+                genre = new Genre();
+
+                genre.setId(aGenreObject.getInt("id"));
+                genre.setName(aGenreObject.getString("name"));
+
+                if (aGenreObject.getInt("id") == 28 || aGenreObject.getInt("id") == 10749 || aGenreObject.getInt("id") == 878) {
+                    if (!em.getTransaction().isActive()) {
+                        em.getTransaction().begin();
+                    }
+                    em.merge(genre);
+                    em.flush();
+                    em.getTransaction().commit();
+
+                    System.out.println("id= " + genre.getId() + ", name= " + genre.getName());
+                }
+
+            }
+
+        } catch (JSONException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void deleteTables() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/myMoviesDB", "pli24", "pli24");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM MOVIE");
+            stmt.executeUpdate("DELETE FROM GENRE");
+            stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
