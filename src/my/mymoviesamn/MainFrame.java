@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,15 +60,13 @@ public class MainFrame extends javax.swing.JFrame {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
         deleteTables();
         loadGenreTable();
-        getMovies();
+//        getMovies();
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
-
-
-        
+//        jTable1.setVisible(false);
+        jPanel1.setVisible(false);
 //        CommonMethods.getNewCurrentWeather(); //Διάβασε απο το Api για τον τρέχων καιρό
-
     }
 
     /**
@@ -88,13 +87,17 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("myMovies by Alexandra,Manolis,Nektarios");
@@ -126,21 +129,64 @@ public class MainFrame extends javax.swing.JFrame {
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jButton1.setText("Δημιουργία");
+
+        jButton2.setText("Επεξεργασία");
+
+        jButton3.setText("Διαγραφή");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton2)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jMenu1.setText("Ανάκτηση/Αποθήκευση δεδομένων ταινιών");
+        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu1MenuSelected(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Διαχείρηση λιστών αγαπημένων ταινιών");
@@ -164,18 +210,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("SHOW_DB");
-        jMenu6.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu6MenuSelected(evt);
-            }
-        });
-        jMenuBar1.add(jMenu6);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,9 +220,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 61, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
@@ -197,7 +229,6 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu5MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu5MenuSelected
-        // TODO add your handling code here:
         String message = "Τερματισμός της εφαρμογής;";
         String title = "Μήνυμα επιβεβαίωσης";
         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
@@ -209,9 +240,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenu5MenuSelected
 
-    private void jMenu6MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu6MenuSelected
-
-    }//GEN-LAST:event_jMenu6MenuSelected
+    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+        // TODO add your handling code here:
+        getMovies();
+    }//GEN-LAST:event_jMenu1MenuSelected
 
     /**
      * @param args the command line arguments
@@ -249,15 +281,19 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private java.util.List<model.Movie> movieList;
     private java.util.List<model.Movie> movieList1;
@@ -282,74 +318,82 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void getMovies() {
 
-        
-        String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439");
-
+        int numberOfPages = 1;
+        String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el");
         try {
             JSONObject response = new JSONObject(result);
-            
-            int numberOfPages = response.getInt("total_pages");
-            System.out.println("numberOfPages= "+numberOfPages);
-            
-            JSONArray results = response.optJSONArray("results");
-            Movie item;
-
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject aMovieObject = results.optJSONObject(i);
-                item = new Movie();
-                item.setId(aMovieObject.getInt("id"));
-                item.setTitle(aMovieObject.getString("title"));
-
-                JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
-                for (int k = 0; k < genre_ids.length(); k++) {
-                    if (genre_ids.getInt(k) == 28) {
-                        item.setGenreId(new Genre(28));
-                        break;
-                    } else if (genre_ids.getInt(k) == 10749) {
-                        item.setGenreId(new Genre(10749));
-                        break;
-                    } else if (genre_ids.getInt(k) == 878) {
-                        item.setGenreId(new Genre(878));
-                        break;
-                    }
-                }
-
-                String releaseDateString = aMovieObject.getString("release_date");
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                Date releaseDate = new Date();
-                try {
-                    releaseDate = df.parse(releaseDateString);
-//                    String newDateString = df.format(releaseDate);
-//                    System.out.println(newDateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                item.setReleaseDate(releaseDate);
-                item.setRating(aMovieObject.getDouble("vote_average"));
-                String s = aMovieObject.getString("overview");
-                if (s.length() >= 500) {
-                    s = s.substring(0, 499);
-                }
-
-                item.setOverview(s);
-//                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
-//                mGridData.add(item);
-
-//                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
-
-                if (!em.getTransaction().isActive()) {
-                    em.getTransaction().begin();
-                }
-                em.merge(item);
-                em.flush();
-                em.getTransaction().commit();
-
-            }
-
+            numberOfPages = response.getInt("total_pages");
+            System.out.println("numberOfPages= " + numberOfPages);
         } catch (JSONException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        for (int m = 1; m <= 3; m++) {
+            String resultPerPage = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el" + "&page=" + m);
+            System.out.println("resultPerPage= " + resultPerPage);
+
+            try {
+                JSONObject response = new JSONObject(resultPerPage);
+
+                JSONArray results = response.optJSONArray("results");
+                Movie item;
+
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject aMovieObject = results.optJSONObject(i);
+                    item = new Movie();
+                    item.setId(aMovieObject.getInt("id"));
+                    item.setTitle(aMovieObject.getString("title"));
+
+                    JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
+                    for (int k = 0; k < genre_ids.length(); k++) {
+                        if (genre_ids.getInt(k) == 28) {
+                            item.setGenreId(new Genre(28));
+                            break;
+                        } else if (genre_ids.getInt(k) == 10749) {
+                            item.setGenreId(new Genre(10749));
+                            break;
+                        } else if (genre_ids.getInt(k) == 878) {
+                            item.setGenreId(new Genre(878));
+                            break;
+                        }
+                    }
+
+                    String releaseDateString = aMovieObject.getString("release_date");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date releaseDate = new Date();
+                    try {
+                        releaseDate = df.parse(releaseDateString);
+//                    String newDateString = df.format(releaseDate);
+//                    System.out.println(newDateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    item.setReleaseDate(releaseDate);
+                    item.setRating(aMovieObject.getDouble("vote_average"));
+                    String s = aMovieObject.getString("overview");
+                    if (s.length() >= 500) {
+                        s = s.substring(0, 499);
+                    }
+
+                    item.setOverview(s);
+//                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
+
+//                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
+                    if (!em.getTransaction().isActive()) {
+                        em.getTransaction().begin();
+                    }
+                    em.merge(item);
+                    em.flush();
+                    em.getTransaction().commit();
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
+        String title = "Μήνυμα ενημέρωσης";
+        JOptionPane.showMessageDialog(null,  message, title,  JOptionPane.INFORMATION_MESSAGE);
     }
     //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
 
@@ -381,7 +425,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void loadGenreTable() {
-        
+
         String resultGenres = readFromURL("http://api.themoviedb.org/3/genre/movie/list?api_key=52cae95ba786564836e9d738e0a0f439");
 
         try {
@@ -418,9 +462,38 @@ public class MainFrame extends javax.swing.JFrame {
         }
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM MOVIE");
-            stmt.executeUpdate("DELETE FROM GENRE");
-            stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
+            DatabaseMetaData dbm = conn.getMetaData();
+
+           
+
+            ResultSet rs2 = dbm.getTables(null, null, "GENRE", null);
+            if (rs2.next()) {
+                System.out.println("Table exists");
+                stmt.executeUpdate("DELETE FROM MOVIE");
+                stmt.executeUpdate("DELETE FROM GENRE");
+            } else {
+                System.out.println("Table does not exist");
+                stmt.execute("CREATE TABLE GENRE (id integer PRIMARY KEY NOT NULL,name varchar(20))");
+            }
+
+            ResultSet rs3 = dbm.getTables(null, null, "FAVORITE_LIST", null);
+            if (rs3.next()) {
+                System.out.println("Table exists");
+                stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
+            } else {
+                System.out.println("Table does not exist");
+                stmt.execute("CREATE TABLE FAVORITE_LIST (id integer PRIMARY KEY NOT NULL, name varchar(50))");
+            }
+            
+             ResultSet rs1 = dbm.getTables(null, null, "MOVIE", null);
+            if (rs1.next()) {
+                System.out.println("Table exists");
+                stmt.executeUpdate("DELETE FROM MOVIE");
+            } else {
+                System.out.println("Table does not exist");
+                stmt.execute("CREATE TABLE MOVIE (id integer PRIMARY KEY NOT NULL,title varchar (100) NOT NULL,genre_id integer,release_date date,rating float,overview varchar (500),favorite_list_id integer,FOREIGN KEY(genre_id) REFERENCES GENRE(id),FOREIGN KEY(favorite_list_id) REFERENCES FAVORITE_LIST(id))");
+            }
+
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
