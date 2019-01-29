@@ -5,11 +5,18 @@
  */
 package my.mymoviesamn;
 
+import java.util.List;
+import model.FavoriteList;
+import javax.swing.DefaultListModel;
+
+
 /**
  *
  * @author nekont
  */
 public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
+    
+    private List<FavoriteList> mFavoriteList = null;
 
     /**
      * Creates new form JInternalFrame_Favorites
@@ -36,6 +43,23 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(0, 102, 102));
         setTitle("Διαχείριση Λιστών Αγαπημένων Ταινιών");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -51,6 +75,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jButton3.setText("Διαγραφή");
 
         jButton4.setText("Επιστροφή");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,6 +117,16 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        loadFavorites();
+    }//GEN-LAST:event_formInternalFrameOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -97,4 +136,20 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+ // Φόρτωση JList με τις πολεις απο τη database.
+    private void loadFavorites() {
+        MainFrame m = new MainFrame();
+        mFavoriteList = m.loadFavorites();
+        
+        jList1.removeAll();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        mFavoriteList.forEach((favorite) -> {
+            listModel.addElement(favorite.getName());
+        });
+        jList1.setModel(listModel);
+    }
+    
+   
+
 }

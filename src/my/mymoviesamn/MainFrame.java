@@ -41,6 +41,7 @@ import javax.imageio.ImageIO;
 import javax.persistence.Query;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import model.FavoriteList;
 import model.Genre;
 import model.Movie;
 import org.json.*;
@@ -545,5 +546,17 @@ public class MainFrame extends javax.swing.JFrame {
         fFavorites.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         jDesktopPane1.add(fFavorites);
         fFavorites.setVisible(true);  
+    }
+    
+     //Επιστροφή λίστας Favorites από τη database.
+    public List<FavoriteList> loadFavorites() {
+        try {
+            Query q = em.createQuery("SELECT f FROM FavoriteList f");
+            List<FavoriteList> mFavorites = q.getResultList();
+            return mFavorites;
+        } catch (Exception e) {
+            System.out.println("Error: Check database connection.");
+            return null;
+        }
     }
 }
