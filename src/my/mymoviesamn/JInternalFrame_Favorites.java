@@ -8,7 +8,10 @@ package my.mymoviesamn;
 import java.util.List;
 import model.FavoriteList;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -134,15 +137,27 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String message = "Δώστε το όνομα της λίστας αγαπημενων ταινιών:";
-        String title = "Νέα κατηγορία αγαπημένων ταινιών";
-//        int reply = JOptionPane.showConfirmDialog(this, message, title, JOptionPane.YES_NO_OPTION);
-        String fvName = JOptionPane.showInputDialog(this, message, title, JOptionPane.OK_CANCEL_OPTION);
+
+        Object[] options1 = { "Αποθήκευση", "Ακύρωση"};
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Νέα κατηγορία αγαπημένων ταινιών"));
+        JTextField textField = new JTextField(10);
+        panel.add(textField);
+
+        int result = JOptionPane.showOptionDialog(this, panel, "Δώστε το όνομα της λίστας αγαπημενων ταινιών",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options1, null);
+        if (result == JOptionPane.YES_OPTION){
+            JOptionPane.showMessageDialog(this, textField.getText());
+        }
+        String fvName= textField.getText();
+        System.out.println(fvName);
 
         if ((fvName != null) && (fvName.length() > 0)) {
-            
+
             saveNewFavorite(fvName);
-            
+
             return;
         }
 
@@ -173,9 +188,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     }
 
     private void saveNewFavorite(String fvName) {
-        
-        
-        
+
         DatabasesConnections m = new DatabasesConnections();
         mFavoriteList = m.saveNewFavorite(fvName);
 
@@ -185,7 +198,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             listModel.addElement(favorite.getName());
         });
         jList1.setModel(listModel);
-        
+
     }
 
 }
