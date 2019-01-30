@@ -8,14 +8,14 @@ package my.mymoviesamn;
 import java.util.List;
 import model.FavoriteList;
 import javax.swing.DefaultListModel;
-
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author nekont
  */
 public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
-    
+
     private List<FavoriteList> mFavoriteList = null;
 
     /**
@@ -69,6 +69,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Δημιουργία");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Επεξεργασία");
 
@@ -127,6 +132,22 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         loadFavorites();
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String message = "Δώστε το όνομα της λίστας αγαπημενων ταινιών:";
+        String title = "Νέα κατηγορία αγαπημένων ταινιών";
+//        int reply = JOptionPane.showConfirmDialog(this, message, title, JOptionPane.YES_NO_OPTION);
+        String fvName = JOptionPane.showInputDialog(this, message, title, JOptionPane.OK_CANCEL_OPTION);
+
+        if ((fvName != null) && (fvName.length() > 0)) {
+            
+            saveNewFavorite(fvName);
+            
+            return;
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -137,11 +158,12 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
- // Φόρτωση JList με τις πολεις απο τη database.
+    // Φόρτωση JList με τις πολεις απο τη database.
     private void loadFavorites() {
-        MainFrame m = new MainFrame();
+
+        DatabasesConnections m = new DatabasesConnections();
         mFavoriteList = m.loadFavorites();
-        
+
         jList1.removeAll();
         DefaultListModel<String> listModel = new DefaultListModel<>();
         mFavoriteList.forEach((favorite) -> {
@@ -149,7 +171,21 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         });
         jList1.setModel(listModel);
     }
-    
-   
+
+    private void saveNewFavorite(String fvName) {
+        
+        
+        
+        DatabasesConnections m = new DatabasesConnections();
+        mFavoriteList = m.saveNewFavorite(fvName);
+
+        jList1.removeAll();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        mFavoriteList.forEach((favorite) -> {
+            listModel.addElement(favorite.getName());
+        });
+        jList1.setModel(listModel);
+        
+    }
 
 }

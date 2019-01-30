@@ -498,8 +498,6 @@ public class MainFrame extends javax.swing.JFrame {
             Statement stmt = conn.createStatement();
             DatabaseMetaData dbm = conn.getMetaData();
 
-           
-
             ResultSet rs2 = dbm.getTables(null, null, "GENRE", null);
             if (rs2.next()) {
                 System.out.println("Table exists");
@@ -513,10 +511,10 @@ public class MainFrame extends javax.swing.JFrame {
             ResultSet rs3 = dbm.getTables(null, null, "FAVORITE_LIST", null);
             if (rs3.next()) {
                 System.out.println("Table exists");
-                stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
+//                stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
             } else {
                 System.out.println("Table does not exist");
-                stmt.execute("CREATE TABLE FAVORITE_LIST (id integer PRIMARY KEY NOT NULL, name varchar(50))");
+                stmt.execute("CREATE TABLE FAVORITE_LIST (id integer PRIMARY KEY NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), name varchar(50))");
             }
             
              ResultSet rs1 = dbm.getTables(null, null, "MOVIE", null);
@@ -548,15 +546,4 @@ public class MainFrame extends javax.swing.JFrame {
         fFavorites.setVisible(true);  
     }
     
-     //Επιστροφή λίστας Favorites από τη database.
-    public List<FavoriteList> loadFavorites() {
-        try {
-            Query q = em.createQuery("SELECT f FROM FavoriteList f");
-            List<FavoriteList> mFavorites = q.getResultList();
-            return mFavorites;
-        } catch (Exception e) {
-            System.out.println("Error: Check database connection.");
-            return null;
-        }
-    }
 }
