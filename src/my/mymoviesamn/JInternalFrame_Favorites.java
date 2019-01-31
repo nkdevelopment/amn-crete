@@ -187,6 +187,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jList1.setModel(listModel);
     }
 
+    
     private void saveNewFavorite(String fvName) {
 
         DatabasesConnections m = new DatabasesConnections();
