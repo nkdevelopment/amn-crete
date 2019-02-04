@@ -378,16 +378,20 @@ public class MainFrame extends javax.swing.JFrame {
                     item.setTitle(aMovieObject.getString("title"));
 
                     JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
+                    OUTER:
                     for (int k = 0; k < genre_ids.length(); k++) {
-                        if (genre_ids.getInt(k) == 28) {
-                            item.setGenreId(new Genre(28));
-                            break;
-                        } else if (genre_ids.getInt(k) == 10749) {
-                            item.setGenreId(new Genre(10749));
-                            break;
-                        } else if (genre_ids.getInt(k) == 878) {
-                            item.setGenreId(new Genre(878));
-                            break;
+                        switch (genre_ids.getInt(k)) {
+                            case 28:
+                                item.setGenreId(new Genre(28));
+                                break OUTER;
+                            case 10749:
+                                item.setGenreId(new Genre(10749));
+                                break OUTER;
+                            case 878:
+                                item.setGenreId(new Genre(878));
+                                break OUTER;
+                            default:
+                                break;
                         }
                     }
 

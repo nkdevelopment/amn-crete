@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 
 /**
  *
@@ -36,7 +37,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        myMoviesAMNPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
+        favoriteListQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT f FROM FavoriteList f");
+        favoriteListList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(favoriteListQuery.getResultList());
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
@@ -64,11 +69,10 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, favoriteListList, jList1);
+        jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+        bindingGroup.addBinding(jListBinding);
+
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Δημιουργία");
@@ -79,8 +83,18 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Επεξεργασία");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Διαγραφή");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Επιστροφή");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +136,8 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 .addGap(17, 17, 17))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,7 +154,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        Object[] options1 = { "Αποθήκευση", "Ακύρωση"};
+        Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
 
         JPanel panel = new JPanel();
         panel.add(new JLabel("Νέα κατηγορία αγαπημένων ταινιών"));
@@ -148,10 +164,10 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         int result = JOptionPane.showOptionDialog(this, panel, "Δώστε το όνομα της λίστας αγαπημενων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
-        if (result == JOptionPane.YES_OPTION){
+        if (result == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, textField.getText());
         }
-        String fvName= textField.getText();
+        String fvName = textField.getText();
         System.out.println(fvName);
 
         if ((fvName != null) && (fvName.length() > 0)) {
@@ -163,31 +179,44 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        updateFavorite();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        deleteFavorite();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<model.FavoriteList> favoriteListList;
+    private javax.persistence.Query favoriteListQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
-    // Φόρτωση JList με τις πολεις απο τη database.
+    // Φόρτωση JList με τις αγαπημένες απο τη database.
     private void loadFavorites() {
 
-        DatabasesConnections m = new DatabasesConnections();
-        mFavoriteList = m.loadFavorites();
-
-        jList1.removeAll();
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        mFavoriteList.forEach((favorite) -> {
-            listModel.addElement(favorite.getName());
-        });
-        jList1.setModel(listModel);
+//        DatabasesConnections m = new DatabasesConnections();
+//        mFavoriteList = m.loadFavorites();
+//
+//        jList1.removeAll();
+//        DefaultListModel<String> listModel = new DefaultListModel<>();
+//        mFavoriteList.forEach((favorite) -> {
+//            listModel.addElement(favorite.getName());
+//        });
+//        jList1.setModel(listModel);
     }
 
-    
     private void saveNewFavorite(String fvName) {
 
         DatabasesConnections m = new DatabasesConnections();
@@ -200,6 +229,44 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         });
         jList1.setModel(listModel);
 
+    }
+
+    private void updateFavorite() {
+
+        System.out.println("getSelectedIndex= " + jList1.getSelectedIndex());
+        System.out.println("getSelectedValue= " + jList1.getSelectedValue());
+        ListModel listModel = jList1.getModel();
+        System.out.println("entity= " + listModel.getElementAt(jList1.getSelectedIndex()));
+
+        System.out.println("getSelectedValue= " + jList1.getSelectedValue());
+
+    }
+
+    private void deleteFavorite() {
+        
+        FavoriteList f = new FavoriteList();
+        f = favoriteListList.get(3);
+
+        
+
+        DefaultListModel model = (DefaultListModel) jList1.getModel();       
+        int selectedIndex = jList1.getSelectedIndex();
+        if (selectedIndex != -1) {
+            model.remove(selectedIndex);
+        }
+        
+        
+//        DefaultListModel<String> listModel = new DefaultListModel<>();
+//
+//        System.out.println("entity= " + (FavoriteList) listModel.getElementAt(jList1.getSelectedIndex()));
+
+//        System.out.println("JList item size: " + jList1.getModel().getSize());
+//        System.out.println("Reading all list items:");
+//        System.out.println("-----------------------");
+//        for (int i = 0; i < jList1.getModel().getSize(); i++) {
+//            Object item = jList1.getModel().getElementAt(i);
+//            System.out.println("Item = " + item);
+//        }
     }
 
 }
