@@ -84,18 +84,17 @@ public class DatabasesConnections {
     
     
     //Επιστροφή λίστας που δεν περιλαμβάνει το διαγραμμένο Favorite
-    public List<FavoriteList> deleteFavorite(String newFavoriteName) {
+    public List<FavoriteList> deleteFavorite(String name) {
         try {
-            FavoriteList newFavorite = new FavoriteList();
-            newFavorite.setName(newFavoriteName);
-
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
-            em.persist(newFavorite);
-//            em.merge(newFavorite);
-//            em.flush();
-            em.getTransaction().commit();
+            Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '"+name+"'");
+            
+            List results = query.getResultList();
+            FavoriteList fl = em.find(FavoriteList.class, results.get(0));
+            em.remove(fl);
+            em.getTransaction().commit(); 
 
             Query q = em.createQuery("SELECT f FROM FavoriteList f");
             List<FavoriteList> mFavorites = q.getResultList();
