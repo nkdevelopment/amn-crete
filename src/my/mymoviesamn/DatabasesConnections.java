@@ -58,43 +58,52 @@ public class DatabasesConnections {
             return null;
         }
     }
-    
+
     //Επιστροφή λίστας με αλλαγμένο Favorite από τη database.
-//    public List<FavoriteList> updateFavorite(String newFavoriteName) {
-//        try {
-//            FavoriteList newFavorite = new FavoriteList();
-//            newFavorite.setName(newFavoriteName);
-//
-//            if (!em.getTransaction().isActive()) {
-//                em.getTransaction().begin();
-//            }
-//            em.persist(newFavorite);
-////            em.merge(newFavorite);
-////            em.flush();
-//            em.getTransaction().commit();
-//
-//            Query q = em.createQuery("SELECT f FROM FavoriteList f");
-//            List<FavoriteList> mFavorites = q.getResultList();
-//            return mFavorites;
-//        } catch (Exception e) {
-//            System.out.println("Error: Check database connection.");
-//            return null;
-//        }
-//    }
-    
-    
-    //Επιστροφή λίστας που δεν περιλαμβάνει το διαγραμμένο Favorite
-    public List<FavoriteList> deleteFavorite(String name) {
+    public List<FavoriteList> updateFavorite(String updateFavoriteName) {
+//        System.out
         try {
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
-            Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '"+name+"'");
-            
+
+            Query q1 = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + updateFavoriteName + "'");
+            List r1 = q1.getResultList();
+            FavoriteList fl1 = em.find(FavoriteList.class, r1.get(0));
+            Query query = em.createNativeQuery("UPDATE FAVORITE_LIST SET NAME ='"+ updateFavoriteName + "' WHERE ID="+fl1.getId());
+//            Query query = em.createNamedQuery("FavoriteList.findByName").setParameter("name", name);
             List results = query.getResultList();
             FavoriteList fl = em.find(FavoriteList.class, results.get(0));
-            em.remove(fl);
-            em.getTransaction().commit(); 
+            em.persist(fl);
+            
+
+            em.getTransaction().commit();
+
+            Query q = em.createQuery("SELECT f FROM FavoriteList f");
+            List<FavoriteList> mFavorites = q.getResultList();
+            return mFavorites;
+        } catch (Exception e) {
+            System.out.println("Error: Check database connection.");
+            return null;
+        }
+    }
+
+    //Επιστροφή λίστας που δεν περιλαμβάνει το διαγραμμένο Favorite
+    public List<FavoriteList> deleteFavorite(List selectedNames) {
+        try {
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
+
+            for (int i = 0; i < selectedNames.size(); i++) {
+
+                Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
+//            Query query = em.createNamedQuery("FavoriteList.findByName").setParameter("name", name);
+                List results = query.getResultList();
+                FavoriteList fl = em.find(FavoriteList.class, results.get(0));
+                em.remove(fl);
+            }
+            em.getTransaction().commit();
 
             Query q = em.createQuery("SELECT f FROM FavoriteList f");
             List<FavoriteList> mFavorites = q.getResultList();
