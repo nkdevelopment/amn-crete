@@ -11,7 +11,7 @@ package my.mymoviesamn;
  */
 public class testgitbranch {
     //
-    // test
+    // test2
     //
     
 }
