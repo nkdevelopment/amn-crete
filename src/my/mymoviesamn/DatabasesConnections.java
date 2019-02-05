@@ -14,8 +14,8 @@ import model.FavoriteList;
  */
 public class DatabasesConnections {
 
-    private static final String SERVICEURL = "http://api.themoviedb.org/3/";
-    private static final String MYAPIKEY = "&api_key=52cae95ba786564836e9d738e0a0f439";
+//    private static final String SERVICEURL = "http://api.themoviedb.org/3/";
+//    private static final String MYAPIKEY = "&api_key=52cae95ba786564836e9d738e0a0f439";
     private final EntityManager em;
 
     // constructor
