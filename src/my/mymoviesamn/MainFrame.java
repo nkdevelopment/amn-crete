@@ -63,7 +63,6 @@ public class MainFrame extends javax.swing.JFrame {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
         deleteTables();
         loadGenreTable();
-//        getMovies();
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
