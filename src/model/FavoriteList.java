@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FavoriteList.findAll", query = "SELECT f FROM FavoriteList f")
     , @NamedQuery(name = "FavoriteList.findById", query = "SELECT f FROM FavoriteList f WHERE f.id = :id")
     , @NamedQuery(name = "FavoriteList.findByName", query = "SELECT f FROM FavoriteList f WHERE f.name = :name")})
+
 public class FavoriteList implements Serializable {
 
     @Transient

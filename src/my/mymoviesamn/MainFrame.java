@@ -276,6 +276,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         favoritesForm();
+//        favoriteTestForm();
                
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -536,7 +537,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     
-    //Φόρμα "Ο Καιρός τώρα"
+    //Φόρμα Λίστα αγαπημένων
     private void favoritesForm(){
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();   
 //        FormCurrentWeather fCurrent = new FormCurrentWeather();
@@ -549,5 +550,6 @@ public class MainFrame extends javax.swing.JFrame {
         jDesktopPane1.add(fFavorites);
         fFavorites.setVisible(true);  
     }
+    
     
 }
