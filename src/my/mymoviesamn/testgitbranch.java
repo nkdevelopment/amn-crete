@@ -5,10 +5,17 @@
  */
 package my.mymoviesamn;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author Manos
  */
 public class testgitbranch {
+
+    public testgitbranch() {
+    }
+    private static final Logger LOG = Logger.getLogger(testgitbranch.class.getName());
+    
     
 }
