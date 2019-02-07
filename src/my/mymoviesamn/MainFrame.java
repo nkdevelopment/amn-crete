@@ -215,7 +215,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel4.setText("This product uses the TMDb API but is not endorsed or certified by TMDb.");
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/my/mymoviesamn/126x50-powered-by-rectangle.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/126x50-powered-by-rectangle.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
