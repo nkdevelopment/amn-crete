@@ -118,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("myMovies");
         setAlwaysOnTop(true);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("movies.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/Images/movies.png")));
 
         jButton4.setText("ΑΝΑΚΤΗΣΗ ΚΑΙ ΑΠΟΘΗΚΕΥΣΗ ΔΕΔΟΜΕΝΩΝ ΤΑΙΝΙΩΝ");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
