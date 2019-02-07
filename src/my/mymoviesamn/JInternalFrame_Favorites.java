@@ -83,6 +83,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 102, 102));
+        setClosable(true);
         setTitle("Διαχείριση Λιστών Αγαπημένων Ταινιών");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
