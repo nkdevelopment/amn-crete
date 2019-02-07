@@ -41,12 +41,11 @@ public class DatabasesConnections {
         try {
             FavoriteList newFavorite = new FavoriteList();
             newFavorite.setName(newFavoriteName);
-
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
             em.persist(newFavorite);
-//            em.merge(newFavorite);
+            em.merge(newFavorite);
 //            em.flush();
             em.getTransaction().commit();
 
@@ -60,23 +59,15 @@ public class DatabasesConnections {
     }
 
     //Επιστροφή λίστας με αλλαγμένο Favorite από τη database.
-    public List<FavoriteList> updateFavorite(String updateFavoriteName) {
-//        System.out
+    public List<FavoriteList> updateFavorite(String oldName, String newName) {
         try {
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
-
-            Query q1 = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + updateFavoriteName + "'");
+            Query q1 = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + oldName + "'");
             List r1 = q1.getResultList();
             FavoriteList fl1 = em.find(FavoriteList.class, r1.get(0));
-            Query query = em.createNativeQuery("UPDATE FAVORITE_LIST SET NAME ='"+ updateFavoriteName + "' WHERE ID="+fl1.getId());
-//            Query query = em.createNamedQuery("FavoriteList.findByName").setParameter("name", name);
-            List results = query.getResultList();
-            FavoriteList fl = em.find(FavoriteList.class, results.get(0));
-            em.persist(fl);
-            
-
+            fl1.setName(newName);
             em.getTransaction().commit();
 
             Query q = em.createQuery("SELECT f FROM FavoriteList f");
@@ -94,9 +85,7 @@ public class DatabasesConnections {
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
-
             for (int i = 0; i < selectedNames.size(); i++) {
-
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
 //            Query query = em.createNamedQuery("FavoriteList.findByName").setParameter("name", name);
                 List results = query.getResultList();
@@ -113,5 +102,4 @@ public class DatabasesConnections {
             return null;
         }
     }
-
 }

@@ -37,6 +37,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         initComponents();
 
         jButton2.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Επεξεργασίας
+        jButton3.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Διαγραφής
 
         // Ελέγχω αν έχω κάνει μία ή περισσότερες επιλογές στην jList και ενεργοποιώ/απενεργοποιώ το κουμπί της Επεξεργασίας
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
@@ -48,6 +49,10 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 
                 if(selectionLength==1){
                     jButton2.setEnabled(true);
+                    jButton3.setEnabled(true);
+                } else if (selectionLength>1) {
+                    jButton2.setEnabled(false);
+                    jButton3.setEnabled(true);
                 } else {
                     jButton2.setEnabled(false);
                 }
@@ -208,7 +213,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String selectedName = jList1.getSelectedValue();
+        String oldName = jList1.getSelectedValue();
         
         Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
 
@@ -216,7 +221,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         panel.add(new JLabel("Δώστε το νέο όνομα της λίστας αγαπημενων ταινιών:"));
         JTextField textField = new JTextField(10);
         panel.add(textField);
-        textField.setText(selectedName);
+        textField.setText(oldName);
 
         int result = JOptionPane.showOptionDialog(this, panel, "Επεξεργασία κατηγορίας αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -228,13 +233,12 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         String fvName = textField.getText();
         System.out.println(fvName);
 
-        if ((fvName != null) && (fvName.length() > 0)) {
+        if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
 
-            updateFavorite(fvName);
+            updateFavorite(oldName, fvName);
 
             return;
         }
-//        updateFavorite();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -284,10 +288,10 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
     }
 
-    private void updateFavorite(String updatedName) {
+    private void updateFavorite(String oldName, String updatedName) {
         
         DatabasesConnections m = new DatabasesConnections();
-        mFavoriteList = m.updateFavorite(updatedName);
+        mFavoriteList = m.updateFavorite(oldName, updatedName);
 
 //        jList1.removeAll();
         DefaultListModel<String> listModel = new DefaultListModel<>();
