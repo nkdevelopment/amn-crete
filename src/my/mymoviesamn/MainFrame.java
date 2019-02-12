@@ -51,7 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
         deleteTables();
-        loadGenreTable();
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
@@ -281,6 +280,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        DatabasesConnections m = new DatabasesConnections();
+        m.loadGenreTable();
+        
+        
         getMovies();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -463,8 +466,8 @@ public class MainFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 
     }
+    
     //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
-
     public static String readFromURL(String webPage) {
         StringBuffer sb = new StringBuffer();
 
@@ -490,35 +493,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
         //επιστροφή του αποτελέσματος σε string
         return sb.toString();
-    }
-
-    private void loadGenreTable() {
-
-        String resultGenres = readFromURL("http://api.themoviedb.org/3/genre/movie/list?api_key=52cae95ba786564836e9d738e0a0f439");
-
-        try {
-            JSONObject response = new JSONObject(resultGenres);
-            JSONArray genres = response.optJSONArray("genres");
-            Genre genre;
-            for (int i = 0; i < genres.length(); i++) {
-                JSONObject aGenreObject = genres.optJSONObject(i);
-                genre = new Genre();
-                genre.setId(aGenreObject.getInt("id"));
-                genre.setName(aGenreObject.getString("name"));
-                if (aGenreObject.getInt("id") == 28 || aGenreObject.getInt("id") == 10749 || aGenreObject.getInt("id") == 878) {
-                    if (!em.getTransaction().isActive()) {
-                        em.getTransaction().begin();
-                    }
-                    em.merge(genre);
-                    em.flush();
-                    em.getTransaction().commit();
-//                    System.out.println("id= " + genre.getId() + ", name= " + genre.getName());
-                }
-            }
-        } catch (JSONException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void deleteTables() {
