@@ -5,6 +5,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,9 +16,13 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import model.FavoriteList;
 import model.Genre;
+import model.Movie;
+import static my.mymoviesamn.MainFrame.em;
+import static my.mymoviesamn.MainFrame.readFromURL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,7 +121,7 @@ public class DatabasesConnections {
             return null;
         }
     }
-    
+
     //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
     public static String readFromURL(String webPage) {
         StringBuffer sb = new StringBuffer();
@@ -141,12 +149,12 @@ public class DatabasesConnections {
         //επιστροφή του αποτελέσματος σε string
         return sb.toString();
     }
-    
-    
-     public void loadGenreTable() {
-        
+
+    // Λήψη διαθέσιμων ειδών ταινιών στον πίνακα GENRE
+    public void loadGenreTable() {
+
         String localURL = "genre/movie/list";
-        String resultGenres = readFromURL(BASE_URL+localURL+AMN_API_KEY);
+        String resultGenres = readFromURL(BASE_URL + localURL + AMN_API_KEY);
 
         try {
             JSONObject response = new JSONObject(resultGenres);
@@ -171,5 +179,91 @@ public class DatabasesConnections {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
+
+    // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
+    public boolean getMovies() {
+
+        int numberOfPages = 1;
+        String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el");
+        try {
+            JSONObject response = new JSONObject(result);
+            numberOfPages = response.getInt("total_pages");
+            System.out.println("numberOfPages= " + numberOfPages);
+        } catch (JSONException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (int m = 1; m <= 3; m++) {
+            String resultPerPage = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el" + "&page=" + m);
+            System.out.println("resultPerPage= " + resultPerPage);
+
+            try {
+                JSONObject response = new JSONObject(resultPerPage);
+
+                JSONArray results = response.optJSONArray("results");
+                Movie item;
+
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject aMovieObject = results.optJSONObject(i);
+                    item = new Movie();
+                    item.setId(aMovieObject.getInt("id"));
+                    item.setTitle(aMovieObject.getString("title"));
+
+                    JSONArray genre_ids = aMovieObject.optJSONArray("genre_ids");
+                    OUTER:
+                    for (int k = 0; k < genre_ids.length(); k++) {
+                        switch (genre_ids.getInt(k)) {
+                            case 28:
+                                item.setGenreId(new Genre(28));
+                                break OUTER;
+                            case 10749:
+                                item.setGenreId(new Genre(10749));
+                                break OUTER;
+                            case 878:
+                                item.setGenreId(new Genre(878));
+                                break OUTER;
+                            default:
+                                break;
+                        }
+                    }
+
+                    String releaseDateString = aMovieObject.getString("release_date");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date releaseDate = new Date();
+                    try {
+                        releaseDate = df.parse(releaseDateString);
+//                    String newDateString = df.format(releaseDate);
+//                    System.out.println(newDateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    item.setReleaseDate(releaseDate);
+                    item.setRating(aMovieObject.getDouble("vote_average"));
+                    String s = aMovieObject.getString("overview");
+                    if (s.length() >= 500) {
+                        s = s.substring(0, 499);
+                    }
+
+                    item.setOverview(s);
+//                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
+
+//                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
+                    if (!em.getTransaction().isActive()) {
+                        em.getTransaction().begin();
+                    }
+                    em.merge(item);
+                    em.flush();
+                    em.getTransaction().commit();
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        boolean downloaded = true;
+        
+        return downloaded;
+
+    }
+
 }
