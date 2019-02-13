@@ -1,5 +1,7 @@
 package my.mymoviesamn;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Task;
+import javax.accessibility.AccessibleContext;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JWindow;
 import javax.swing.ProgressMonitor;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 import model.FavoriteList;
 import model.Genre;
@@ -36,9 +48,6 @@ public class DatabasesConnections {
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
     private static final String AMN_API_KEY = "api_key=52cae95ba786564836e9d738e0a0f439";
     private final EntityManager em;
-    
-    private ProgressMonitor progressMonitor;
-    private Task task;
 
     // constructor
     public DatabasesConnections() {
@@ -186,6 +195,20 @@ public class DatabasesConnections {
     // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
     public boolean getMovies(MainFrame aThis) {
         
+        JWindow f = new JWindow();
+        f.setAlwaysOnTop(true);
+//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container content = f.getContentPane();
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true);
+        Border border = BorderFactory.createTitledBorder("Downloading...");
+        progressBar.setBorder(border);
+        content.add(progressBar);
+        f.setSize(300, 60);
+         f.setLocationRelativeTo(null);
+        f.setVisible(true);
+        
         // Υπολογίζω τον συνολικό αριθμό των σελίδων του αποτελέσματος
         int numberOfPages = 1;
         String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
@@ -198,6 +221,9 @@ public class DatabasesConnections {
         }
 
         for (int m = 1; m <= 10; m++) {
+            
+            progressBar.setValue(m*10);
+            progressBar.update(progressBar.getGraphics());
 
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
             System.out.println("resultPerPage= " + resultPerPage);
@@ -264,6 +290,9 @@ public class DatabasesConnections {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        f.setVisible(false);
+        f.dispose();
 
         boolean downloaded = true;
 

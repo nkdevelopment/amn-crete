@@ -5,6 +5,9 @@
  */
 package my.mymoviesamn;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,8 +26,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.border.Border;
 
 /**
  *
@@ -275,6 +282,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         m.loadGenreTable();
 
+       
+        
         if (m.getMovies(this)) {
             String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
             String title = "Μήνυμα ενημέρωσης";
