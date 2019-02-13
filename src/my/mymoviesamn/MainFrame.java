@@ -5,7 +5,6 @@
  */
 package my.mymoviesamn;
 
-//import com.sun.xml.internal.ws.util.StringUtils;
 import java.awt.Dimension;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,10 +25,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ProgressMonitor;
 import model.Genre;
 import model.Movie;
 import org.json.*;
@@ -280,10 +281,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         DatabasesConnections m = new DatabasesConnections();
-        
+
         m.loadGenreTable();
-        
-        if (m.getMovies()) {
+
+        if (m.getMovies(this)) {
             String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
             String title = "Μήνυμα ενημέρωσης";
             JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);

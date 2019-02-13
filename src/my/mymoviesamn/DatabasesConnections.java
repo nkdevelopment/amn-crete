@@ -1,5 +1,6 @@
 package my.mymoviesamn;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,9 +15,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.concurrent.Task;
 import javax.swing.JOptionPane;
+import javax.swing.ProgressMonitor;
+import javax.swing.SwingWorker;
 
 import model.FavoriteList;
 import model.Genre;
@@ -34,8 +39,11 @@ import org.json.JSONObject;
 public class DatabasesConnections {
 
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
-    private static final String AMN_API_KEY = "?api_key=52cae95ba786564836e9d738e0a0f439";
+    private static final String AMN_API_KEY = "api_key=52cae95ba786564836e9d738e0a0f439";
     private final EntityManager em;
+    
+    private ProgressMonitor progressMonitor;
+    private Task task;
 
     // constructor
     public DatabasesConnections() {
@@ -153,7 +161,7 @@ public class DatabasesConnections {
     // Λήψη διαθέσιμων ειδών ταινιών στον πίνακα GENRE
     public void loadGenreTable() {
 
-        String localURL = "genre/movie/list";
+        String localURL = "genre/movie/list?";
         String resultGenres = readFromURL(BASE_URL + localURL + AMN_API_KEY);
 
         try {
@@ -181,10 +189,11 @@ public class DatabasesConnections {
     }
 
     // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
-    public boolean getMovies() {
-
+    public boolean getMovies(MainFrame aThis) {
+        
+        // Υπολογίζω τον συνολικό αριθμό των σελίδων του αποτελέσματος
         int numberOfPages = 1;
-        String result = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el");
+        String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
         try {
             JSONObject response = new JSONObject(result);
             numberOfPages = response.getInt("total_pages");
@@ -193,8 +202,9 @@ public class DatabasesConnections {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int m = 1; m <= 3; m++) {
-            String resultPerPage = readFromURL("http://api.themoviedb.org/3/discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&api_key=52cae95ba786564836e9d738e0a0f439&language=el" + "&page=" + m);
+        for (int m = 1; m <= 10; m++) {
+
+            String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
             System.out.println("resultPerPage= " + resultPerPage);
 
             try {
@@ -259,9 +269,9 @@ public class DatabasesConnections {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         boolean downloaded = true;
-        
+
         return downloaded;
 
     }
