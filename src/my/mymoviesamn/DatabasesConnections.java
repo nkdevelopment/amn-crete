@@ -15,26 +15,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.concurrent.Task;
-import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
-import javax.swing.SwingWorker;
 
 import model.FavoriteList;
 import model.Genre;
 import model.Movie;
-import static my.mymoviesamn.MainFrame.em;
-import static my.mymoviesamn.MainFrame.readFromURL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 public class DatabasesConnections {
 
@@ -273,7 +268,6 @@ public class DatabasesConnections {
         boolean downloaded = true;
 
         return downloaded;
-
     }
 
 }

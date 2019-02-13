@@ -21,23 +21,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.ProgressMonitor;
-import model.Genre;
-import model.Movie;
-import org.json.*;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 public class MainFrame extends javax.swing.JFrame {
 
@@ -289,7 +280,6 @@ public class MainFrame extends javax.swing.JFrame {
             String title = "Μήνυμα ενημέρωσης";
             JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
         }
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

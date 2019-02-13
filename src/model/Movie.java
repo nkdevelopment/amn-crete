@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 @Entity
 @Table(name = "MOVIE")

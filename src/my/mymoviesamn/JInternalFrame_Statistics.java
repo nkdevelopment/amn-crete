@@ -7,7 +7,7 @@ package my.mymoviesamn;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
 

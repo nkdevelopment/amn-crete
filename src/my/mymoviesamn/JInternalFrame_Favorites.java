@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 

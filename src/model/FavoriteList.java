@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nekont
+ * @author amn
  */
 @Entity
 @Table(name = "FAVORITE_LIST")
