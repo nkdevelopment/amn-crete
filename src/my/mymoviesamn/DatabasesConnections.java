@@ -195,6 +195,7 @@ public class DatabasesConnections {
     // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
     public boolean getMovies(MainFrame aThis) {
         
+        // Αρχικές ρυθμίσεις για το παράθυρο downloading...
         JWindow f = new JWindow();
         f.setAlwaysOnTop(true);
 //        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,23 +207,24 @@ public class DatabasesConnections {
         progressBar.setBorder(border);
         content.add(progressBar);
         f.setSize(300, 60);
-         f.setLocationRelativeTo(null);
+        f.setLocationRelativeTo(null);
         f.setVisible(true);
         
         // Υπολογίζω τον συνολικό αριθμό των σελίδων του αποτελέσματος
-        int numberOfPages = 1;
-        String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
-        try {
-            JSONObject response = new JSONObject(result);
-            numberOfPages = response.getInt("total_pages");
-            System.out.println("numberOfPages= " + numberOfPages);
-        } catch (JSONException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        int numberOfPages = 1;
+//        String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
+//        try {
+//            JSONObject response = new JSONObject(result);
+//            numberOfPages = response.getInt("total_pages");
+//            System.out.println("numberOfPages= " + numberOfPages);
+//        } catch (JSONException ex) {
+//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
-        for (int m = 1; m <= 10; m++) {
+        for (int m = 1; m <= 20; m++) {
             
-            progressBar.setValue(m*10);
+            // ενημέρωση progressBar downloading
+            progressBar.setValue(m*5);
             progressBar.update(progressBar.getGraphics());
 
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
@@ -293,10 +295,8 @@ public class DatabasesConnections {
         
         f.setVisible(false);
         f.dispose();
-
-        boolean downloaded = true;
-
-        return downloaded;
+        
+        return true;
     }
 
 }
