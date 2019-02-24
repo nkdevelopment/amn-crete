@@ -444,6 +444,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
                 System.out.println("Table does not exist");
                 stmt.execute("CREATE TABLE MOVIE (id integer PRIMARY KEY NOT NULL,title varchar (100) NOT NULL,genre_id integer,release_date date,rating float,overview varchar (500),favorite_list_id integer,FOREIGN KEY(genre_id) REFERENCES GENRE(id),FOREIGN KEY(favorite_list_id) REFERENCES FAVORITE_LIST(id))");
+//                stmt.execute("ALTER TABLE MOVIE ORDER BY (rating))");
             }
 
             conn.close();
