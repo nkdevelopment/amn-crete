@@ -143,7 +143,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +158,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 .addComponent(jButton2)
                 .addGap(47, 47, 47)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(17, 17, 17))
         );
@@ -230,9 +230,12 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
 
             updateFavorite(oldName, fvName);
+            
 
             return;
         }
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -294,6 +297,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         });
         jList1.setModel(listModel);
         
+        jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
     }
 
     private void deleteFavorite() {
@@ -308,7 +312,8 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             listModel.addElement(favorite.getName());
         });
         jList1.setModel(listModel);
-
+        
+        jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
     }
 
 }
