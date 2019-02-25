@@ -53,7 +53,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             }
         };
         jList1.addListSelectionListener(listSelectionListener);
-
     }
 
     /**
