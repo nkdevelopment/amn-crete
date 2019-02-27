@@ -266,7 +266,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        movieseaarchForm();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -478,5 +478,16 @@ public class MainFrame extends javax.swing.JFrame {
         fStatistics.setVisible(true);
 
     }
+private void movieseaarchForm() {
 
+        JInternalFrame_MovieSearch msearch = new JInternalFrame_MovieSearch();
+
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = msearch.getSize();
+        msearch.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
+        msearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        jDesktopPane1.add(msearch);
+        msearch.setVisible(true);
+}
 }
