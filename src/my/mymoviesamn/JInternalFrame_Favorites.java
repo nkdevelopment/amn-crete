@@ -40,10 +40,18 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 JList list = (JList) listSelectionEvent.getSource();
                 int selections[] = list.getSelectedIndices();
                 int selectionLength = selections.length;
+                
 
                 if (selectionLength == 1) {
                     jButton2.setEnabled(true);
                     jButton3.setEnabled(true);
+                    
+                    String objectName = jList1.getSelectedValue();
+                    System.out.println(objectName);
+                    
+                    // https://stackoverflow.com/questions/27815400/retrieving-data-from-jdbc-database-into-jtable
+
+                    
                 } else if (selectionLength > 1) {
                     jButton2.setEnabled(false);
                     jButton3.setEnabled(true);
@@ -51,6 +59,8 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                     jButton2.setEnabled(false);
                 }
             }
+
+            
         };
         jList1.addListSelectionListener(listSelectionListener);
     }
