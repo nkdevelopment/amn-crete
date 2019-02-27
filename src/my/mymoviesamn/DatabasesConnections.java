@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -221,6 +223,8 @@ public class DatabasesConnections {
 //            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
+        Connection conn = null;
+
         for (int m = 1; m <= 20; m++) {
             
             // ενημέρωση progressBar downloading
@@ -230,7 +234,7 @@ public class DatabasesConnections {
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
             System.out.println("resultPerPage= " + resultPerPage);
 
-            try {
+            try {                
                 JSONObject response = new JSONObject(resultPerPage);
 
                 JSONArray results = response.optJSONArray("results");
@@ -284,6 +288,8 @@ public class DatabasesConnections {
                     if (!em.getTransaction().isActive()) {
                         em.getTransaction().begin();
                     }
+                    
+                    
                     em.merge(item);
                     em.flush();
                     em.getTransaction().commit();
