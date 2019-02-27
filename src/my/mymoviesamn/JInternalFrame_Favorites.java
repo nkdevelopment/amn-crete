@@ -221,21 +221,16 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         int result = JOptionPane.showOptionDialog(this, panel, "Επεξεργασία κατηγορίας αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
+        
+        String fvName = textField.getText();
         if (result == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, textField.getText());
+            
+            if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
+                updateFavorite(oldName, fvName);
+                return;
+            }
         }
-
-        String fvName = textField.getText();
-        System.out.println(fvName);
-
-        if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
-
-            updateFavorite(oldName, fvName);
-
-            return;
-        }
-
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Διαγραφής
