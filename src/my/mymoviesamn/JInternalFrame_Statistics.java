@@ -5,12 +5,25 @@
  */
 package my.mymoviesamn;
 
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.swing.table.DefaultTableModel;
+import model.FavoriteList;
+import model.Movie;
+
 /**
  *
- * @author amn
+ * @author alexandra
  */
 public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
-
+//Δημιουργία Entity Manager Factory & Entity Manager (Διαχειριστή Οντοτήτων)
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("myMoviesAMNPU");
+    EntityManager em = emf.createEntityManager();
+    
     /**
      * Creates new form JInternalFrame_Statistics
      */
@@ -29,8 +42,12 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("ΣΤΑΤΙΣΤΙΚΑ");
@@ -41,21 +58,52 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         jButton1.setMaximumSize(new java.awt.Dimension(200, 35));
         jButton1.setMinimumSize(new java.awt.Dimension(200, 35));
         jButton1.setPreferredSize(new java.awt.Dimension(220, 35));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -69,21 +117,36 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             }
         });
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(109, 109, 109))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(396, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -109,10 +172,72 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//ΚΟΥΜΠΙ: ΟΙ ΚΑΛΥΤΕΡΕΣ ΤΑΙΝΙΕΣ ΑΝΑ ΛΙΣΤΑ
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        /* Περιγραφή: Όταν πατηθεί, θα εμφανίζεται ένας πίνακας (jTable2) με μία
+        στήλη (Όνομα Ταινίας) και τόσες γραμμές όσες οι λίστες αγαπημένων που 
+        έχουν οριστεί στη ΒΔ. Αυτός θα περιέχει τις ταινίες με την υψηλότερη
+        βαθμολογία από την κάθε λίστα αγαπημένων.*/
+        
+        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
+        Αγαπημένων Λιστών ταξινομημένες ανά Βαθμολογία*/
+        Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
+        
+        //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 1
+        List<Movie> movies = q1.getResultList();
+        
+        //Δημιουργία νέου ερωτήματος (query) που μου επιστρέφει τις Λίστες Αγαπημένων
+        Query q2 = em.createQuery("SELECT f FROM FavoriteList f");
+        
+        //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 2
+        List<FavoriteList> flist = q2.getResultList();
+        
+        /*Σετάρω έναν βοηθητικό πίνακα (model) που να περιέχει δύο στήλες με
+        πεδία Τίτλος Ταινίας & Βαθμολογία*/
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία"});
+        
+        //Διαπερνάω τη Λίστα 2 των Αγαπημένων Λιστών 
+        for (int i=1; i<flist.size()+1;i++){
+            //Με ένα for διαβάζω τη Λίστα 1 και την περνάω στον βοηθητικό πίνακα
+            for (Movie movie:movies){
+            //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
+            if (i== movie.getFavoriteListId().getId()){
+                String rating = Double.toString(movie.getRating());
+                model.addRow(new String[]{movie.getTitle(),rating});
+                break;
+                }
+            }
+        }
+        //Κι ενημερώνω το jTable2
+        jTable2.setModel(model);
     }//GEN-LAST:event_jButton2ActionPerformed
+//ΚΟΥΜΠΙ: ΟΙ ΚΑΛΥΤΕΡΕΣ 10 ΤΑΙΝΙΕΣ
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        /* Περιγραφή: Όταν πατηθεί, θα εμφανίζεται ένας πίνακας (jTable1) με 2
+        στήλες και 10 γραμμές, που θα περιέχει τις 10 ταινίες με την υψηλότερη
+        βαθμολογία ανεξαρτήτου είδους ταινίας.*/
+        
+        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
+        ανά Βαθμολογία*/
+        Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
+        //Εμφάνιση μόνο των πρώτων 10 Ταινιών
+        q1.setMaxResults(10);
+        //...τις οποίες τοποθετώ σε μία Λίστα 
+        List<Movie> movies = q1.getResultList();
+        //Σετάρω έναν βοηθητικό πίνακα (model) όπως ζητείται από την εκφώνηση 
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Ταινία","Βαθμολογία"});
+        //Με ένα for διαβάζω τη Λίστα και την περνάω στον βοηθητικό πίνακα
+        movies.forEach((movie) -> {
+            //αφού μετατρέψω τη βαθμολογία από double σε string
+            String rating = Double.toString(movie.getRating());
+            //Προσθέτω μία μία γραμμή της Λίστας στον Πίνακα
+            model.addRow(new String[]{movie.getTitle(),rating});
+        });
+        //Κι ενημερώνω το jTable1 1
+        jTable1.setModel(model);   
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -120,5 +245,9 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
