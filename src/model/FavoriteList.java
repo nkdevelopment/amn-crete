@@ -109,7 +109,7 @@ public class FavoriteList implements Serializable {
 
     @Override
     public String toString() {
-        return "model.FavoriteList[ id=" + id + " ]";
+        return this.getName();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

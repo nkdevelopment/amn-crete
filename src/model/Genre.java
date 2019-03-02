@@ -96,7 +96,7 @@ public class Genre implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Genre[ id=" + id + " ]";
+        return this.getName();
     }
     
 }
