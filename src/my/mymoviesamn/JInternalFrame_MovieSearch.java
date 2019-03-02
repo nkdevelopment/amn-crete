@@ -26,8 +26,24 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager1 = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
+        myMoviesAMNPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
+        movieQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
+        movieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : movieQuery.getResultList();
+        movieQuery1 = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
+        movieList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : movieQuery1.getResultList();
+        movieQuery2 = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
+        movieList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : movieQuery2.getResultList();
+        favoriteListQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT f FROM FavoriteList f");
+        favoriteListList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : favoriteListQuery.getResultList();
+        genreQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT g FROM Genre g");
+        genreList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : genreQuery.getResultList();
+        genreQuery1 = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT g FROM Genre g");
+        genreList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : genreQuery1.getResultList();
+        genreQuery2 = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT g FROM Genre g");
+        genreList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : genreQuery2.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
@@ -72,7 +88,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jPanel1.setToolTipText("");
 
         jComboBox1.setMaximumRowCount(3);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Action", "Romance", "Science Fiction", " " }));
         jComboBox1.setToolTipText("");
         jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jComboBox1.setName("Είδος Ταινίας"); // NOI18N
@@ -153,10 +168,26 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jTable2.setFillsViewportHeight(true);
         jTable2.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, movieList2, jTable2);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${title}"));
+        columnBinding.setColumnName("Title");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rating}"));
+        columnBinding.setColumnName("Rating");
+        columnBinding.setColumnClass(Double.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${overview}"));
+        columnBinding.setColumnName("Overview");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane2.setViewportView(jTable2);
 
         jLabel5.setLabelFor(jComboBox2);
         jLabel5.setText("Προσθήκη σε Λίστα");
+
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, favoriteListList, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jCheckBox1.setText("Ταξινόμηση με βάση τη Βαθμολογία");
 
@@ -221,6 +252,8 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -243,6 +276,14 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager entityManager1;
+    private java.util.List<model.FavoriteList> favoriteListList;
+    private javax.persistence.Query favoriteListQuery;
+    private java.util.List<model.Genre> genreList;
+    private java.util.List<model.Genre> genreList1;
+    private java.util.List<model.Genre> genreList2;
+    private javax.persistence.Query genreQuery;
+    private javax.persistence.Query genreQuery1;
+    private javax.persistence.Query genreQuery2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -258,5 +299,13 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private java.util.List<model.Movie> movieList;
+    private java.util.List<model.Movie> movieList1;
+    private java.util.List<model.Movie> movieList2;
+    private javax.persistence.Query movieQuery;
+    private javax.persistence.Query movieQuery1;
+    private javax.persistence.Query movieQuery2;
+    private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
