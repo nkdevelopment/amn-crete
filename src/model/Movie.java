@@ -54,8 +54,8 @@ public class Movie implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RATING", length = 10)
-    private Float rating;
+    @Column(name = "RATING", length = 10, precision = 3, scale = 2)
+    private Double rating;
     @Column(name = "OVERVIEW", length = 500)
     private String overview;
     @JoinColumn(name = "FAVORITE_LIST_ID", referencedColumnName = "ID")
@@ -107,12 +107,12 @@ public class Movie implements Serializable {
         changeSupport.firePropertyChange("releaseDate", oldReleaseDate, releaseDate);
     }
 
-    public Float getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
-        Float oldRating = this.rating;
+    public void setRating(Double rating) {
+        Double oldRating = this.rating;
         this.rating = rating;
         changeSupport.firePropertyChange("rating", oldRating, rating);
     }
