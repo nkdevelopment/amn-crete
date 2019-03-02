@@ -41,7 +41,6 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
-        deleteTables();
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
@@ -365,6 +364,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void connectToDb() {
         try {
+            Persistence.generateSchema("myMoviesAMNPU", null);
             // Δημιουργία ενός EntityManagerFactory το οποίο συνδέεται στο
             // Persistence Unit που αντιστοιχεί στην Βάση Δεδομένων μας
             emf = Persistence.createEntityManagerFactory("myMoviesAMNPU");
@@ -402,52 +402,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
         //επιστροφή του αποτελέσματος σε string
         return sb.toString();
-    }
-
-    private void deleteTables() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/myMoviesDB", "pli24", "pli24");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
-            Statement stmt = conn.createStatement();
-            DatabaseMetaData dbm = conn.getMetaData();
-
-            ResultSet rs2 = dbm.getTables(null, null, "GENRE", null);
-            if (rs2.next()) {
-                System.out.println("Table exists");
-                stmt.executeUpdate("DELETE FROM MOVIE");
-                stmt.executeUpdate("DELETE FROM GENRE");
-            } else {
-                System.out.println("Table does not exist");
-                stmt.execute("CREATE TABLE GENRE (id integer PRIMARY KEY NOT NULL,name varchar(20))");
-            }
-
-            ResultSet rs3 = dbm.getTables(null, null, "FAVORITE_LIST", null);
-            if (rs3.next()) {
-                System.out.println("Table exists");
-//                stmt.executeUpdate("DELETE FROM FAVORITE_LIST");
-            } else {
-                System.out.println("Table does not exist");
-                stmt.execute("CREATE TABLE FAVORITE_LIST (id integer PRIMARY KEY NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), name varchar(50))");
-            }
-
-            ResultSet rs1 = dbm.getTables(null, null, "MOVIE", null);
-            if (rs1.next()) {
-                System.out.println("Table exists");
-                stmt.executeUpdate("DELETE FROM MOVIE");
-            } else {
-                System.out.println("Table does not exist");
-                stmt.execute("CREATE TABLE MOVIE (id integer PRIMARY KEY NOT NULL,title varchar (100) NOT NULL,genre_id integer,release_date date,rating float,overview varchar (500),favorite_list_id integer,FOREIGN KEY(genre_id) REFERENCES GENRE(id),FOREIGN KEY(favorite_list_id) REFERENCES FAVORITE_LIST(id))");
-//                stmt.execute("ALTER TABLE MOVIE ORDER BY (rating))");
-            }
-
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     //Φόρμα Λίστα αγαπημένων
