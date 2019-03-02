@@ -44,9 +44,9 @@ public class FavoriteList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "ID", length = 10)
     private Integer id;
-    @Column(name = "NAME")
+    @Column(name = "NAME", length = 50)
     private String name;
     @OneToMany(mappedBy = "favoriteListId")
     private List<Movie> movieList;

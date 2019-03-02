@@ -35,9 +35,9 @@ public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "ID", length = 10)
     private Integer id;
-    @Column(name = "NAME")
+    @Column(name = "NAME", length = 20)
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "genreId")
     private List<Movie> movieList;

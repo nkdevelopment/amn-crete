@@ -45,18 +45,18 @@ public class Movie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "ID", length = 10)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", length  =100)
     private String title;
     @Column(name = "RELEASE_DATE")
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "RATING")
-    private Double rating;
-    @Column(name = "OVERVIEW")
+    @Column(name = "RATING", length = 10)
+    private Float rating;
+    @Column(name = "OVERVIEW", length = 500)
     private String overview;
     @JoinColumn(name = "FAVORITE_LIST_ID", referencedColumnName = "ID")
     @ManyToOne
@@ -107,12 +107,12 @@ public class Movie implements Serializable {
         changeSupport.firePropertyChange("releaseDate", oldReleaseDate, releaseDate);
     }
 
-    public Double getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
-        Double oldRating = this.rating;
+    public void setRating(Float rating) {
+        Float oldRating = this.rating;
         this.rating = rating;
         changeSupport.firePropertyChange("rating", oldRating, rating);
     }
