@@ -16,6 +16,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
      */
     public JInternalFrame_MovieSearch() {
         initComponents();
+        jComboBox1.setSelectedIndex(-1);
     }
 
     /**
