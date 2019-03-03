@@ -291,6 +291,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             Genre selectedGenre = (Genre) jComboBox1.getSelectedItem();
             queryText += " WHERE m.genreId.id = " + selectedGenre.getId().toString();
         }
+        if (jCheckBox1.isSelected()) {
+            queryText += " ORDER BY m.rating DESC";
+        }
         Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
         List<Movie> movieList = movieQuery.getResultList();
         DefaultTableModel model = new DefaultTableModel();
