@@ -287,9 +287,15 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String queryText = "SELECT m FROM Movie m";
+        boolean putWhere = false;
         if (jComboBox1.getSelectedIndex() >= 0) {
             Genre selectedGenre = (Genre) jComboBox1.getSelectedItem();
             queryText += " WHERE m.genreId.id = " + selectedGenre.getId().toString();
+            putWhere = true;
+        }
+        if (!jTextField1.getText().isEmpty()) {
+            queryText += putWhere ? " AND " : " WHERE ";
+            queryText += "FUNC('YEAR', m.releaseDate) = " + jTextField1.getText();
         }
         if (jCheckBox1.isSelected()) {
             queryText += " ORDER BY m.rating DESC";
