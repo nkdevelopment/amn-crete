@@ -432,14 +432,14 @@ public class MainFrame extends javax.swing.JFrame {
     }
 private void movieSearchForm() {
 
-        JInternalFrame_MovieSearch msearch = new JInternalFrame_MovieSearch();
+        JInternalFrame_MovieSearch mSearch = new JInternalFrame_MovieSearch();
 
         Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension jInternalFrameSize = msearch.getSize();
-        msearch.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+        Dimension jInternalFrameSize = mSearch.getSize();
+        mSearch.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
-        msearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(msearch);
-        msearch.setVisible(true);
+        mSearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        jDesktopPane1.add(mSearch);
+        mSearch.setVisible(true);
 }
 }
