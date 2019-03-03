@@ -213,7 +213,7 @@
             <Property name="name" type="java.lang.String" value="&#x395;&#x3af;&#x3b4;&#x3bf;&#x3c2; &#x3a4;&#x3b1;&#x3b9;&#x3bd;&#x3af;&#x3b1;&#x3c2;" noResource="true"/>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="elements" source="genreList" target="jComboBox1" targetPath="elements" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="elements" source="genreList" target="jComboBox1" targetPath="elements" updateStrategy="1" immediately="false"/>
           </BindingProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
@@ -319,7 +319,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
           <BindingProperties>
-            <BindingProperty name="elements" source="favoriteListList" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="elements" source="favoriteListList" target="jComboBox2" targetPath="elements" updateStrategy="1" immediately="false"/>
           </BindingProperties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

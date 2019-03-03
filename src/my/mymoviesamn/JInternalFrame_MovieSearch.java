@@ -85,7 +85,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jComboBox1.setName("Είδος Ταινίας"); // NOI18N
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, genreList, jComboBox1);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, genreList, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +144,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         jButton4.setText("Επιστροφή");
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, favoriteListList, jComboBox2);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jLabel5.setLabelFor(jComboBox2);
