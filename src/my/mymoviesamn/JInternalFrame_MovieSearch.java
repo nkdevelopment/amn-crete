@@ -6,6 +6,7 @@
 package my.mymoviesamn;
 
 import java.awt.Window;
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.Query;
 import javax.swing.SwingUtilities;
@@ -269,11 +270,46 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        if (jTable2.getSelectedRowCount() == 0) {
+            return;
+        }
+        for (int row : jTable2.getSelectedRows()) {
+            int movieId = (int) jTable2.getModel().getValueAt(row, 0);
+
+            if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
+                myMoviesAMNPUEntityManager.getTransaction().begin();
+            }
+
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
+            m.setFavoriteListId(null);
+
+            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.getTransaction().commit();
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        if (jTable2.getSelectedRowCount() == 0) {
+            return;
+        }
+        FavoriteList favList = (FavoriteList) jComboBox2.getSelectedItem();
+        System.out.println(favList.getId());
+        for (int row : jTable2.getSelectedRows()) {
+            int movieId = (int) jTable2.getModel().getValueAt(row, 0);
+
+            if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
+                myMoviesAMNPUEntityManager.getTransaction().begin();
+            }
+
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
+            m.setFavoriteListId(favList);
+
+            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.getTransaction().commit();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -304,7 +340,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         List<Movie> movieList = movieQuery.getResultList();
         DefaultTableModel model = new DefaultTableModel();
 
-        model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας",
+        // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
+        // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
+        model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
             "Βαθμολογία", "Ημερομηνία Κυκλοφορίας", "Είδος", "Λίστα"});
         for (Movie m : movieList) {
             String genreText = "";
@@ -318,7 +356,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getTitle(), m.getRating(), m.getReleaseDate(), genreText, favoriteListText});
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getReleaseDate(), genreText, favoriteListText});
         }
 
         jTable2.setModel(model);
