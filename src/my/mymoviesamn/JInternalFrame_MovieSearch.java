@@ -6,7 +6,13 @@
 package my.mymoviesamn;
 
 import java.awt.Window;
+import java.util.List;
+import javax.persistence.Query;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import model.FavoriteList;
+import model.Genre;
+import model.Movie;
 
 /**
  *
@@ -33,8 +39,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         myMoviesAMNPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
-        movieQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
-        movieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : movieQuery.getResultList();
         favoriteListQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT f FROM FavoriteList f");
         favoriteListList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : favoriteListQuery.getResultList();
         genreQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT g FROM Genre g");
@@ -98,6 +102,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Αναζήτηση");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Καθαρισμός Κριτηρίων");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -130,19 +139,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jTable2.setFillsViewportHeight(true);
         jTable2.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, movieList, jTable2);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${title}"));
-        columnBinding.setColumnName("Title");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rating}"));
-        columnBinding.setColumnName("Rating");
-        columnBinding.setColumnClass(Double.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${overview}"));
-        columnBinding.setColumnName("Overview");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
         jScrollPane2.setViewportView(jTable2);
 
         jButton4.setText("Επιστροφή");
@@ -289,6 +285,36 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String queryText = "SELECT m FROM Movie m";
+        if (jComboBox1.getSelectedIndex() >= 0) {
+            Genre selectedGenre = (Genre) jComboBox1.getSelectedItem();
+            queryText += " WHERE m.genreId.id = " + selectedGenre.getId().toString();
+        }
+        Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
+        List<Movie> movieList = movieQuery.getResultList();
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας",
+            "Βαθμολογία", "Ημερομηνία Κυκλοφορίας", "Είδος", "Λίστα"});
+        for (Movie m : movieList) {
+            String genreText = "";
+            String favoriteListText = "";
+            String dateText = "";
+            Genre genre = m.getGenreId();
+            if (genre != null) {
+                genreText = genre.getName();
+            }
+            FavoriteList list = m.getFavoriteListId();
+            if (list != null) {
+                favoriteListText = list.getName();
+            }
+            model.addRow(new Object[]{m.getTitle(), m.getRating(), m.getReleaseDate(), genreText, favoriteListText});
+        }
+
+        jTable2.setModel(model);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<model.FavoriteList> favoriteListList;
@@ -311,8 +337,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private java.util.List<model.Movie> movieList;
-    private javax.persistence.Query movieQuery;
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
