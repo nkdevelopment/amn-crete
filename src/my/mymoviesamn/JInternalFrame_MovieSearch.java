@@ -5,6 +5,9 @@
  */
 package my.mymoviesamn;
 
+import java.awt.Window;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author Manos
@@ -143,6 +146,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jButton4.setText("Επιστροφή");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -276,6 +284,10 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jComboBox1.setSelectedIndex(-1);
         jTextField1.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
