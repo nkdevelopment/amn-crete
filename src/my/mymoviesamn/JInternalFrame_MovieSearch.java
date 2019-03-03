@@ -274,6 +274,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         jComboBox1.setSelectedIndex(-1);
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
