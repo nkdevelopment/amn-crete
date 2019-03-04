@@ -118,18 +118,17 @@ public class DatabasesConnections {
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
-            
+
             // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List
             Query queryMovies = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(0) + "'");
             List moviesList = queryMovies.getResultList();
-            String stringId = moviesList.get(0).toString(); 
-            Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
+            String stringId = moviesList.get(0).toString();
+            Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = " + stringId);
             List<Movie> moviesToChange = q1.getResultList();
-            for (Movie movie:moviesToChange){
+            for (Movie movie : moviesToChange) {
                 movie.setFavoriteListId(null);
             }
-            
-            
+
             for (int i = 0; i < selectedNames.size(); i++) {
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
                 List results = query.getResultList();
@@ -207,7 +206,7 @@ public class DatabasesConnections {
 
     // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
     public boolean getMovies(MainFrame aThis) {
-        
+
         // Αρχικές ρυθμίσεις για το παράθυρο downloading...
         JWindow f = new JWindow();
         f.setAlwaysOnTop(true);
@@ -222,7 +221,7 @@ public class DatabasesConnections {
         f.setSize(300, 60);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
-        
+
         // Υπολογίζω τον συνολικό αριθμό των σελίδων του αποτελέσματος
 //        int numberOfPages = 1;
 //        String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
@@ -233,19 +232,18 @@ public class DatabasesConnections {
 //        } catch (JSONException ex) {
 //            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
         Connection conn = null;
 
         for (int m = 1; m <= 20; m++) {
-            
+
             // ενημέρωση progressBar downloading
-            progressBar.setValue(m*5);
+            progressBar.setValue(m * 5);
             progressBar.update(progressBar.getGraphics());
 
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
             System.out.println("resultPerPage= " + resultPerPage);
 
-            try {                
+            try {
                 JSONObject response = new JSONObject(resultPerPage);
 
                 JSONArray results = response.optJSONArray("results");
@@ -295,12 +293,10 @@ public class DatabasesConnections {
                     item.setOverview(s);
 //                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
 
-//                System.out.println("id= " + item.getId() + ", title= " + item.getTitle() + ", release_date= " + item.getReleaseDate());
                     if (!em.getTransaction().isActive()) {
                         em.getTransaction().begin();
                     }
-                    
-                    
+
                     em.merge(item);
                     em.flush();
                     em.getTransaction().commit();
@@ -309,10 +305,10 @@ public class DatabasesConnections {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         f.setVisible(false);
         f.dispose();
-        
+
         return true;
     }
 

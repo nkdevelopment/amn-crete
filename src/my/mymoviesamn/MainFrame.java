@@ -272,8 +272,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         m.loadGenreTable();
 
-       
-        
         if (m.getMovies(this)) {
             String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
             String title = "Μήνυμα ενημέρωσης";
@@ -429,7 +427,8 @@ public class MainFrame extends javax.swing.JFrame {
         fStatistics.setVisible(true);
 
     }
-private void movieSearchForm() {
+
+    private void movieSearchForm() {
 
         JInternalFrame_MovieSearch mSearch = new JInternalFrame_MovieSearch();
 
@@ -440,5 +439,5 @@ private void movieSearchForm() {
         mSearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         jDesktopPane1.add(mSearch);
         mSearch.setVisible(true);
-}
+    }
 }
