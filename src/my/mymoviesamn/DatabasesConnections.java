@@ -118,6 +118,18 @@ public class DatabasesConnections {
             if (!em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
+            
+            // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List
+            Query queryMovies = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(0) + "'");
+            List moviesList = queryMovies.getResultList();
+            String stringId = moviesList.get(0).toString(); 
+            Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
+            List<Movie> moviesToChange = q1.getResultList();
+            for (Movie movie:moviesToChange){
+                movie.setFavoriteListId(null);
+            }
+            
+            
             for (int i = 0; i < selectedNames.size(); i++) {
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
                 List results = query.getResultList();
