@@ -48,7 +48,7 @@ public class Movie implements Serializable {
     @Column(name = "ID", length = 10)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "TITLE", length  =100)
+    @Column(name = "TITLE", length =100)
     private String title;
     @Column(name = "RELEASE_DATE")
     @Temporal(TemporalType.DATE)
