@@ -120,7 +120,6 @@ public class DatabasesConnections {
             }
             for (int i = 0; i < selectedNames.size(); i++) {
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
-//            Query query = em.createNamedQuery("FavoriteList.findByName").setParameter("name", name);
                 List results = query.getResultList();
                 FavoriteList fl = em.find(FavoriteList.class, results.get(0));
                 em.remove(fl);
