@@ -5,7 +5,12 @@
  */
 package my.mymoviesamn;
 
+import java.sql.ResultSet;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import model.FavoriteList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -15,12 +20,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import model.Movie;
 
 /**
  *
  * @author amn
  */
 public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("myMoviesAMNPU");
+    EntityManager em = emf.createEntityManager();
 
     private List<FavoriteList> mFavoriteList = null;
 
@@ -49,8 +59,50 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                     String objectName = jList1.getSelectedValue();
                     System.out.println(objectName);
                     
+                    List selected = jList1.getSelectedValuesList();
+                 
+                    Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selected.get(0) + "'");
+                    List results = query.getResultList();
+                    System.out.println("results= "+results);
+                    
+                    int resultId = Integer.parseInt(results.get(0).toString());
+                    String stringId = results.get(0).toString();
+                    System.out.println("resultId= "+resultId);
+                    
+//                    Query q2 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId ="+resultId+"");
+                    
+                    
+                    Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId = :favoriteListId");
+//                    q1.setParameter("FAVORITE_LIST_ID", resultId);
+                    q1.setParameter("favoriteListId", "25");
+                    
+                    
+                    List<Movie> movies = q1.getResultList();
+                    
+                    DefaultTableModel model = new DefaultTableModel();
+                    model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία", "Περιγραφή"});
+                    
+                    for (Movie movie:movies){
+                        String rating = Double.toString(movie.getRating());
+                        model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
+                    }
+                    jTable1.setModel(model);
+
                     // https://stackoverflow.com/questions/27815400/retrieving-data-from-jdbc-database-into-jtable
 
+//                    DefaultTableModel model = new DefaultTableModel(new String[]{"Class Name", "Home work", "Due Date"}, 0);
+//                    String sql="SELECT * FROM hwList";
+//                    ResultSet rs = st.executeQuery(sql); 
+//                    while(rs.next())
+//                    {
+//                        String d = rs.getString("className");
+//                        String e = rs.getString("homeWork");
+//                        String f = rs.getString("dueDate");
+//                        model.addRow(new Object[]{d, e, f});
+//                    }
+//                    table.setModel(model);
+                    
+                    
                     
                 } else if (selectionLength > 1) {
                     jButton2.setEnabled(false);
@@ -159,7 +211,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                             .addGap(18, 18, 18)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +229,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                         .addComponent(jButton4)
                         .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
