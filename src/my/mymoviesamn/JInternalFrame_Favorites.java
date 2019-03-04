@@ -349,6 +349,12 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 listModel.addElement(favorite.getName());
             });
             jList1.setModel(listModel);
+            
+            // Αδειάζοντας τον πίνακα από τις ταινίες
+            DefaultTableModel modelEmpty = new DefaultTableModel();
+            modelEmpty.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία", "Περιγραφή"});
+            jTable1.setModel(modelEmpty);
+            
             jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
         } else {
             return;
