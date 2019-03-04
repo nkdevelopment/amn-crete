@@ -51,32 +51,21 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 int selections[] = list.getSelectedIndices();
                 int selectionLength = selections.length;
                 
-
                 if (selectionLength == 1) {
                     jButton2.setEnabled(true);
                     jButton3.setEnabled(true);
                     
-                    String objectName = jList1.getSelectedValue();
-                    System.out.println(objectName);
+//                    String objectName = jList1.getSelectedValue();
+//                    System.out.println(objectName);
                     
                     List selected = jList1.getSelectedValuesList();
-                 
+                    
                     Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selected.get(0) + "'");
                     List results = query.getResultList();
-                    System.out.println("results= "+results);
                     
-                    int resultId = Integer.parseInt(results.get(0).toString());
-                    String stringId = results.get(0).toString();
-                    System.out.println("resultId= "+resultId);
-                    
-//                    Query q2 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId ="+resultId+"");
-                    
-                    
-                    Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId = :favoriteListId");
-//                    q1.setParameter("FAVORITE_LIST_ID", resultId);
-                    q1.setParameter("favoriteListId", "25");
-                    
-                    
+                    String stringId = results.get(0).toString(); 
+                    Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
+                   
                     List<Movie> movies = q1.getResultList();
                     
                     DefaultTableModel model = new DefaultTableModel();
@@ -86,23 +75,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                         String rating = Double.toString(movie.getRating());
                         model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
                     }
-                    jTable1.setModel(model);
-
-                    // https://stackoverflow.com/questions/27815400/retrieving-data-from-jdbc-database-into-jtable
-
-//                    DefaultTableModel model = new DefaultTableModel(new String[]{"Class Name", "Home work", "Due Date"}, 0);
-//                    String sql="SELECT * FROM hwList";
-//                    ResultSet rs = st.executeQuery(sql); 
-//                    while(rs.next())
-//                    {
-//                        String d = rs.getString("className");
-//                        String e = rs.getString("homeWork");
-//                        String f = rs.getString("dueDate");
-//                        model.addRow(new Object[]{d, e, f});
-//                    }
-//                    table.setModel(model);
-                    
-                    
+                    jTable1.setModel(model);  
                     
                 } else if (selectionLength > 1) {
                     jButton2.setEnabled(false);
@@ -112,7 +85,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 }
             }
 
-            
         };
         jList1.addListSelectionListener(listSelectionListener);
     }
