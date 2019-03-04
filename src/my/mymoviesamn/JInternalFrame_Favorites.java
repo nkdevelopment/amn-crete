@@ -136,7 +136,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("DELETE");
+        jButton3.setText("Διαγραφή");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
