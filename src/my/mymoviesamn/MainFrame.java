@@ -392,8 +392,8 @@ public class MainFrame extends javax.swing.JFrame {
         //επιστροφή του αποτελέσματος σε string
         return sb.toString();
     }
-
-    //Φόρμα Λίστα αγαπημένων
+ 
+//Φόρμα Λίστα αγαπημένων
     private void favoritesForm() {
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();
 
