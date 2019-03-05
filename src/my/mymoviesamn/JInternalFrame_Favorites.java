@@ -6,10 +6,6 @@
 package my.mymoviesamn;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import model.FavoriteList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -27,9 +23,6 @@ import model.Movie;
  * @author amn
  */
 public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
-    
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("myMoviesAMNPU");
-    EntityManager em = emf.createEntityManager();
 
     private List<FavoriteList> mFavoriteList = null;
 
@@ -49,39 +42,37 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 JList list = (JList) listSelectionEvent.getSource();
                 int selections[] = list.getSelectedIndices();
                 int selectionLength = selections.length;
-                
+
                 if (selectionLength == 1) {
                     jButton2.setEnabled(true);
                     jButton3.setEnabled(true);
-                    
+
 //                    String objectName = jList1.getSelectedValue();
 //                    System.out.println(objectName);
-                    
-                    List selected = jList1.getSelectedValuesList();
-                    
-                    Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selected.get(0) + "'");
-                    List results = query.getResultList();
-                    
-                    String stringId = results.get(0).toString(); 
-                    Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
-                   
-                    List<Movie> movies = q1.getResultList();
-                    
-                    DefaultTableModel model = new DefaultTableModel();
-                    model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία", "Περιγραφή"});
-                    
-                    for (Movie movie:movies){
-                        String rating = Double.toString(movie.getRating());
-                        model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
-                    }
-                    jTable1.setModel(model);  
-                    
+                    showFavoritesListMovies();
+
                 } else if (selectionLength > 1) {
                     jButton2.setEnabled(false);
                     jButton3.setEnabled(true);
                 } else {
                     jButton2.setEnabled(false);
                 }
+            }
+
+            private void showFavoritesListMovies() {
+
+                List selected = jList1.getSelectedValuesList();
+                DatabasesConnections m = new DatabasesConnections();
+                List<Movie> movies = m.loadFavoritesListMovies(selected);
+
+                DefaultTableModel model = new DefaultTableModel();
+                model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
+
+                for (Movie movie : movies) {
+                    String rating = Double.toString(movie.getRating());
+                    model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
+                }
+                jTable1.setModel(model);
             }
 
         };
@@ -245,11 +236,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         int result = JOptionPane.showOptionDialog(this, panel, "Επεξεργασία κατηγορίας αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
-        
+
         String fvName = textField.getText();
         if (result == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, textField.getText());
-            
+
             if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
                 updateFavorite(oldName, fvName);
                 return;
@@ -280,7 +271,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
 
     private void saveNewFavorite(String fvName) {
 
@@ -336,12 +326,12 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 listModel.addElement(favorite.getName());
             });
             jList1.setModel(listModel);
-            
+
             // Αδειάζοντας τον πίνακα από τις ταινίες
             DefaultTableModel modelEmpty = new DefaultTableModel();
-            modelEmpty.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία", "Περιγραφή"});
+            modelEmpty.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
             jTable1.setModel(modelEmpty);
-            
+
             jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
         } else {
             return;
