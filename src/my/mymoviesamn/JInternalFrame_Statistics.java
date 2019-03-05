@@ -8,7 +8,6 @@ package my.mymoviesamn;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.table.DefaultTableModel;
@@ -198,7 +197,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         
         /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
         Αγαπημένων Λιστών ταξινομημένες ανά Βαθμολογία*/
-        Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
+        Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id>0 ORDER BY m.rating DESC");
         
         //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 1
         List<Movie> movies = q1.getResultList();
