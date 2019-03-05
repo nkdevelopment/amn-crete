@@ -260,15 +260,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        DatabasesConnections m = new DatabasesConnections();
-
-        m.loadGenreTable();
-
-        if (m.getMovies(this)) {
-            String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
-            String title = "Μήνυμα ενημέρωσης";
-            JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-        }
+        loadTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -392,7 +384,7 @@ public class MainFrame extends javax.swing.JFrame {
         //επιστροφή του αποτελέσματος σε string
         return sb.toString();
     }
- 
+
 //Φόρμα Λίστα αγαπημένων
     private void favoritesForm() {
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();
@@ -431,5 +423,17 @@ public class MainFrame extends javax.swing.JFrame {
         mSearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         jDesktopPane1.add(mSearch);
         mSearch.setVisible(true);
+    }
+
+    private void loadTables() {
+        DatabasesConnections m = new DatabasesConnections();
+
+        m.loadGenreTable();
+
+        if (m.getMovies(this)) {
+            String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
+            String title = "Μήνυμα ενημέρωσης";
+            JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
