@@ -68,10 +68,10 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 DefaultTableModel model = new DefaultTableModel();
                 model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
 
-                for (Movie movie : movies) {
+                movies.forEach((movie) -> {
                     String rating = Double.toString(movie.getRating());
                     model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
-                }
+                });
                 jTable1.setModel(model);
             }
 
@@ -217,7 +217,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
             saveNewFavorite(fvName);
 
-            return;
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -244,7 +243,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
             if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
                 updateFavorite(oldName, fvName);
-                return;
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -335,7 +333,6 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
             jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
         } else {
-            return;
         }
     }
 
