@@ -6,15 +6,21 @@
 package my.mymoviesamn;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
@@ -26,6 +32,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private EntityManagerFactory emf; // Το EntityManagerFactory
     public static EntityManager em; // Ο EntityManager
+    
+    private JDesktopPane jdpDesktop;
+    private static int openFrameCount = 0;
+    private BufferedImage img;
+//    private ImageIcon img;
 
 //    public static String myIcon = "themoviesdb_logo.jpg";
     /**
@@ -33,6 +44,19 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
+        
+       try {
+//            img = ImageIO.read(new URL("http://images1.wikia.nocookie.net/__cb20120817224359/villains/images/6/6a/Nine-Tailed_Fox_(Naruto).jpg"));
+//            img = ImageIO.read(new File("/Images/back.jpg"));
+            img = ImageIO.read(getClass().getResource("/Images/filmtransparent.png"));
+
+//img = new ImageIcon(ImageIO.read(MainFrame.class.getResource("/Images/back.jpg")));
+
+    
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
@@ -46,7 +70,24 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.white);
         jLabel2.setForeground(java.awt.Color.white);
         jLabel3.setForeground(java.awt.Color.white);
+        
+       
+        // A specialized layered pane to be used with JInternalFrames
+//        jdpDesktop = new JDesktopPane() {
+//            @Override
+//            protected void paintComponent(Graphics grphcs) {
+//                super.paintComponent(grphcs);
+//                grphcs.drawImage(img, 0, 0, null);
+//            }
+//
+//            @Override
+//            public Dimension getPreferredSize() {
+//                return new Dimension(img.getWidth(), img.getHeight());
+//            }
+//        };
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +101,18 @@ public class MainFrame extends javax.swing.JFrame {
         myMoviesAMNPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
         movieQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
         movieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(movieQuery.getResultList());
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDesktopPane1 = new javax.swing.JDesktopPane(){
+            @Override
+            protected void paintComponent(Graphics grphcs) {
+                super.paintComponent(grphcs);
+                grphcs.drawImage(img, 0, 0, null);
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(img.getWidth(), img.getHeight());
+            }
+        };
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -82,7 +134,10 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("myMovies");
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/Images/movies.png")));
+        setPreferredSize(new java.awt.Dimension(1100, 750));
+        setResizable(false);
 
+        jButton4.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton4.setText("ΑΝΑΚΤΗΣΗ ΚΑΙ ΑΠΟΘΗΚΕΥΣΗ ΔΕΔΟΜΕΝΩΝ ΤΑΙΝΙΩΝ");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton5.setText("ΑΝΑΖΗΤΗΣΗ ΤΑΙΝΙΩΝ");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +154,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton6.setText("ΔΙΑΧΕΙΡΙΣΗ ΛΙΣΤΩΝ ΑΓΑΠΗΜΕΝΩΝ ΤΑΙΝΙΩΝ");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +162,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton7.setText("ΣΤΑΤΙΣΤΙΚΑ");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +170,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jButton8.setForeground(java.awt.Color.red);
         jButton8.setText("ΕΞΟΔΟΣ");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
