@@ -8,6 +8,7 @@ package my.mymoviesamn;
 import java.awt.Window;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.persistence.Query;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -342,8 +343,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
-            "Βαθμολογία", "Ημερομηνία Κυκλοφορίας", "Είδος", "Λίστα"});
-        for (Movie m : movieList) {
+            "Βαθμολογία", "Περίληψη"});
+        
+        movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
             String dateText = "";
@@ -355,8 +357,8 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getReleaseDate(), genreText, favoriteListText});
-        }
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating()});
+        });
 
         jTable2.setModel(model);
     }//GEN-LAST:event_jButton1ActionPerformed

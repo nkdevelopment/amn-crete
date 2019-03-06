@@ -224,11 +224,12 @@ public class DatabasesConnections {
 //            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         Connection conn = null;
+        int maxpages=20;
 
-        for (int m = 1; m <= 20; m++) {
+        for (int m = 1; m <= maxpages; m++) {
 
             // ενημέρωση progressBar downloading
-            progressBar.setValue(m * 5);
+            progressBar.setValue((100/maxpages)*m);
             progressBar.update(progressBar.getGraphics());
 
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
@@ -275,7 +276,7 @@ public class DatabasesConnections {
                         e.printStackTrace();
                     }
                     item.setReleaseDate(releaseDate);
-                    item.setRating(aMovieObject.getDouble("vote_average"));
+                    item.setRating(aMovieObject.getFloat("vote_average"));
                     String s = aMovieObject.getString("overview");
                     if (s.length() >= 500) {
                         s = s.substring(0, 499);

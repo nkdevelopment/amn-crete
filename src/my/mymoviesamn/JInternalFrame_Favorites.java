@@ -69,7 +69,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
 
                 for (Movie movie : movies) {
-                    String rating = Double.toString(movie.getRating());
+                    String rating = Float.toString(movie.getRating());
                     model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
                 }
                 jTable1.setModel(model);
