@@ -20,9 +20,10 @@ import model.Movie;
  */
 public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
 //Δημιουργία Entity Manager Factory & Entity Manager (Διαχειριστή Οντοτήτων)
+
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("myMoviesAMNPU");
     EntityManager em = emf.createEntityManager();
-    
+
     /**
      * Creates new form JInternalFrame_Statistics
      */
@@ -194,34 +195,34 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         στήλη (Όνομα Ταινίας) και τόσες γραμμές όσες οι λίστες αγαπημένων που 
         έχουν οριστεί στη ΒΔ. Αυτός θα περιέχει τις ταινίες με την υψηλότερη
         βαθμολογία από την κάθε λίστα αγαπημένων.*/
-        
-        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
+
+ /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
         Αγαπημένων Λιστών ταξινομημένες ανά Βαθμολογία*/
         Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id>0 ORDER BY m.rating DESC");
-        
+
         //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 1
         List<Movie> movies = q1.getResultList();
-        
+
         //Δημιουργία νέου ερωτήματος (query) που μου επιστρέφει τις Λίστες Αγαπημένων
         Query q2 = em.createQuery("SELECT f FROM FavoriteList f");
-        
+
         //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 2
         List<FavoriteList> flist = q2.getResultList();
-        
+
         /*Σετάρω έναν βοηθητικό πίνακα (model) που να περιέχει δύο στήλες με
         πεδία Τίτλος Ταινίας & Βαθμολογία*/
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας","Βαθμολογία"});
-        
+        model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία"});
+
         //Διαπερνάω τη Λίστα 2 των Αγαπημένων Λιστών 
-        for (int i=1; i<flist.size()+1;i++){
+        for (int i = 1; i < flist.size() + 1; i++) {
             //Με ένα for διαβάζω τη Λίστα 1 και την περνάω στον βοηθητικό πίνακα
-            for (Movie movie:movies){
-            //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
-            if (i== movie.getFavoriteListId().getId()){
-                String rating = Double.toString(movie.getRating());
-                model.addRow(new String[]{movie.getTitle(),rating});
-                break;
+            for (Movie movie : movies) {
+                //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
+                if (i == movie.getFavoriteListId().getId()) {
+                    String rating = Double.toString(movie.getRating());
+                    model.addRow(new String[]{movie.getTitle(), rating});
+                    break;
                 }
             }
         }
@@ -233,8 +234,8 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         /* Περιγραφή: Όταν πατηθεί, θα εμφανίζεται ένας πίνακας (jTable1) με 2
         στήλες και 10 γραμμές, που θα περιέχει τις 10 ταινίες με την υψηλότερη
         βαθμολογία ανεξαρτήτου είδους ταινίας.*/
-        
-        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
+
+ /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
         ανά Βαθμολογία*/
         Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
         //Εμφάνιση μόνο των πρώτων 10 Ταινιών
@@ -243,16 +244,16 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         List<Movie> movies = q1.getResultList();
         //Σετάρω έναν βοηθητικό πίνακα (model) όπως ζητείται από την εκφώνηση 
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Ταινία","Βαθμολογία"});
+        model.setColumnIdentifiers(new String[]{"Ταινία", "Βαθμολογία"});
         //Με ένα for διαβάζω τη Λίστα και την περνάω στον βοηθητικό πίνακα
         movies.forEach((movie) -> {
             //αφού μετατρέψω τη βαθμολογία από double σε string
             String rating = Double.toString(movie.getRating());
             //Προσθέτω μία μία γραμμή της Λίστας στον Πίνακα
-            model.addRow(new String[]{movie.getTitle(),rating});
+            model.addRow(new String[]{movie.getTitle(), rating});
         });
         //Κι ενημερώνω το jTable1 1
-        jTable1.setModel(model);   
+        jTable1.setModel(model);
     }//GEN-LAST:event_jButton1ActionPerformed
 //ΚΟΥΜΠΙ ΕΞΟΔΟΥ - ΕΠΙΣΤΡΟΦΗΣ
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
