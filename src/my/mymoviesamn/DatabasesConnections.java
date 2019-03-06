@@ -1,15 +1,12 @@
 package my.mymoviesamn;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,17 +18,9 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.concurrent.Task;
-import javax.accessibility.AccessibleContext;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
-import javax.swing.ProgressMonitor;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import model.FavoriteList;
@@ -119,17 +108,19 @@ public class DatabasesConnections {
                 em.getTransaction().begin();
             }
 
-            // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List
-            Query queryMovies = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(0) + "'");
-            List moviesList = queryMovies.getResultList();
-            String stringId = moviesList.get(0).toString();
-            Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = " + stringId);
-            List<Movie> moviesToChange = q1.getResultList();
-            for (Movie movie : moviesToChange) {
-                movie.setFavoriteListId(null);
-            }
-
             for (int i = 0; i < selectedNames.size(); i++) {
+                
+                 // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List (i)
+                Query queryMovies = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
+                List moviesList = queryMovies.getResultList();
+                String stringId = moviesList.get(0).toString();
+                Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = " + stringId);
+                List<Movie> moviesToChange = q1.getResultList();
+                for (Movie movie : moviesToChange) {
+                    movie.setFavoriteListId(null);
+                }
+                
+                // Τώρα Διαγραφή Λίστας Αγαπημένων
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
                 List results = query.getResultList();
                 FavoriteList fl = em.find(FavoriteList.class, results.get(0));
@@ -310,6 +301,20 @@ public class DatabasesConnections {
         f.dispose();
 
         return true;
+    }
+
+    // Η μέθοδος επιστρέφει τις ταινίες που περιέχει η επιλεγμένη Λίστα αγαπημένων
+    List<Movie> loadFavoritesListMovies(List selected) {
+        
+        // εύρεση του id της λίστας αγαπημένων που έχουμε επιλέξει
+        Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selected.get(0) + "'");
+        List results = query.getResultList();
+
+        // Δημιουργία query που επιστρέφει όλες τις ταινίες που έχουν favorite_list_id το παραπανω id
+        String stringId = results.get(0).toString(); 
+        Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
+        
+        return q1.getResultList();
     }
 
 }
