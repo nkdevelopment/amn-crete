@@ -164,6 +164,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trebuchet MS" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x391;&#x39d;&#x391;&#x39a;&#x3a4;&#x397;&#x3a3;&#x397; &#x39a;&#x391;&#x399; &#x391;&#x3a0;&#x39f;&#x398;&#x397;&#x39a;&#x395;&#x3a5;&#x3a3;&#x397; &#x394;&#x395;&#x394;&#x39f;&#x39c;&#x395;&#x39d;&#x3a9;&#x39d; &#x3a4;&#x391;&#x399;&#x39d;&#x399;&#x3a9;&#x39d;"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Default Cursor"/>
@@ -175,6 +178,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trebuchet MS" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x391;&#x39d;&#x391;&#x396;&#x397;&#x3a4;&#x397;&#x3a3;&#x397; &#x3a4;&#x391;&#x399;&#x39d;&#x399;&#x3a9;&#x39d;"/>
           </Properties>
           <Events>
@@ -183,6 +189,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton6">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trebuchet MS" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x394;&#x399;&#x391;&#x3a7;&#x395;&#x399;&#x3a1;&#x399;&#x3a3;&#x397; &#x39b;&#x399;&#x3a3;&#x3a4;&#x3a9;&#x39d; &#x391;&#x393;&#x391;&#x3a0;&#x397;&#x39c;&#x395;&#x39d;&#x3a9;&#x39d; &#x3a4;&#x391;&#x399;&#x39d;&#x399;&#x3a9;&#x39d;"/>
           </Properties>
           <Events>
@@ -191,6 +200,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trebuchet MS" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x3a3;&#x3a4;&#x391;&#x3a4;&#x399;&#x3a3;&#x3a4;&#x399;&#x39a;&#x391;"/>
           </Properties>
           <Events>
@@ -199,6 +211,12 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton8">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Trebuchet MS" size="12" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x395;&#x39e;&#x39f;&#x394;&#x39f;&#x3a3;"/>
           </Properties>
           <Events>
