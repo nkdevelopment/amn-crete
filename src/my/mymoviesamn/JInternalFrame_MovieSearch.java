@@ -344,7 +344,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
             "Βαθμολογία", "Περίληψη"});
-        
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
@@ -357,7 +356,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating()});
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(),m.getOverview()});
         });
 
         jTable2.setModel(model);
