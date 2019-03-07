@@ -196,7 +196,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         έχουν οριστεί στη ΒΔ. Αυτός θα περιέχει τις ταινίες με την υψηλότερη
         βαθμολογία από την κάθε λίστα αγαπημένων.*/
 
- /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
+        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
         Αγαπημένων Λιστών ταξινομημένες ανά Βαθμολογία*/
         Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id>0 ORDER BY m.rating DESC");
 
