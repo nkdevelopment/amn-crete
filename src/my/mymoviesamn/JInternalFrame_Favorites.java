@@ -35,7 +35,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jButton2.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Επεξεργασίας
         jButton3.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Διαγραφής
 
-        // Ελέγχω αν έχω κάνει μία ή περισσότερες επιλογές στην jList και ενεργοποιώ/απενεργοποιώ το κουμπί της Επεξεργασίας
+        // Ελέγχω αν έχουν γίνει μία ή περισσότερες επιλογές στην jList
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -43,14 +43,14 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 int selections[] = list.getSelectedIndices();
                 int selectionLength = selections.length;
 
+                // Εάν έχω κάνει μία (1) επιλογή
                 if (selectionLength == 1) {
                     jButton2.setEnabled(true);
                     jButton3.setEnabled(true);
 
-//                    String objectName = jList1.getSelectedValue();
-//                    System.out.println(objectName);
-                    showFavoritesListMovies();
+                    showFavoritesListMovies(); // Δείξε τις ταινίες της συγκεκριμένης Favorite List
 
+                    // Εάν έχω κάνει περισσότερες από μία επιλογές
                 } else if (selectionLength > 1) {
                     jButton2.setEnabled(false);
                     jButton3.setEnabled(true);
@@ -59,6 +59,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 }
             }
 
+            // Δείξε τις ταινίες της συγκεκριμένης Favorite List
             private void showFavoritesListMovies() {
 
                 List selected = jList1.getSelectedValuesList();
