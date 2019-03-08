@@ -261,7 +261,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         στήλες και 10 γραμμές, που θα περιέχει τις 10 ταινίες με την υψηλότερη
         βαθμολογία ανεξαρτήτου είδους ταινίας.*/
 
- /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
+        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
         ανά Βαθμολογία*/
         Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
         //Εμφάνιση μόνο των πρώτων 10 Ταινιών
