@@ -215,17 +215,43 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία"});
 
         //Διαπερνάω τη Λίστα 2 των Αγαπημένων Λιστών 
-        for (int i = 1; i < flist.size() + 1; i++) {
-            //Με ένα for διαβάζω τη Λίστα 1 και την περνάω στον βοηθητικό πίνακα
-            for (Movie movie:movies){
-            //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
-            if (i== movie.getFavoriteListId().getId()){
-                String rating = Float.toString(movie.getRating());
-                model.addRow(new String[]{movie.getTitle(),rating});
-                break;
-                }
+//        for (int i = 1; i < flist.size() + 1; i++) {
+//            //Με ένα for διαβάζω τη Λίστα 1 και την περνάω στον βοηθητικό πίνακα
+//            for (Movie movie:movies){
+//            //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
+//            if (i== movie.getFavoriteListId().getId()){
+//                String rating = Float.toString(movie.getRating());
+//                model.addRow(new String[]{movie.getTitle(),rating});
+//                break;
+//                }
+//            }
+//        }
+        
+        //
+        // Από Νεκτάριο K.
+        //
+        // Εκτύπωση μεγέθους λίστας Favorites
+        System.out.println("flist size = "+flist.size());
+        
+        for (int i = 0; i < flist.size(); i++) {
+            
+            // Βρίσκω ID της Λίστας αγαπημένων
+            System.out.println("flist id = "+flist.get(i).getId());
+
+            // Βρίσκω όλες οι ταινίες με το παραπάνω ID και σετάρω DESC
+            Query q3 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id ="+flist.get(i).getId()+" ORDER BY m.rating DESC");
+
+            // Τοποθετώ τα αποτελέσματα του q3 σε μια λίστα <Movies>
+            List<Movie> moviesF = q3.getResultList();
+            
+            // Εάν υπάρχουν ταινίες με αυτό το ID τότε..
+            if(moviesF.size()>0) {
+                // Το μηδέν είναι για να διαβάζω την 1η ταινία της λίστας (με το υψηλότερο rating
+                String ratingF = Float.toString(moviesF.get(0).getRating());
+                model.addRow(new String[]{moviesF.get(0).getTitle(),ratingF});
             }
         }
+        
         //Κι ενημερώνω το jTable2
         jTable2.setModel(model);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -235,7 +261,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         στήλες και 10 γραμμές, που θα περιέχει τις 10 ταινίες με την υψηλότερη
         βαθμολογία ανεξαρτήτου είδους ταινίας.*/
 
- /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
+        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες ταξινομημένες
         ανά Βαθμολογία*/
         Query q1 = em.createQuery("SELECT m FROM Movie m ORDER BY m.rating DESC");
         //Εμφάνιση μόνο των πρώτων 10 Ταινιών
