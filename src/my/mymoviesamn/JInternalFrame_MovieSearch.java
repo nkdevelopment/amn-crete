@@ -153,6 +153,12 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, cbFavoriteLists);
         bindingGroup.addBinding(jComboBoxBinding);
 
+        cbFavoriteLists.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFavoriteListsActionPerformed(evt);
+            }
+        });
+
         lblFavoriteLists.setLabelFor(cbFavoriteLists);
         lblFavoriteLists.setText("Λίστες Αγαπημένων");
 
@@ -293,7 +299,10 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRemoveFromListActionPerformed
 
     private void btnAddToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToListActionPerformed
-        // TODO add your handling code here:
+        addMovieToFavoritesList();
+    }//GEN-LAST:event_btnAddToListActionPerformed
+
+    private void addMovieToFavoritesList() {
         if (tblMovieList.getSelectedRowCount() == 0) {
             return;
         }
@@ -304,18 +313,20 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         System.out.println(favList.getId());
         for (int row : tblMovieList.getSelectedRows()) {
             int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
-
+            
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
             }
-
+            
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
             m.setFavoriteListId(favList);
-
+            
+            tblMovieList.getModel().setValueAt(favList, row, 5);
+            
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-    }//GEN-LAST:event_btnAddToListActionPerformed
+    }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         cbGenre.setSelectedIndex(-1);
@@ -328,6 +339,10 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        doSearch();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void doSearch() {
         String queryText = "SELECT m FROM Movie m";
         boolean putWhere = false;
         if (cbGenre.getSelectedIndex() >= 0) {
@@ -345,7 +360,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
         List<Movie> movieList = movieQuery.getResultList();
         DefaultTableModel model = new DefaultTableModel();
-
+        
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
@@ -364,20 +379,24 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             }
             model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getOverview(), m.getGenreId(), m.getFavoriteListId()});
         });
-
+        
         tblMovieList.setModel(model);
-
+        
         tblMovieList.getColumnModel().getColumn(1).setPreferredWidth(300);
         tblMovieList.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblMovieList.getColumnModel().getColumn(3).setPreferredWidth(1000);
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("ID"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Genre"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Favorite_List_ID"));
-    }//GEN-LAST:event_btnSearchActionPerformed
+    }
 
     private void txtYearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtYearKeyReleased
         doActivateSearchButton();
     }//GEN-LAST:event_txtYearKeyReleased
+
+    private void cbFavoriteListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoriteListsActionPerformed
+        addMovieToFavoritesList();
+    }//GEN-LAST:event_cbFavoriteListsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
