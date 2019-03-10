@@ -267,7 +267,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         cbGenre.setSelectedIndex(-1);
         cbFavoriteLists.setSelectedIndex(-1);
-//        btnSearch.setEnabled(false);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void cbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenreActionPerformed

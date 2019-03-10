@@ -193,7 +193,7 @@ public class DatabasesConnections {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+// Διαγραφή της Βάσης Δεδομένων
     public void clearDatabase() {
         Query deleteFavorites = em.createQuery("DELETE FROM FavoriteList");
         Query deleteMovies = em.createQuery("DELETE FROM Movie");
