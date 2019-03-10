@@ -213,25 +213,6 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         πεδία Τίτλος Ταινίας & Βαθμολογία*/
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία"});
-
-        //Διαπερνάω τη Λίστα 2 των Αγαπημένων Λιστών 
-//        for (int i = 1; i < flist.size() + 1; i++) {
-//            //Με ένα for διαβάζω τη Λίστα 1 και την περνάω στον βοηθητικό πίνακα
-//            for (Movie movie:movies){
-//            //Βρίσκω από την κάθε Αγαπημένη Λίστα την Ταινία με την υψηλότερη Βαθμολογία
-//            if (i== movie.getFavoriteListId().getId()){
-//                String rating = Float.toString(movie.getRating());
-//                model.addRow(new String[]{movie.getTitle(),rating});
-//                break;
-//                }
-//            }
-//        }
-        
-        //
-        // Από Νεκτάριο K.
-        //
-        // Εκτύπωση μεγέθους λίστας Favorites
-        System.out.println("flist size = "+flist.size());
         
         for (int i = 0; i < flist.size(); i++) {
             
