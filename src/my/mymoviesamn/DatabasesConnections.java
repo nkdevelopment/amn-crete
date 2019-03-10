@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,8 +108,8 @@ public class DatabasesConnections {
             }
 
             for (int i = 0; i < selectedNames.size(); i++) {
-                
-                 // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List (i)
+
+                // Αποσυσχέτιση ταινιών από τη συγκεκριμένη Favorite List (i)
                 Query queryMovies = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
                 List moviesList = queryMovies.getResultList();
                 String stringId = moviesList.get(0).toString();
@@ -119,7 +118,7 @@ public class DatabasesConnections {
                 for (Movie movie : moviesToChange) {
                     movie.setFavoriteListId(null);
                 }
-                
+
                 // Τώρα Διαγραφή Λίστας Αγαπημένων
                 Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selectedNames.get(i) + "'");
                 List results = query.getResultList();
@@ -243,12 +242,12 @@ public class DatabasesConnections {
 //        } catch (JSONException ex) {
 //            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        int maxpages=10;
+        int maxpages = 10;
 
         for (int m = 1; m <= maxpages; m++) {
 
             // ενημέρωση progressBar downloading
-            progressBar.setValue((100/maxpages)*m);
+            progressBar.setValue((100 / maxpages) * m);
             progressBar.update(progressBar.getGraphics());
 
             String resultPerPage = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el" + "&page=" + m);
@@ -325,15 +324,15 @@ public class DatabasesConnections {
 
     // Η μέθοδος επιστρέφει τις ταινίες που περιέχει η επιλεγμένη Λίστα αγαπημένων
     List<Movie> loadFavoritesListMovies(List selected) {
-        
+
         // εύρεση του id της λίστας αγαπημένων που έχουμε επιλέξει
         Query query = em.createNativeQuery("SELECT ID FROM FAVORITE_LIST WHERE NAME= '" + selected.get(0) + "'");
         List results = query.getResultList();
 
         // Δημιουργία query που επιστρέφει όλες τις ταινίες που έχουν favorite_list_id το παραπανω id
-        String stringId = results.get(0).toString(); 
-        Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = "+stringId);
-        
+        String stringId = results.get(0).toString();
+        Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id = " + stringId);
+
         return q1.getResultList();
     }
 

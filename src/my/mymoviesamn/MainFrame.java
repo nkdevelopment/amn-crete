@@ -46,16 +46,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
-        
-       try {
+
+        try {
 //            img = ImageIO.read(new URL("http://images1.wikia.nocookie.net/__cb20120817224359/villains/images/6/6a/Nine-Tailed_Fox_(Naruto).jpg"));
 //            img = ImageIO.read(new File("/Images/back.jpg"));
             img = ImageIO.read(getClass().getResource("/Images/filmtransparent.png"));
 
 //img = new ImageIcon(ImageIO.read(MainFrame.class.getResource("/Images/back.jpg")));
-
-    
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -72,8 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.white);
         jLabel2.setForeground(java.awt.Color.white);
         jLabel3.setForeground(java.awt.Color.white);
-        
-       
+
         // A specialized layered pane to be used with JInternalFrames
 //        jdpDesktop = new JDesktopPane() {
 //            @Override
@@ -88,8 +84,6 @@ public class MainFrame extends javax.swing.JFrame {
 //            }
 //        };
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
