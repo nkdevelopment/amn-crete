@@ -58,6 +58,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         btnRemoveFromList = new javax.swing.JButton();
         btnAddToList = new javax.swing.JButton();
         chkSortByRating = new javax.swing.JCheckBox();
+        lblWarnCriteria = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         setClosable(true);
@@ -116,10 +117,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         txtYear.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txtYear.setName("Έτος Κυκλοφορίας"); // NOI18N
-        txtYear.setOpaque(false);
-        txtYear.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtYearFocusLost(evt);
+        txtYear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtYearKeyReleased(evt);
             }
         });
 
@@ -136,15 +136,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         scrollMovieList.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         tblMovieList.setAutoCreateRowSorter(true);
-        tblMovieList.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        tblMovieList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
         tblMovieList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblMovieList.setFillsViewportHeight(true);
         tblMovieList.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
@@ -185,44 +176,47 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblCriteria)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(lblFavoriteLists)
-                                .addGap(20, 20, 20)
-                                .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAddToList)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRemoveFromList)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(chkSortByRating))
+                        .addComponent(lblFavoriteLists)
+                        .addGap(20, 20, 20)
+                        .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddToList)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRemoveFromList)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chkSortByRating))
+                    .addComponent(scrollMovieList)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblGenre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
-                                .addComponent(lblYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCriteria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblWarnCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                                 .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(97, 97, 97)
                                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnClear)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
-                                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(scrollMovieList))
-                        .addGap(54, 54, 54))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(54, 54, 54))
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addComponent(lblCriteria)
-                .addGap(11, 11, 11)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCriteria)
+                    .addComponent(lblWarnCriteria))
+                .addGap(17, 17, 17)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblYear)
                     .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,7 +234,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
                     .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFavoriteLists)
                     .addComponent(chkSortByRating))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -376,14 +370,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("ID"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Genre"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Favorite_List_ID"));
-
-
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void txtYearFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtYearFocusLost
-        // TODO add your handling code here:
+    private void txtYearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtYearKeyReleased
         doActivateSearchButton();
-    }//GEN-LAST:event_txtYearFocusLost
+    }//GEN-LAST:event_txtYearKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -402,6 +393,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCriteria;
     private javax.swing.JLabel lblFavoriteLists;
     private javax.swing.JLabel lblGenre;
+    private javax.swing.JLabel lblWarnCriteria;
     private javax.swing.JLabel lblYear;
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
     private javax.swing.JPanel pnlMain;
@@ -412,7 +404,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void doActivateSearchButton() {
-        btnSearch.setEnabled(areCriteriaOk());
+        final boolean criteriaOk = areCriteriaOk();
+        btnSearch.setEnabled(criteriaOk);
+        lblWarnCriteria.setText(criteriaOk ? "" : "Συμπληρώστε σωστές τιμές για το έτος και το είδος της ταινίας");
     }
 
     private boolean areCriteriaOk() throws NumberFormatException {
