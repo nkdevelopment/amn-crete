@@ -229,6 +229,9 @@
             <Property name="name" type="java.lang.String" value="&#x388;&#x3c4;&#x3bf;&#x3c2; &#x39a;&#x3c5;&#x3ba;&#x3bb;&#x3bf;&#x3c6;&#x3bf;&#x3c1;&#x3af;&#x3b1;&#x3c2;" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtYearFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCriteria">
           <Properties>

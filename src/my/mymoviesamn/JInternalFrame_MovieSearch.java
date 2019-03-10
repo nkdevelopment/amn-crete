@@ -116,6 +116,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         txtYear.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txtYear.setName("Έτος Κυκλοφορίας"); // NOI18N
         txtYear.setOpaque(false);
+        txtYear.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtYearFocusLost(evt);
+            }
+        });
 
         lblCriteria.setText("Κριτήρια Αναζήτησης");
 
@@ -261,11 +266,12 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         cbGenre.setSelectedIndex(-1);
         cbFavoriteLists.setSelectedIndex(-1);
-        // jButton1.setEnabled(false);
+//        btnSearch.setEnabled(false);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void cbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenreActionPerformed
         // TODO add your handling code here:
+        doActivateSearchButton();
     }//GEN-LAST:event_cbGenreActionPerformed
 
     private void btnRemoveFromListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFromListActionPerformed
@@ -317,6 +323,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         cbGenre.setSelectedIndex(-1);
         txtYear.setText("");
+        doActivateSearchButton();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
@@ -373,6 +380,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void txtYearFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtYearFocusLost
+        // TODO add your handling code here:
+        doActivateSearchButton();
+    }//GEN-LAST:event_txtYearFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToList;
@@ -398,4 +410,19 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtYear;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    private void doActivateSearchButton() {
+        String yearText = txtYear.getText();
+        boolean isEnabled = true;
+        if (cbGenre.getSelectedIndex() < 0) {
+            isEnabled = false;
+        }
+        if (4 != yearText.length()) {
+            isEnabled = false;
+        }
+        //TODO: Check if 4 digits
+        //TODO: Check if year in proper range
+        btnSearch.setEnabled(isEnabled);
+    }
+
 }
