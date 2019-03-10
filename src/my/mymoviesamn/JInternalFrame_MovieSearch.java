@@ -309,6 +309,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         if (tblMovieList.getSelectedRowCount() == 0) {
             return;
         }
+        if (cbFavoriteLists.getSelectedIndex()<0) {
+            return;
+        }
         FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem();
         System.out.println(favList.getId());
         for (int row : tblMovieList.getSelectedRows()) {
