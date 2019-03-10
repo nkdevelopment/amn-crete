@@ -195,6 +195,26 @@ public class DatabasesConnections {
         }
     }
 
+    public void clearDatabase() {
+        Query deleteFavorites = em.createQuery("DELETE FROM FavoriteList");
+        Query deleteMovies = em.createQuery("DELETE FROM Movie");
+        Query deleteGenres = em.createQuery("DELETE FROM Genre");
+
+        if (!em.getTransaction().isActive()) {
+            em.getTransaction().begin();
+        }
+
+        deleteFavorites.executeUpdate();
+        System.out.println("Favorite list table deleted");
+        deleteMovies.executeUpdate();
+        System.out.println("Movie table deleted");
+        deleteGenres.executeUpdate();
+        System.out.println("Genres table deleted");
+
+        em.flush();
+        em.getTransaction().commit();
+    }
+
     // Λήψη δεδομένων ταινιών και αποθήκευση στον πίνακα MOVIES
     public boolean getMovies(MainFrame aThis) {
 

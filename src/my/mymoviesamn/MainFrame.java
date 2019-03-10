@@ -299,27 +299,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-     
-      
-        try {
-            Connection conn;
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/myMoviesDB", "pli24", "pli24");
-            Statement stmt = conn.createStatement();
-            String query2 =("DELETE FROM FAVORITE_LIST ");
-            String query3 =("DELETE FROM  MOVIE ");
-            
-            stmt.executeUpdate(query3);
-           System.out.println("Movie table deleted");
-            stmt.executeUpdate(query2); 
-            System.out.println("Favorite list table deleted");
-          
-         
-            conn.close();
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-          loadTables();
+
+        loadTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -479,9 +460,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void loadTables() {
-         
-        DatabasesConnections m = new DatabasesConnections();
 
+        DatabasesConnections m = new DatabasesConnections();
+        m.clearDatabase();
         m.loadGenreTable();
 
         if (m.getMovies(this)) {
