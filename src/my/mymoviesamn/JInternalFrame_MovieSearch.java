@@ -5,6 +5,7 @@
  */
 package my.mymoviesamn;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
 import javax.swing.table.DefaultTableModel;
@@ -412,17 +413,33 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void doActivateSearchButton() {
-        String yearText = txtYear.getText();
-        boolean isEnabled = true;
-        if (cbGenre.getSelectedIndex() < 0) {
-            isEnabled = false;
-        }
-        if (4 != yearText.length()) {
-            isEnabled = false;
-        }
-        //TODO: Check if 4 digits
-        //TODO: Check if year in proper range
-        btnSearch.setEnabled(isEnabled);
+        btnSearch.setEnabled(areCriteriaOk());
     }
 
+    private boolean areCriteriaOk() throws NumberFormatException {
+        String yearText = txtYear.getText();
+        if (cbGenre.getSelectedIndex() < 0) {
+            return false;
+        }
+        if (4 != yearText.length()) {
+            return false;
+        }
+        //Check if 4 digits
+        for (int i = 0; i < yearText.length(); i++) {
+            char chr = yearText.charAt(i);
+            if (chr < '0' || chr > '9') {
+                return false;
+            }
+        }
+        //Check if year in proper range
+        int yearValue = Integer.parseInt(yearText);
+        if (yearValue < 2000) {
+            return false;
+        }
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        if (yearValue > currentYear) {
+            return false;
+        }
+        return true;
+    }
 }
