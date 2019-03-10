@@ -238,15 +238,18 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             // Βρίσκω ID της Λίστας αγαπημένων
             System.out.println("flist id = "+flist.get(i).getId());
 
+            String myQuery = "SELECT m FROM Movie m WHERE m.favoriteListId.id ="+flist.get(i).getId()+" ORDER BY m.rating DESC";
             // Βρίσκω όλες οι ταινίες με το παραπάνω ID και σετάρω DESC
-            Query q3 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id ="+flist.get(i).getId()+" ORDER BY m.rating DESC");
+            Query q3 = em.createQuery(myQuery);
+            
+//            Query q3 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id ="+flist.get(i).getId()+" ORDER BY m.rating DESC");
 
             // Τοποθετώ τα αποτελέσματα του q3 σε μια λίστα <Movies>
             List<Movie> moviesF = q3.getResultList();
             
             // Εάν υπάρχουν ταινίες με αυτό το ID τότε..
             if(moviesF.size()>0) {
-                // Το μηδέν είναι για να διαβάζω την 1η ταινία της λίστας (με το υψηλότερο rating
+                // Το μηδέν είναι για να διαβάζω την 1η ταινία της λίστας (με το υψηλότερο rating)
                 String ratingF = Float.toString(moviesF.get(0).getRating());
                 model.addRow(new String[]{moviesF.get(0).getTitle(),ratingF});
             }
@@ -281,6 +284,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         //Κι ενημερώνω το jTable1 1
         jTable1.setModel(model);
     }//GEN-LAST:event_jButton1ActionPerformed
+
 //ΚΟΥΜΠΙ ΕΞΟΔΟΥ - ΕΠΙΣΤΡΟΦΗΣ
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         this.dispose();
