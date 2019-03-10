@@ -8,6 +8,7 @@ package my.mymoviesamn;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -292,14 +293,42 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
             m.setFavoriteListId(null);
 
+            tblMovieList.getModel().setValueAt(null, row, 5);
+            cbFavoriteLists.setSelectedIndex(-1);
+
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-
+        changeSelectedFavoriteList();
     }//GEN-LAST:event_btnRemoveFromListActionPerformed
 
     private void btnAddToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToListActionPerformed
-        addMovieToFavoritesList();
+        if (tblMovieList.getSelectedRowCount() == 0) {
+            return;
+        }
+
+        final Object[] favoriteLists = favoriteListList.toArray();
+        FavoriteList selectedFavoritelist = (FavoriteList) JOptionPane.showInputDialog(this, "Επιλογή λίστας",
+                "The Choice of a Lifetime", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
+        if (selectedFavoritelist == null) {
+            return;
+        }
+        for (int row : tblMovieList.getSelectedRows()) {
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
+
+            if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
+                myMoviesAMNPUEntityManager.getTransaction().begin();
+            }
+
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
+            m.setFavoriteListId(selectedFavoritelist);
+
+            tblMovieList.getModel().setValueAt(selectedFavoritelist, row, 5);
+
+            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.getTransaction().commit();
+        }
+        changeSelectedFavoriteList();
     }//GEN-LAST:event_btnAddToListActionPerformed
 
     private void addMovieToFavoritesList() {
@@ -313,19 +342,20 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         System.out.println(favList.getId());
         for (int row : tblMovieList.getSelectedRows()) {
             int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
-            
+
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
             }
-            
+
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
             m.setFavoriteListId(favList);
-            
+
             tblMovieList.getModel().setValueAt(favList, row, 5);
-            
+
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
+        changeSelectedFavoriteList();
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -360,7 +390,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
         List<Movie> movieList = movieQuery.getResultList();
         DefaultTableModel model = new DefaultTableModel();
-        
+
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
@@ -379,9 +409,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             }
             model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getOverview(), m.getGenreId(), m.getFavoriteListId()});
         });
-        
+
         tblMovieList.setModel(model);
-        
+
         tblMovieList.getColumnModel().getColumn(1).setPreferredWidth(300);
         tblMovieList.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblMovieList.getColumnModel().getColumn(3).setPreferredWidth(1000);
@@ -464,6 +494,8 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             favoriteList = (FavoriteList) tblMovieList.getModel().getValueAt(row, 5);
         }
         cbFavoriteLists.setSelectedItem(favoriteList);
+        cbFavoriteLists.setVisible(favoriteList != null);
+        btnAddToList.setVisible(favoriteList == null);
     }
 
     private class RowListener implements ListSelectionListener {
