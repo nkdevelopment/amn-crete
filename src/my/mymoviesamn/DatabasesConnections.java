@@ -203,10 +203,10 @@ public class DatabasesConnections {
             em.getTransaction().begin();
         }
 
-        deleteFavorites.executeUpdate();
-        System.out.println("Favorite list table deleted");
         deleteMovies.executeUpdate();
         System.out.println("Movie table deleted");
+        deleteFavorites.executeUpdate();
+        System.out.println("Favorite list table deleted");
         deleteGenres.executeUpdate();
         System.out.println("Genres table deleted");
 
