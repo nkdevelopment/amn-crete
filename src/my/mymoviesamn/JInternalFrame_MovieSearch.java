@@ -5,22 +5,16 @@
  */
 package my.mymoviesamn;
 
-import java.awt.Window;
-import java.util.HashSet;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.persistence.Query;
-import javax.swing.SwingUtilities;
-import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.DefaultTableColumnModel;
 import model.FavoriteList;
 import model.Genre;
 import model.Movie;
 
 /**
  *
- * @author Manos
+ * @author AMN
  */
 public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
@@ -29,7 +23,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
      */
     public JInternalFrame_MovieSearch() {
         initComponents();
-        jComboBox1.setSelectedIndex(-1);
+
     }
 
     /**
@@ -140,6 +134,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        jTable2.setAutoCreateRowSorter(true);
         jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,6 +158,12 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
+
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setLabelFor(jComboBox2);
         jLabel5.setText("Λίστες Αγαπημένων");
@@ -269,7 +270,9 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        // TODO add your handling code here:
+        jComboBox1.setSelectedIndex(-1);
+        jComboBox2.setSelectedIndex(-1);
+        jButton1.setEnabled(false);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -354,7 +357,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
-            "Βαθμολογία", "Περίληψη"});
+            "Βαθμολογία", "Περίληψη","Genre", "Favorite_List_ID"});
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
@@ -367,16 +370,28 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(),m.getOverview()});
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(),m.getOverview(),m.getGenreId(),m.getFavoriteListId()});
         });
 
         jTable2.setModel(model);
-        jTable2.getColumnModel().getColumn(0).setPreferredWidth(0);
+        
+        
         jTable2.getColumnModel().getColumn(1).setPreferredWidth(300);
         jTable2.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable2.getColumnModel().getColumn(3).setPreferredWidth(1000);
+        jTable2.getColumnModel().removeColumn(jTable2.getColumn("ID"));
+        jTable2.getColumnModel().removeColumn(jTable2.getColumn("Genre"));
+        jTable2.getColumnModel().removeColumn(jTable2.getColumn("Favorite_List_ID"));
+        
+       
+       
+       
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
