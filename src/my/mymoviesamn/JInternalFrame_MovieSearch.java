@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import javax.persistence.Query;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableColumnModel;
 import model.FavoriteList;
 import model.Genre;
 import model.Movie;
@@ -139,6 +141,15 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable2.setFillsViewportHeight(true);
         jTable2.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
         jScrollPane2.setViewportView(jTable2);
@@ -360,6 +371,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         });
 
         jTable2.setModel(model);
+        jTable2.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable2.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTable2.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable2.getColumnModel().getColumn(3).setPreferredWidth(1000);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

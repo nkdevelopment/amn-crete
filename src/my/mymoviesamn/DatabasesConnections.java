@@ -223,8 +223,7 @@ public class DatabasesConnections {
 //        } catch (JSONException ex) {
 //            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        Connection conn = null;
-        int maxpages=20;
+        int maxpages=10;
 
         for (int m = 1; m <= maxpages; m++) {
 

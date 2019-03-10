@@ -13,10 +13,14 @@ import javax.persistence.Persistence;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -295,7 +299,27 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        loadTables();
+     
+      
+        try {
+            Connection conn;
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/myMoviesDB", "pli24", "pli24");
+            Statement stmt = conn.createStatement();
+            String query2 =("DELETE FROM FAVORITE_LIST ");
+            String query3 =("DELETE FROM  MOVIE ");
+            
+            stmt.executeUpdate(query3);
+           System.out.println("Movie table deleted");
+            stmt.executeUpdate(query2); 
+            System.out.println("Favorite list table deleted");
+          
+         
+            conn.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+          loadTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -455,6 +479,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void loadTables() {
+         
         DatabasesConnections m = new DatabasesConnections();
 
         m.loadGenreTable();
