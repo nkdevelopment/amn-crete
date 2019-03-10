@@ -116,11 +116,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         txtYear.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txtYear.setName("Έτος Κυκλοφορίας"); // NOI18N
         txtYear.setOpaque(false);
-        txtYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtYearActionPerformed(evt);
-            }
-        });
 
         lblCriteria.setText("Κριτήρια Αναζήτησης");
 
@@ -158,12 +153,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, cbFavoriteLists);
         bindingGroup.addBinding(jComboBoxBinding);
-
-        cbFavoriteLists.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFavoriteListsActionPerformed(evt);
-            }
-        });
 
         lblFavoriteLists.setLabelFor(cbFavoriteLists);
         lblFavoriteLists.setText("Λίστες Αγαπημένων");
@@ -274,10 +263,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         cbFavoriteLists.setSelectedIndex(-1);
         // jButton1.setEnabled(false);
     }//GEN-LAST:event_formInternalFrameOpened
-
-    private void txtYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtYearActionPerformed
 
     private void cbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenreActionPerformed
         // TODO add your handling code here:
