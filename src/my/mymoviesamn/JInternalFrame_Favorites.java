@@ -73,7 +73,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                     String rating = Float.toString(movie.getRating());
                     model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
                 });
-;
+
                 jTable1.setModel(model);
             }
 
