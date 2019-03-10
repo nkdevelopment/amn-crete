@@ -8,6 +8,8 @@ package my.mymoviesamn;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.FavoriteList;
 import model.Genre;
@@ -24,7 +26,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
      */
     public JInternalFrame_MovieSearch() {
         initComponents();
-
+        tblMovieList.getSelectionModel().addListSelectionListener(new RowListener());
     }
 
     /**
@@ -434,5 +436,27 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             return false;
         }
         return true;
+    }
+
+    private void changeSelectedFavoriteList() {
+        FavoriteList favoriteList = null;
+        for (int row : tblMovieList.getSelectedRows()) {
+            favoriteList = (FavoriteList) tblMovieList.getModel().getValueAt(row, 5);
+        }
+        cbFavoriteLists.setSelectedItem(favoriteList);
+    }
+
+    private class RowListener implements ListSelectionListener {
+
+        public RowListener() {
+        }
+
+        public void valueChanged(ListSelectionEvent event) {
+            if (event.getValueIsAdjusting()) {
+                return;
+            }
+            changeSelectedFavoriteList();
+        }
+
     }
 }
