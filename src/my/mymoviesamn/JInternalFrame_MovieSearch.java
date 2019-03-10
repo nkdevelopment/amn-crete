@@ -294,7 +294,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         if (tblMovieList.getSelectedRowCount() == 0) {
             return;
         }
-        if (cbFavoriteLists.getSelectedIndex()<0) {
+        if (cbFavoriteLists.getSelectedIndex() < 0) {
             return;
         }
         FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem();
@@ -345,7 +345,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
-            "Βαθμολογία", "Περίληψη","Genre", "Favorite_List_ID"});
+            "Βαθμολογία", "Περίληψη", "Genre", "Favorite_List_ID"});
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
@@ -358,28 +358,20 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(),m.getOverview(),m.getGenreId(),m.getFavoriteListId()});
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getOverview(), m.getGenreId(), m.getFavoriteListId()});
         });
 
         tblMovieList.setModel(model);
-        
-        
+
         tblMovieList.getColumnModel().getColumn(1).setPreferredWidth(300);
         tblMovieList.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblMovieList.getColumnModel().getColumn(3).setPreferredWidth(1000);
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("ID"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Genre"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Favorite_List_ID"));
-        
-       
-       
-       
-        
-    }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void cbFavoriteListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoriteListsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbFavoriteListsActionPerformed
+
+    }//GEN-LAST:event_btnSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
