@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.mymoviesamn;
 
 import java.awt.Dimension;
@@ -48,11 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
 
         try {
-//            img = ImageIO.read(new URL("http://images1.wikia.nocookie.net/__cb20120817224359/villains/images/6/6a/Nine-Tailed_Fox_(Naruto).jpg"));
-//            img = ImageIO.read(new File("/Images/back.jpg"));
             img = ImageIO.read(getClass().getResource("/Images/filmtransparent.png"));
-
-//img = new ImageIcon(ImageIO.read(MainFrame.class.getResource("/Images/back.jpg")));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -70,19 +61,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setForeground(java.awt.Color.white);
         jLabel3.setForeground(java.awt.Color.white);
 
-        // A specialized layered pane to be used with JInternalFrames
-//        jdpDesktop = new JDesktopPane() {
-//            @Override
-//            protected void paintComponent(Graphics grphcs) {
-//                super.paintComponent(grphcs);
-//                grphcs.drawImage(img, 0, 0, null);
-//            }
-//
-//            @Override
-//            public Dimension getPreferredSize() {
-//                return new Dimension(img.getWidth(), img.getHeight());
-//            }
-//        };
     }
 
     /**
@@ -303,10 +281,8 @@ public class MainFrame extends javax.swing.JFrame {
         String title = "Μήνυμα επιβεβαίωσης";
         int reply = JOptionPane.showConfirmDialog(this, message, title, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            //            JOptionPane.showMessageDialog(null, "Η εφαρμογή τερματίζεται!", "Ενημερωτικό μήνυμα", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         } else {
-            //            JOptionPane.showMessageDialog(null, "Ο τερματισμός της εφαρμογής ακυρώθηκε!");
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
