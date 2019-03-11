@@ -18,7 +18,7 @@ import model.Movie;
 
 /**
  *
- * @author AMN
+ * @author amn
  */
 public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
@@ -69,20 +69,20 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Αναζήτηση Ταινιών");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -198,31 +198,30 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
                         .addComponent(chkSortByRating))
                     .addComponent(scrollMovieList)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(lblGenre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(lblYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblCriteria))
+                        .addComponent(lblGenre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblWarnCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                                .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(97, 97, 97)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnClear)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(lblYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                        .addComponent(lblCriteria)
+                        .addGap(44, 44, 44)
+                        .addComponent(lblWarnCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(54, 54, 54))
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCriteria)
                     .addComponent(lblWarnCriteria))
                 .addGap(17, 17, 17)
@@ -243,7 +242,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
                     .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFavoriteLists)
                     .addComponent(chkSortByRating))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -307,8 +306,8 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         }
 
         final Object[] favoriteLists = favoriteListList.toArray();
-        FavoriteList selectedFavoritelist = (FavoriteList) JOptionPane.showInputDialog(this, "Επιλογή λίστας",
-                "Επιλογή λίστας", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
+        FavoriteList selectedFavoritelist = (FavoriteList) JOptionPane.showInputDialog(this, "Επιλογή λίστας αγαπημένων τανιών",
+                "Παρακαλώ επιλέξτε...", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
         if (selectedFavoritelist == null) {
             return;
         }
@@ -396,7 +395,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
-            String dateText = "";
             Genre genre = m.getGenreId();
             if (genre != null) {
                 genreText = genre.getName();
@@ -425,40 +423,14 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     private void cbFavoriteListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoriteListsActionPerformed
         addMovieToFavoritesList();
     }//GEN-LAST:event_cbFavoriteListsActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddToList;
-    private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnRemoveFromList;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbFavoriteLists;
-    private javax.swing.JComboBox<String> cbGenre;
-    private javax.swing.JCheckBox chkSortByRating;
-    private java.util.List<model.FavoriteList> favoriteListList;
-    private javax.persistence.Query favoriteListQuery;
-    private java.util.List<model.Genre> genreList;
-    private javax.persistence.Query genreQuery;
-    private javax.swing.JLabel lblCriteria;
-    private javax.swing.JLabel lblFavoriteLists;
-    private javax.swing.JLabel lblGenre;
-    private javax.swing.JLabel lblWarnCriteria;
-    private javax.swing.JLabel lblYear;
-    private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
-    private javax.swing.JPanel pnlMain;
-    private javax.swing.JScrollPane scrollMovieList;
-    private javax.swing.JTable tblMovieList;
-    private javax.swing.JTextField txtYear;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
-    // End of variables declaration//GEN-END:variables
-
+    
     private void doActivateSearchButton() {
         final boolean criteriaOk = areCriteriaOk();
         btnSearch.setEnabled(criteriaOk);
-        lblWarnCriteria.setText(criteriaOk ? "" : "Συμπληρώστε σωστές τιμές για το έτος και το είδος της ταινίας");
+        lblWarnCriteria.setText(criteriaOk ? "" : "Παρακαλώ εισάγετε τιμές για το είδος της ταινίας(Action, Romance, Science Fiction)  και το έτος κυκλοφορίας(2000 έως σήμερα)");
     }
 
+   //Έλεγχος αν έχει επιλεγεί το είδος τανίας 
     private boolean areCriteriaOk() throws NumberFormatException {
         String yearText = txtYear.getText();
         if (cbGenre.getSelectedIndex() < 0) {
@@ -467,14 +439,14 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         if (4 != yearText.length()) {
             return false;
         }
-        //Check if 4 digits
+        //Έλεγχος αν έχουν εισαχθεί τέσσερα ψηφία για το έτος κυκλοφορίας
         for (int i = 0; i < yearText.length(); i++) {
             char chr = yearText.charAt(i);
             if (chr < '0' || chr > '9') {
                 return false;
             }
         }
-        //Check if year in proper range
+        //Έλεγχος αν το έτος κυκλοφορίας βρίσκεται εντος του εύρους που καλύπτει η εφαρμογή (2000 έως σήμερα)
         int yearValue = Integer.parseInt(yearText);
         if (yearValue < 2000) {
             return false;
@@ -509,4 +481,29 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         }
 
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToList;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnRemoveFromList;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbFavoriteLists;
+    private javax.swing.JComboBox<String> cbGenre;
+    private javax.swing.JCheckBox chkSortByRating;
+    private java.util.List<model.FavoriteList> favoriteListList;
+    private javax.persistence.Query favoriteListQuery;
+    private java.util.List<model.Genre> genreList;
+    private javax.persistence.Query genreQuery;
+    private javax.swing.JLabel lblCriteria;
+    private javax.swing.JLabel lblFavoriteLists;
+    private javax.swing.JLabel lblGenre;
+    private javax.swing.JLabel lblWarnCriteria;
+    private javax.swing.JLabel lblYear;
+    private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private javax.swing.JPanel pnlMain;
+    private javax.swing.JScrollPane scrollMovieList;
+    private javax.swing.JTable tblMovieList;
+    private javax.swing.JTextField txtYear;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
+    // End of variables declaration//GEN-END:variables
 }
