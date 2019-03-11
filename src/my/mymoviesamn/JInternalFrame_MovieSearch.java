@@ -338,7 +338,6 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             return;
         }
         FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem();
-        System.out.println(favList.getId());
         for (int row : tblMovieList.getSelectedRows()) {
             int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
 
