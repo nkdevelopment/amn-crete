@@ -223,8 +223,6 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             // Βρίσκω όλες οι ταινίες με το παραπάνω ID και σετάρω DESC
             Query q3 = em.createQuery(myQuery);
             
-//            Query q3 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id ="+flist.get(i).getId()+" ORDER BY m.rating DESC");
-
             // Τοποθετώ τα αποτελέσματα του q3 σε μια λίστα <Movies>
             List<Movie> moviesF = q3.getResultList();
             

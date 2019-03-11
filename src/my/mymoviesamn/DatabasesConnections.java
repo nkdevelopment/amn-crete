@@ -67,7 +67,6 @@ public class DatabasesConnections {
             }
             em.persist(newFavorite);
             em.merge(newFavorite);
-//            em.flush();
             em.getTransaction().commit();
 
             Query q = em.createQuery("SELECT f FROM FavoriteList f");
@@ -301,8 +300,6 @@ public class DatabasesConnections {
                     }
 
                     item.setOverview(s);
-//                item.setImage("http://image.tmdb.org/t/p/w185/" + aMovieObject.getString("poster_path"));
-
                     if (!em.getTransaction().isActive()) {
                         em.getTransaction().begin();
                     }
