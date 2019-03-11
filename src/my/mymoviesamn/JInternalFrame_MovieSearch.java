@@ -308,7 +308,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
         final Object[] favoriteLists = favoriteListList.toArray();
         FavoriteList selectedFavoritelist = (FavoriteList) JOptionPane.showInputDialog(this, "Επιλογή λίστας",
-                "The Choice of a Lifetime", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
+                "Επιλογή λίστας", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
         if (selectedFavoritelist == null) {
             return;
         }
