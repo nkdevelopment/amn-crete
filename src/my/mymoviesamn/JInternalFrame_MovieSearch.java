@@ -5,12 +5,12 @@
  */
 package my.mymoviesamn;
 
-import java.awt.Window;
-import java.util.HashSet;
+import java.util.Calendar;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.persistence.Query;
-import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.FavoriteList;
 import model.Genre;
@@ -18,7 +18,7 @@ import model.Movie;
 
 /**
  *
- * @author Manos
+ * @author amn
  */
 public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
@@ -27,7 +27,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
      */
     public JInternalFrame_MovieSearch() {
         initComponents();
-        jComboBox1.setSelectedIndex(-1);
+        tblMovieList.getSelectionModel().addListSelectionListener(new RowListener());
     }
 
     /**
@@ -45,22 +45,23 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         favoriteListList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : favoriteListQuery.getResultList();
         genreQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT g FROM Genre g");
         genreList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : genreQuery.getResultList();
-        jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        pnlMain = new javax.swing.JPanel();
+        cbGenre = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        txtYear = new javax.swing.JTextField();
+        lblCriteria = new javax.swing.JLabel();
+        lblGenre = new javax.swing.JLabel();
+        lblYear = new javax.swing.JLabel();
+        scrollMovieList = new javax.swing.JScrollPane();
+        tblMovieList = new javax.swing.JTable();
+        btnClose = new javax.swing.JButton();
+        cbFavoriteLists = new javax.swing.JComboBox<>();
+        lblFavoriteLists = new javax.swing.JLabel();
+        btnRemoveFromList = new javax.swing.JButton();
+        btnAddToList = new javax.swing.JButton();
+        chkSortByRating = new javax.swing.JCheckBox();
+        lblWarnCriteria = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         setClosable(true);
@@ -85,154 +86,162 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jPanel1.setToolTipText("");
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 550));
+        pnlMain.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        pnlMain.setToolTipText("");
+        pnlMain.setPreferredSize(new java.awt.Dimension(1000, 550));
 
-        jComboBox1.setMaximumRowCount(3);
-        jComboBox1.setToolTipText("");
-        jComboBox1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jComboBox1.setName("Είδος Ταινίας"); // NOI18N
+        cbGenre.setMaximumRowCount(3);
+        cbGenre.setToolTipText("");
+        cbGenre.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        cbGenre.setName("Είδος Ταινίας"); // NOI18N
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, genreList, jComboBox1);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, genreList, cbGenre);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbGenre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbGenreActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Αναζήτηση");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("Αναζήτηση");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Καθαρισμός Κριτηρίων");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("Καθαρισμός Κριτηρίων");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jTextField1.setName("Έτος Κυκλοφορίας"); // NOI18N
-        jTextField1.setOpaque(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        txtYear.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txtYear.setName("Έτος Κυκλοφορίας"); // NOI18N
+        txtYear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtYearKeyReleased(evt);
             }
         });
 
-        jLabel1.setText("Κριτήρια Αναζήτησης");
+        lblCriteria.setText("Κριτήρια Αναζήτησης");
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setLabelFor(jComboBox1);
-        jLabel2.setText("Έιδος Ταινίας:");
+        lblGenre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblGenre.setLabelFor(cbGenre);
+        lblGenre.setText("Έιδος Ταινίας:");
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setLabelFor(jTextField1);
-        jLabel3.setText("Έτος Κυκλοφορίας:");
+        lblYear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblYear.setLabelFor(txtYear);
+        lblYear.setText("Έτος Κυκλοφορίας:");
 
-        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        scrollMovieList.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jTable2.setFillsViewportHeight(true);
-        jTable2.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
-        jScrollPane2.setViewportView(jTable2);
+        tblMovieList.setAutoCreateRowSorter(true);
+        tblMovieList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblMovieList.setFillsViewportHeight(true);
+        tblMovieList.setName("Αποτελέσματα Αναζήτησης"); // NOI18N
+        scrollMovieList.setViewportView(tblMovieList);
 
-        jButton4.setText("Επιστροφή");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnClose.setText("Επιστροφή");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnCloseActionPerformed(evt);
             }
         });
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, jComboBox2);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, favoriteListList, cbFavoriteLists);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jLabel5.setLabelFor(jComboBox2);
-        jLabel5.setText("Λίστες Αγαπημένων");
-
-        jButton3.setText("Αφαίρεση από Λίστα");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        cbFavoriteLists.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                cbFavoriteListsActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Προσθήκη σε λίστα");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        lblFavoriteLists.setLabelFor(cbFavoriteLists);
+        lblFavoriteLists.setText("Λίστες Αγαπημένων");
+
+        btnRemoveFromList.setText("Αφαίρεση από Λίστα");
+        btnRemoveFromList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnRemoveFromListActionPerformed(evt);
             }
         });
 
-        jCheckBox1.setText("Ταξινόμηση με βάση τη Βαθμολογία");
+        btnAddToList.setText("Προσθήκη σε λίστα");
+        btnAddToList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToListActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        chkSortByRating.setText("Ταξινόμηση με βάση τη Βαθμολογία");
+
+        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
+        pnlMain.setLayout(pnlMainLayout);
+        pnlMainLayout.setHorizontalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(20, 20, 20)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2))
-                        .addGap(54, 54, 54))))
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlMainLayout.createSequentialGroup()
+                        .addComponent(lblFavoriteLists)
+                        .addGap(20, 20, 20)
+                        .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddToList)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRemoveFromList)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chkSortByRating))
+                    .addComponent(scrollMovieList)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                        .addComponent(lblGenre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(lblYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                        .addComponent(lblCriteria)
+                        .addGap(44, 44, 44)
+                        .addComponent(lblWarnCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(54, 54, 54))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+        pnlMainLayout.setVerticalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCriteria)
+                    .addComponent(lblWarnCriteria))
+                .addGap(17, 17, 17)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblYear)
+                    .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGenre)
+                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch)
+                    .addComponent(btnClear)
+                    .addComponent(btnClose))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollMovieList, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCheckBox1))
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemoveFromList)
+                    .addComponent(btnAddToList)
+                    .addComponent(cbFavoriteLists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFavoriteLists)
+                    .addComponent(chkSortByRating))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -242,14 +251,14 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bindingGroup.bind();
@@ -258,24 +267,22 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        // TODO add your handling code here:
+        cbGenre.setSelectedIndex(-1);
+        cbFavoriteLists.setSelectedIndex(-1);
     }//GEN-LAST:event_formInternalFrameOpened
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void cbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        doActivateSearchButton();
+    }//GEN-LAST:event_cbGenreActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void btnRemoveFromListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFromListActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        if (jTable2.getSelectedRowCount() == 0) {
+        if (tblMovieList.getSelectedRowCount() == 0) {
             return;
         }
-        for (int row : jTable2.getSelectedRows()) {
-            int movieId = (int) jTable2.getModel().getValueAt(row, 0);
+        for (int row : tblMovieList.getSelectedRows()) {
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
 
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
@@ -284,21 +291,54 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
             m.setFavoriteListId(null);
 
+            tblMovieList.getModel().setValueAt(null, row, 5);
+            cbFavoriteLists.setSelectedIndex(-1);
+
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
+        changeSelectedFavoriteList();
+    }//GEN-LAST:event_btnRemoveFromListActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        if (jTable2.getSelectedRowCount() == 0) {
+    private void btnAddToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToListActionPerformed
+        if (tblMovieList.getSelectedRowCount() == 0) {
             return;
         }
-        FavoriteList favList = (FavoriteList) jComboBox2.getSelectedItem();
-        System.out.println(favList.getId());
-        for (int row : jTable2.getSelectedRows()) {
-            int movieId = (int) jTable2.getModel().getValueAt(row, 0);
+
+        final Object[] favoriteLists = favoriteListList.toArray();
+        FavoriteList selectedFavoritelist = (FavoriteList) JOptionPane.showInputDialog(this, "Επιλογή λίστας αγαπημένων τανιών",
+                "Παρακαλώ επιλέξτε...", JOptionPane.QUESTION_MESSAGE, null, favoriteLists, favoriteLists[0]);
+        if (selectedFavoritelist == null) {
+            return;
+        }
+        for (int row : tblMovieList.getSelectedRows()) {
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
+
+            if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
+                myMoviesAMNPUEntityManager.getTransaction().begin();
+            }
+
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
+            m.setFavoriteListId(selectedFavoritelist);
+
+            tblMovieList.getModel().setValueAt(selectedFavoritelist, row, 5);
+
+            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.getTransaction().commit();
+        }
+        changeSelectedFavoriteList();
+    }//GEN-LAST:event_btnAddToListActionPerformed
+
+    private void addMovieToFavoritesList() {
+        if (tblMovieList.getSelectedRowCount() == 0) {
+            return;
+        }
+        if (cbFavoriteLists.getSelectedIndex() < 0) {
+            return;
+        }
+        FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem();
+        for (int row : tblMovieList.getSelectedRows()) {
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
 
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
@@ -307,33 +347,41 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
             m.setFavoriteListId(favList);
 
+            tblMovieList.getModel().setValueAt(favList, row, 5);
+
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+        changeSelectedFavoriteList();
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jComboBox1.setSelectedIndex(-1);
-        jTextField1.setText("");
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        cbGenre.setSelectedIndex(-1);
+        txtYear.setText("");
+        doActivateSearchButton();
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnCloseActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        doSearch();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void doSearch() {
         String queryText = "SELECT m FROM Movie m";
         boolean putWhere = false;
-        if (jComboBox1.getSelectedIndex() >= 0) {
-            Genre selectedGenre = (Genre) jComboBox1.getSelectedItem();
+        if (cbGenre.getSelectedIndex() >= 0) {
+            Genre selectedGenre = (Genre) cbGenre.getSelectedItem();
             queryText += " WHERE m.genreId.id = " + selectedGenre.getId().toString();
             putWhere = true;
         }
-        if (!jTextField1.getText().isEmpty()) {
+        if (!txtYear.getText().isEmpty()) {
             queryText += putWhere ? " AND " : " WHERE ";
-            queryText += "FUNC('YEAR', m.releaseDate) = " + jTextField1.getText();
+            queryText += "FUNC('YEAR', m.releaseDate) = " + txtYear.getText();
         }
-        if (jCheckBox1.isSelected()) {
+        if (chkSortByRating.isSelected()) {
             queryText += " ORDER BY m.rating DESC";
         }
         Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
@@ -343,11 +391,10 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
-            "Βαθμολογία", "Περίληψη"});
+            "Βαθμολογία", "Περίληψη", "Genre", "Favorite_List_ID"});
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
-            String dateText = "";
             Genre genre = m.getGenreId();
             if (genre != null) {
                 genreText = genre.getName();
@@ -356,35 +403,107 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (list != null) {
                 favoriteListText = list.getName();
             }
-            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(),m.getOverview()});
+            model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getOverview(), m.getGenreId(), m.getFavoriteListId()});
         });
 
-        jTable2.setModel(model);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        tblMovieList.setModel(model);
 
+        tblMovieList.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tblMovieList.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblMovieList.getColumnModel().getColumn(3).setPreferredWidth(1000);
+        tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("ID"));
+        tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Genre"));
+        tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Favorite_List_ID"));
+    }
 
+    private void txtYearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtYearKeyReleased
+        doActivateSearchButton();
+    }//GEN-LAST:event_txtYearKeyReleased
+
+    private void cbFavoriteListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoriteListsActionPerformed
+        addMovieToFavoritesList();
+    }//GEN-LAST:event_cbFavoriteListsActionPerformed
+    
+    private void doActivateSearchButton() {
+        final boolean criteriaOk = areCriteriaOk();
+        btnSearch.setEnabled(criteriaOk);
+        lblWarnCriteria.setText(criteriaOk ? "" : "Παρακαλώ εισάγετε τιμές για το είδος της ταινίας(Action, Romance, Science Fiction)  και το έτος κυκλοφορίας(2000 έως σήμερα)");
+    }
+
+   //Έλεγχος αν έχει επιλεγεί το είδος τανίας 
+    private boolean areCriteriaOk() throws NumberFormatException {
+        String yearText = txtYear.getText();
+        if (cbGenre.getSelectedIndex() < 0) {
+            return false;
+        }
+        if (4 != yearText.length()) {
+            return false;
+        }
+        //Έλεγχος αν έχουν εισαχθεί τέσσερα ψηφία για το έτος κυκλοφορίας
+        for (int i = 0; i < yearText.length(); i++) {
+            char chr = yearText.charAt(i);
+            if (chr < '0' || chr > '9') {
+                return false;
+            }
+        }
+        //Έλεγχος αν το έτος κυκλοφορίας βρίσκεται εντος του εύρους που καλύπτει η εφαρμογή (2000 έως σήμερα)
+        int yearValue = Integer.parseInt(yearText);
+        if (yearValue < 2000) {
+            return false;
+        }
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        if (yearValue > currentYear) {
+            return false;
+        }
+        return true;
+    }
+
+    private void changeSelectedFavoriteList() {
+        FavoriteList favoriteList = null;
+        for (int row : tblMovieList.getSelectedRows()) {
+            favoriteList = (FavoriteList) tblMovieList.getModel().getValueAt(row, 5);
+        }
+        cbFavoriteLists.setSelectedItem(favoriteList);
+        cbFavoriteLists.setVisible(favoriteList != null);
+        btnAddToList.setVisible(favoriteList == null);
+    }
+
+    private class RowListener implements ListSelectionListener {
+
+        public RowListener() {
+        }
+
+        public void valueChanged(ListSelectionEvent event) {
+            if (event.getValueIsAdjusting()) {
+                return;
+            }
+            changeSelectedFavoriteList();
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToList;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnRemoveFromList;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbFavoriteLists;
+    private javax.swing.JComboBox<String> cbGenre;
+    private javax.swing.JCheckBox chkSortByRating;
     private java.util.List<model.FavoriteList> favoriteListList;
     private javax.persistence.Query favoriteListQuery;
     private java.util.List<model.Genre> genreList;
     private javax.persistence.Query genreQuery;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblCriteria;
+    private javax.swing.JLabel lblFavoriteLists;
+    private javax.swing.JLabel lblGenre;
+    private javax.swing.JLabel lblWarnCriteria;
+    private javax.swing.JLabel lblYear;
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private javax.swing.JPanel pnlMain;
+    private javax.swing.JScrollPane scrollMovieList;
+    private javax.swing.JTable tblMovieList;
+    private javax.swing.JTextField txtYear;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

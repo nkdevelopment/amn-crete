@@ -16,7 +16,7 @@ import model.Movie;
 
 /**
  *
- * @author alexandra
+ * @author amn
  */
 public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
 //Δημιουργία Entity Manager Factory & Entity Manager (Διαχειριστή Οντοτήτων)

@@ -13,10 +13,14 @@ import javax.persistence.Persistence;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -42,16 +46,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
-        
-       try {
+
+        try {
 //            img = ImageIO.read(new URL("http://images1.wikia.nocookie.net/__cb20120817224359/villains/images/6/6a/Nine-Tailed_Fox_(Naruto).jpg"));
 //            img = ImageIO.read(new File("/Images/back.jpg"));
             img = ImageIO.read(getClass().getResource("/Images/filmtransparent.png"));
 
 //img = new ImageIcon(ImageIO.read(MainFrame.class.getResource("/Images/back.jpg")));
-
-    
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -68,8 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.white);
         jLabel2.setForeground(java.awt.Color.white);
         jLabel3.setForeground(java.awt.Color.white);
-        
-       
+
         // A specialized layered pane to be used with JInternalFrames
 //        jdpDesktop = new JDesktopPane() {
 //            @Override
@@ -84,8 +84,6 @@ public class MainFrame extends javax.swing.JFrame {
 //            }
 //        };
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -295,6 +293,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+
         loadTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -455,8 +454,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void loadTables() {
-        DatabasesConnections m = new DatabasesConnections();
 
+        DatabasesConnections m = new DatabasesConnections();
+        m.clearDatabase();
         m.loadGenreTable();
 
         if (m.getMovies(this)) {
