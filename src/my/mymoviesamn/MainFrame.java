@@ -7,15 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -29,7 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private EntityManagerFactory emf; // Το EntityManagerFactory
     public static EntityManager em; // Ο EntityManager
-    
+
     private JDesktopPane jdpDesktop;
     private static int openFrameCount = 0;
     private BufferedImage img;
@@ -51,9 +42,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         initComponents(); // Αρχικοποίηση του γραφικού περιβάλλοντος
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
-//        jTable1.setVisible(false);
-//        jPanel1.setVisible(false);
-//        CommonMethods.getNewCurrentWeather(); //Διάβασε απο το Api για τον τρέχων καιρό
 
         // ορίζονται τα χρώματα των Labels
         jLabel1.setBackground(new java.awt.Color(136, 23, 152));
@@ -269,7 +257,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // Πατώντας το κουμπί "Αναζήτηση ταινιών"
-        movieSearchForm(); 
+        movieSearchForm();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -364,56 +352,61 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
-
     // Πατώντας το κουμπί "Διαχείριση λιστών αγαπημένων
     private void favoritesForm() {
+        // Δημιουργία αντικειμένου JInternalFrame_Favorites
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();
 
+        // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
         Dimension desktopSize = jDesktopPane1.getSize();
         Dimension jInternalFrameSize = fFavorites.getSize();
         fFavorites.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         fFavorites.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(fFavorites);
-        fFavorites.setVisible(true);
+        jDesktopPane1.add(fFavorites); // προσθήκη φόρμας
+        fFavorites.setVisible(true); // κάνε ορατή τη φόρμα
     }
 
     // Πατώντας το κουμπί "Στατιστικά"
     private void statisticsForm() {
-
+        // Δημιουργία αντικειμένου JInternalFrame_Statistics
         JInternalFrame_Statistics fStatistics = new JInternalFrame_Statistics();
 
+        // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
         Dimension desktopSize = jDesktopPane1.getSize();
         Dimension jInternalFrameSize = fStatistics.getSize();
         fStatistics.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         fStatistics.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(fStatistics);
-        fStatistics.setVisible(true);
+        jDesktopPane1.add(fStatistics); // προσθήκη φόρμας
+        fStatistics.setVisible(true); // κάνε ορατή τη φόρμα
 
     }
 
     // Πατώντας το κουμπί "Αναζήτηση ταινιών"
     private void movieSearchForm() {
-
+        // Δημιουργία αντικειμένου JInternalFrame_MovieSearch
         JInternalFrame_MovieSearch mSearch = new JInternalFrame_MovieSearch();
 
+        // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
         Dimension desktopSize = jDesktopPane1.getSize();
         Dimension jInternalFrameSize = mSearch.getSize();
         mSearch.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         mSearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(mSearch);
-        mSearch.setVisible(true);
+        jDesktopPane1.add(mSearch); // προσθήκη φόρμας
+        mSearch.setVisible(true); // κάνε ορατή τη φόρμα
     }
 
     // Πατώντας το κουμπί "Ανάκτηση και αποθήκευση δεδομένων ταινιών"
     private void loadTables() {
 
+        // Δημιουργία αντικειμένου DatabasesConnections
         DatabasesConnections m = new DatabasesConnections();
-        m.clearDatabase();
-        m.loadGenreTable();
+        m.clearDatabase(); // εκτέλεση μεθόδου clearDatabase της DatabasesConnections
+        m.loadGenreTable(); // εκτέλεση μεθόδου loadGenreTable της DatabasesConnections
 
+        // Αν ληφθούν οι ταινίες (m.getMovies) εκτέλεσε τα παρακάτω:
         if (m.getMovies(this)) {
             String message = "Τα δεδομένα κατέβηκαν και αποθηκεύτηκαν στη Βάση Δεδομένων";
             String title = "Μήνυμα ενημέρωσης";
