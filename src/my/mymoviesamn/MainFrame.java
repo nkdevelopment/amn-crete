@@ -43,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         connectToDb(); // Σύνδεση με την βάση δεδομένων
 
         try {
+            // Η εικόμα του background
             img = ImageIO.read(getClass().getResource("/Images/filmtransparent.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -54,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        jPanel1.setVisible(false);
 //        CommonMethods.getNewCurrentWeather(); //Διάβασε απο το Api για τον τρέχων καιρό
 
+        // ορίζονται τα χρώματα των Labels
         jLabel1.setBackground(new java.awt.Color(136, 23, 152));
         jLabel2.setBackground(new java.awt.Color(136, 23, 152));
         jLabel3.setBackground(new java.awt.Color(136, 23, 152));
@@ -266,33 +268,34 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        movieSearchForm();
+        // Πατώντας το κουμπί "Αναζήτηση ταινιών"
+        movieSearchForm(); 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-
+        // Πατώντας το κουμπί "Ανάκτηση και αποθήκευση δεδομένων ταινιών"
         loadTables();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        // Πατώντας το κουμπί "Έξοδος"
         String message = "Τερματισμός της εφαρμογής;";
         String title = "Μήνυμα επιβεβαίωσης";
+        // Εμφάνιση μηνύματος επιβεβαίωσης τερματισμού της εφαρμογής
         int reply = JOptionPane.showConfirmDialog(this, message, title, JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            System.exit(0); // Τερματισμός εφαρμογής
         } else {
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        // Πατώντας το κουμπί "Διαχείριση λιστών αγαπημένων
         favoritesForm();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        // Πατώντας το κουμπί "Στατιστικά"
         statisticsForm();
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -361,35 +364,8 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
-    //μέθοδος ανάγνωσης URL του api και επιστροφής σε string το αποτέλεσμα
-    public static String readFromURL(String webPage) {
-        StringBuffer sb = new StringBuffer();
 
-        try {
-            //δημιουργία url από string
-            URL uri = new URL(webPage);
-            //σύνδεση με το url
-            URLConnection urlConnection = uri.openConnection();
-            //γέφυρα μετατροπής από bytes σε chars του αποτελέσματος
-            InputStreamReader isr;
-            try (InputStream is = urlConnection.getInputStream()) {
-                isr = new InputStreamReader(is);
-                int numCharsRead;
-                char[] charArray = new char[1024];
-                while ((numCharsRead = isr.read(charArray)) > 0) {
-                    sb.append(charArray, 0, numCharsRead);
-                }
-            }
-            //κλείσιμο της γέφυρας
-            isr.close();
-        } catch (IOException e) { //αν δεν μπορεί να κάνει την μετατροπή
-            System.err.println(e.toString());
-        }
-        //επιστροφή του αποτελέσματος σε string
-        return sb.toString();
-    }
-
-//Φόρμα Λίστα αγαπημένων
+    // Πατώντας το κουμπί "Διαχείριση λιστών αγαπημένων
     private void favoritesForm() {
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();
 
@@ -402,6 +378,7 @@ public class MainFrame extends javax.swing.JFrame {
         fFavorites.setVisible(true);
     }
 
+    // Πατώντας το κουμπί "Στατιστικά"
     private void statisticsForm() {
 
         JInternalFrame_Statistics fStatistics = new JInternalFrame_Statistics();
@@ -416,6 +393,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
+    // Πατώντας το κουμπί "Αναζήτηση ταινιών"
     private void movieSearchForm() {
 
         JInternalFrame_MovieSearch mSearch = new JInternalFrame_MovieSearch();
@@ -429,6 +407,7 @@ public class MainFrame extends javax.swing.JFrame {
         mSearch.setVisible(true);
     }
 
+    // Πατώντας το κουμπί "Ανάκτηση και αποθήκευση δεδομένων ταινιών"
     private void loadTables() {
 
         DatabasesConnections m = new DatabasesConnections();
