@@ -31,49 +31,54 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         jButton3.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Διαγραφής
 
         // Ελέγχω αν έχουν γίνει μία ή περισσότερες επιλογές στην jList
+        // Ενεργοποιώ έναν Listener που "ακούει" αν έχουν επιλεγεί 1 ή περισσότερες FavoriteList
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 JList list = (JList) listSelectionEvent.getSource();
-                int selections[] = list.getSelectedIndices();
-                int selectionLength = selections.length;
+                int selections[] = list.getSelectedIndices(); // πίνακας FavoriteList που έχουν επιλεχθεί
+                int selectionLength = selections.length; // μέγεθος πίνακα selections
 
                 // Εάν έχω κάνει μία (1) επιλογή
                 if (selectionLength == 1) {
-                    jButton2.setEnabled(true);
-                    jButton3.setEnabled(true);
+                    jButton2.setEnabled(true); // ενεργοποιώ κουμπί Επεξεργασία
+                    jButton3.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
 
                     showFavoritesListMovies(); // Δείξε τις ταινίες της συγκεκριμένης Favorite List
 
                     // Εάν έχω κάνει περισσότερες από μία επιλογές
                 } else if (selectionLength > 1) {
-                    jButton2.setEnabled(false);
-                    jButton3.setEnabled(true);
+                    jButton2.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
+                    jButton3.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
                 } else {
-                    jButton2.setEnabled(false);
+                    jButton2.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
                 }
             }
 
-            // Δείξε τις ταινίες της συγκεκριμένης Favorite List
+            // Δείξε τις ταινίες της συγκεκριμένης Favorite List 
             private void showFavoritesListMovies() {
 
+                // παίρνω τη λίστα των FavoriteList που έχω επιλέξει
                 List selected = jList1.getSelectedValuesList();
-                DatabasesConnections m = new DatabasesConnections();
+                DatabasesConnections m = new DatabasesConnections(); // δημιουργώ αντικείμενο DatabasesConnections
+                // διαβάζω τις ταινίες της συγκεκριμένης Favorite List
                 List<Movie> movies = m.loadFavoritesListMovies(selected);
 
+                // δημιουργώ νέο μοντέλο DefaultTableModel και μετά ορίζω τις στήλες του πίνακα
                 DefaultTableModel model = new DefaultTableModel();
                 model.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
 
+                // διατρέχω όλες τια ταινίες movies και προσθέτω γραμμές στο model με τις ανάλογες τιμές των στηλών 
                 movies.forEach((movie) -> {
                     String rating = Float.toString(movie.getRating());
                     model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
                 });
 
-                jTable1.setModel(model);
+                jTable1.setModel(model); // ορισμός μοντέλου του jTable1
             }
 
         };
-        jList1.addListSelectionListener(listSelectionListener);
+        jList1.addListSelectionListener(listSelectionListener); // προσθήκη του listener στην jList1
     }
 
     /**
@@ -187,64 +192,68 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // πατώντας το κουμπί Επιστροφή και κλείνοντας το παράθυρο
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Δημιουργίας
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        // πίνακας κουμπιών μηνύματος
         Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(); // δημιουργία JPanel
         panel.add(new JLabel("Δώστε το όνομα της νέας λίστας αγαπημενων ταινιών:"));
         JTextField textField = new JTextField(10);
         panel.add(textField);
 
+        // Δημιουργία μηνύματος (παραθύρου) με επιλογές options1 (Αποθήκευση και Ακύρωση)
         int result = JOptionPane.showOptionDialog(this, panel, "Νέα κατηγορία αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
         if (result == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(this, textField.getText());
+            JOptionPane.showMessageDialog(this, textField.getText()); // μήνυμα εμφάνισης ονόματος νέας FavoriteList
         }
         String fvName = textField.getText();
         System.out.println(fvName);
 
+        // αν δεν είναι null και έχει μήκος >0 
         if ((fvName != null) && (fvName.length() > 0)) {
-            saveNewFavorite(fvName);
+            saveNewFavorite(fvName); // δημιουργία και αποθήκευση νέας Favorite List
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Επεξεργασίας
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String oldName = jList1.getSelectedValue();
+        String oldName = jList1.getSelectedValue(); // διάβασμα ονόματος FavoriteList από την jList1
 
+        // πίνακας κουμπιών μηνύματος
         Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
 
+        // Δημιουργία και εμφάνιση παραθύρου αλλαγής του ονόματος
         JPanel panel = new JPanel();
         panel.add(new JLabel("Δώστε το νέο όνομα της λίστας αγαπημενων ταινιών:"));
         JTextField textField = new JTextField(10);
         panel.add(textField);
-        textField.setText(oldName);
-
+        textField.setText(oldName); // βάλε για αρχή το παλιό όνονα στο textField
         int result = JOptionPane.showOptionDialog(this, panel, "Επεξεργασία κατηγορίας αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
 
-        String fvName = textField.getText();
-        if (result == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(this, textField.getText());
+        String fvName = textField.getText(); // διάβασε το νέο όνομα της Favorite List από το textField
+        if (result == JOptionPane.YES_OPTION) { // αν πατήσεις Αποθήκευση
+            JOptionPane.showMessageDialog(this, textField.getText()); // εμφάνισε μήνυμα με το νέο όνομα
 
             if ((fvName != null) && (!fvName.equals(oldName)) && (fvName.length() > 0)) {
-                updateFavorite(oldName, fvName);
+                updateFavorite(oldName, fvName); // ενημέρωσε την Favorite List με το νέο όνομα
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Διαγραφής
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // πατώντας το κουμπί Διαγραφή
         deleteFavorite();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -266,69 +275,76 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
+    // δημιουργία και αποθήκευση νέας Favorite List με το όνομα fvName
     private void saveNewFavorite(String fvName) {
 
-        DatabasesConnections m = new DatabasesConnections();
-        mFavoriteList = m.saveNewFavorite(fvName);
+        DatabasesConnections m = new DatabasesConnections(); // νέο αντικείμενο DatabasesConnections
+        mFavoriteList = m.saveNewFavorite(fvName); // εκτέλεσε τη μέθοδο saveNewFavorite του m
 
-//        jList1.removeAll();
+        // δημιουργήσε ένα νέο DefaultListModel με Strings
         DefaultListModel<String> listModel = new DefaultListModel<>();
         mFavoriteList.forEach((favorite) -> {
-            listModel.addElement(favorite.getName());
+            listModel.addElement(favorite.getName()); // πρόσθεσε στο μοντέλο το όνομα της favorite
         });
-        jList1.setModel(listModel);
+        jList1.setModel(listModel); // όρισε το μοντέλο της jList1
 
     }
 
+    // ενημέρωσε τη favorite list που έχει παλιό όνομα oldName με το νέο όνομα updatedName
     private void updateFavorite(String oldName, String updatedName) {
 
-        DatabasesConnections m = new DatabasesConnections();
-        mFavoriteList = m.updateFavorite(oldName, updatedName);
+        DatabasesConnections m = new DatabasesConnections(); // νέο αντικείμενο DatabasesConnections
+        mFavoriteList = m.updateFavorite(oldName, updatedName); // εκτέλεσε τη μέθοδο updateFavorite του m
 
-//        jList1.removeAll();
+        // δημιουργήσε ένα νέο DefaultListModel με Strings
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        mFavoriteList.forEach((favorite) -> {
-            listModel.addElement(favorite.getName());
+        mFavoriteList.forEach((favorite) -> { // διάτρεξε όλη τη λίστα mFavoriteList
+            listModel.addElement(favorite.getName()); // πρόσθεσε στο μοντέλο το όνομα της favorite
         });
-        jList1.setModel(listModel);
+        jList1.setModel(listModel); // όρισε το μοντέλο της jList1
 
         jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
     }
 
+    // πατώντας το κουμπί Διαγραφή
     private void deleteFavorite() {
         // Λίστα επιλεγμένων ταινιών
         List selectedNames = jList1.getSelectedValuesList();
 
+        // δημιουργία πανελ μηνύματος επιβεβαίωσης Διαγραφής
         Object[] options1 = {"Διαγραφή", "Ακύρωση"};
         JPanel panel = new JPanel();
         panel.add(new JLabel("Σίγουρα διαγραφή των παρακάτω;"));
-
-        // Δημιουργία λίστας ταινιών προς Διαγραφή και προσθήκη στο panel
+        // Δημιουργία λίστας ταινιών που επιλέχθηκαν προς Διαγραφή και προσθήκη στο panel
         JList listToDelete = new JList(selectedNames.toArray());
         panel.add(listToDelete);
 
+        // εμφάνιση μηνύματος επιβεβαίωσης Διαγραφής
         int result = JOptionPane.showOptionDialog(this, panel, "Διαγραφή κατηγορίας αγαπημένων ταινιών",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
 
-        if (result == JOptionPane.YES_OPTION) {
-            DatabasesConnections m = new DatabasesConnections();
+        if (result == JOptionPane.YES_OPTION) { // εάν επιβεβαιωθεί η Διαγραφή προχωράμε στη διαγραφή
+            DatabasesConnections m = new DatabasesConnections(); // νέο αντικείμενο DatabasesConnections
+
+            // εκτέλεση μεθόδου deleteFavorite του m
+            // που επιστρέφει τη νέα λίστα χωρίς τη/τις προς δοαγραφή favorite lists
             mFavoriteList = m.deleteFavorite(selectedNames);
 
+            // δημιουργήσε ένα νέο DefaultListModel με Strings
             DefaultListModel<String> listModel = new DefaultListModel<>();
-            mFavoriteList.forEach((favorite) -> {
-                listModel.addElement(favorite.getName());
+            mFavoriteList.forEach((favorite) -> { // διάτρεξε όλη τη λίστα mFavoriteList
+                listModel.addElement(favorite.getName());// πρόσθεσε στο μοντέλο το όνομα της favorite 
             });
-            jList1.setModel(listModel);
+            jList1.setModel(listModel); // όρισε το μοντέλο της jList1
 
-            // Αδειάζοντας τον πίνακα από τις ταινίες
+            // Αδειάζοντας τον πίνακα από τις ταινίες αφού εκτελέσαμ Διαγραφή και πλέον δεν είναι καμία favorite list επιλεγμένη
             DefaultTableModel modelEmpty = new DefaultTableModel();
             modelEmpty.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
             jTable1.setModel(modelEmpty);
 
             jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
-        } else {
+        } else { // διαφορετικά δεν κάνουμε τίποτα - δεν διαγράφουμε κάτι
         }
     }
-
 }
