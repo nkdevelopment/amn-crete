@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.mymoviesamn;
 
 import java.util.Calendar;
@@ -267,20 +262,22 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        cbGenre.setSelectedIndex(-1);
-        cbFavoriteLists.setSelectedIndex(-1);
+        cbGenre.setSelectedIndex(-1); // ορισμός επιλογής JComboBox cbGenre σε -1
+        cbFavoriteLists.setSelectedIndex(-1); // ορισμός επιλογής JComboBox cbFavoriteLists σε -1
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void cbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGenreActionPerformed
-        // TODO add your handling code here:
+        // ενεργοποίησε το κουμπί Αναζήτηση
         doActivateSearchButton();
     }//GEN-LAST:event_cbGenreActionPerformed
 
+    // Πατώντας το κουμπί "Αφαίρεση από λίστα"
     private void btnRemoveFromListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFromListActionPerformed
 
         if (tblMovieList.getSelectedRowCount() == 0) {
-            return;
+            return; // αν δεν έχει επιλεχθεί τίποτα επέστρεψε
         }
+        // βρόγχος που διατρέχει όλες τις επιλεχθέντες ταινίες
         for (int row : tblMovieList.getSelectedRows()) {
             int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
 
@@ -288,18 +285,21 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
             }
 
+            // διάβασε την ταινία με id το movieId
             Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
-            m.setFavoriteListId(null);
+            m.setFavoriteListId(null); // αφαίρεσε από τη λίστα ορίζοντας το favorite list id σε null
 
+            // διάβασε το μοντέλο και όρισε τη νέα τιμή
             tblMovieList.getModel().setValueAt(null, row, 5);
-            cbFavoriteLists.setSelectedIndex(-1);
+            cbFavoriteLists.setSelectedIndex(-1); // όρισε να μην είναι τίποτα επιλεγμένο στο cbFavoriteLists
 
-            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.persist(m); // ενημέρωσε τη ΒΔ με την την αλλαγμένη ταινία m
             myMoviesAMNPUEntityManager.getTransaction().commit();
-        }
-        changeSelectedFavoriteList();
+        } 
+        changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }//GEN-LAST:event_btnRemoveFromListActionPerformed
 
+    // Πατώντας το κουμπι "Προσθήκη σε λίστα"
     private void btnAddToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToListActionPerformed
         if (tblMovieList.getSelectedRowCount() == 0) {
             return;
@@ -326,7 +326,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-        changeSelectedFavoriteList();
+        changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }//GEN-LAST:event_btnAddToListActionPerformed
 
     private void addMovieToFavoritesList() {
@@ -352,13 +352,15 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             myMoviesAMNPUEntityManager.persist(m);
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-        changeSelectedFavoriteList();
+        
+        changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }
 
+    // όταν πατηθεί το κουμπί Καθαρισμός Κριτηρίων
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        cbGenre.setSelectedIndex(-1);
-        txtYear.setText("");
-        doActivateSearchButton();
+        cbGenre.setSelectedIndex(-1); // αφαίρεσε τυχόν επιλογή από το combobox "Είδος ταινίας"
+        txtYear.setText(""); // καθάρισε το κείμενο "Έτος κυκλοφορίας"
+        doActivateSearchButton(); // ενεργοποίησε το κουμπί Αναζήτηση
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
@@ -424,9 +426,11 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         addMovieToFavoritesList();
     }//GEN-LAST:event_cbFavoriteListsActionPerformed
     
+    // Ενεργοποίηση του κουμπιού Αναζήτηση
     private void doActivateSearchButton() {
         final boolean criteriaOk = areCriteriaOk();
-        btnSearch.setEnabled(criteriaOk);
+        btnSearch.setEnabled(criteriaOk); // αν εκπληρώνονται τα κριτήρια ενεργοποίησε το κουμπί
+        // όρισε το κείμενο του JLabel lblWarnCriteria
         lblWarnCriteria.setText(criteriaOk ? "" : "Παρακαλώ εισάγετε τιμές για το είδος της ταινίας(Action, Romance, Science Fiction)  και το έτος κυκλοφορίας(2000 έως σήμερα)");
     }
 
@@ -458,6 +462,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         return true;
     }
 
+    // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     private void changeSelectedFavoriteList() {
         FavoriteList favoriteList = null;
         for (int row : tblMovieList.getSelectedRows()) {
@@ -477,7 +482,7 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             if (event.getValueIsAdjusting()) {
                 return;
             }
-            changeSelectedFavoriteList();
+            changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
         }
 
     }
