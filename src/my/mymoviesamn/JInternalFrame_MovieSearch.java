@@ -295,14 +295,14 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
 
             myMoviesAMNPUEntityManager.persist(m); // ενημέρωσε τη ΒΔ με την την αλλαγμένη ταινία m
             myMoviesAMNPUEntityManager.getTransaction().commit();
-        } 
+        }
         changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }//GEN-LAST:event_btnRemoveFromListActionPerformed
 
-    // Πατώντας το κουμπι "Προσθήκη σε λίστα"
+    // Πατώντας το κουμπι "Προσθήκη σε λίστα" αναδύετε το παράθυρο επιλογής λίστας αγαπημένων
     private void btnAddToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToListActionPerformed
         if (tblMovieList.getSelectedRowCount() == 0) {
-            return;
+            return; // αν δεν υπάρχει επιλογή επέστρεψε
         }
 
         final Object[] favoriteLists = favoriteListList.toArray();
@@ -312,47 +312,48 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             return;
         }
         for (int row : tblMovieList.getSelectedRows()) {
-            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0); // διάβασε το id της ταινίας
 
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
             }
 
-            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
-            m.setFavoriteListId(selectedFavoritelist);
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);// βρες την ταινία m
+            m.setFavoriteListId(selectedFavoritelist); // όρισε το favorite list id της ταινίας m
 
             tblMovieList.getModel().setValueAt(selectedFavoritelist, row, 5);
 
-            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.persist(m); // ενημέρωσε τη ΒΔ με την αλλαγμένη ταινία
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
         changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }//GEN-LAST:event_btnAddToListActionPerformed
 
+    // 
     private void addMovieToFavoritesList() {
         if (tblMovieList.getSelectedRowCount() == 0) {
-            return;
+            return; // επέστρεψε αν δεν έχεις επιλέξει κάτι
         }
         if (cbFavoriteLists.getSelectedIndex() < 0) {
-            return;
+            return; // επέστρεψε αν δεν έχεις επιλέξει κάτι (<0)
         }
-        FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem();
+        FavoriteList favList = (FavoriteList) cbFavoriteLists.getSelectedItem(); // πάρε τη favorite list που είναι επιλεγμένη
         for (int row : tblMovieList.getSelectedRows()) {
-            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0);
+            int movieId = (int) tblMovieList.getModel().getValueAt(row, 0); // διάβασε το id της ταινίας
 
             if (!myMoviesAMNPUEntityManager.getTransaction().isActive()) {
                 myMoviesAMNPUEntityManager.getTransaction().begin();
             }
 
-            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId);
-            m.setFavoriteListId(favList);
+            Movie m = myMoviesAMNPUEntityManager.find(Movie.class, movieId); // βρες την ταινία m
+            m.setFavoriteListId(favList); // όρισε το favorite list id της ταινίας m
 
             tblMovieList.getModel().setValueAt(favList, row, 5);
 
-            myMoviesAMNPUEntityManager.persist(m);
+            myMoviesAMNPUEntityManager.persist(m); // ενημέρωσε τη ΒΔ με την αλλαγμένη ταινία
             myMoviesAMNPUEntityManager.getTransaction().commit();
         }
-        
+
         changeSelectedFavoriteList(); // ενημέρωσε τη λίστα αγαπημένων του combobox Λίστες αγαπημένων
     }
 
@@ -363,37 +364,50 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
         doActivateSearchButton(); // ενεργοποίησε το κουμπί Αναζήτηση
     }//GEN-LAST:event_btnClearActionPerformed
 
+    // Πατώντας το κουμπί "Επιστροφή"
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        this.dispose();
+        this.dispose(); // κλείσε το πάνελ
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    // Πατώντας το κουμπί "Αναζήτηση"
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        doSearch();
+        doSearch(); // εκτέλεση μεθόδου doSearch()
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    // Μέθοδος αναζήτησης ταινιών βάση των κριτηρίων αναζήτησης
     private void doSearch() {
-        String queryText = "SELECT m FROM Movie m";
+        String queryText = "SELECT m FROM Movie m"; // Αρχικό query (string)
         boolean putWhere = false;
+
+        // αν έχει επιλεγεί Είδος ταινίας λάβε το genre id και πρόσθεσε το στο αρχικο queryText
         if (cbGenre.getSelectedIndex() >= 0) {
             Genre selectedGenre = (Genre) cbGenre.getSelectedItem();
             queryText += " WHERE m.genreId.id = " + selectedGenre.getId().toString();
             putWhere = true;
         }
+
+        // αν έχει επιλεγεί Έτος πρόσθεσε το στο queryText
         if (!txtYear.getText().isEmpty()) {
             queryText += putWhere ? " AND " : " WHERE ";
             queryText += "FUNC('YEAR', m.releaseDate) = " + txtYear.getText();
         }
+
+        // αν είναι πατημένο το κουμπί "Ταξινόμηση με βάση τη Βαθμολογία" πρόσθεσε στο queryText την ταξινόμηση
         if (chkSortByRating.isSelected()) {
             queryText += " ORDER BY m.rating DESC";
         }
+
+        // Εκτέλεση query
         Query movieQuery = myMoviesAMNPUEntityManager.createQuery(queryText);
-        List<Movie> movieList = movieQuery.getResultList();
-        DefaultTableModel model = new DefaultTableModel();
+        List<Movie> movieList = movieQuery.getResultList(); // πάρε τη λίστα ταινιών από το query
+        DefaultTableModel model = new DefaultTableModel(); // δημιούργησε νέο μοντέλο DefaultTableModel
 
         // το ID χρειάζεται για να βρούμε την ταινία όταν είναι
         // να την προσθέσουμε σε λίστα ή να την αφαιρέσουμε από λίστα
         model.setColumnIdentifiers(new String[]{"ID", "Τίτλος Ταινίας",
             "Βαθμολογία", "Περίληψη", "Genre", "Favorite_List_ID"});
+
+        // βρόγχος προσθήκης κάθε ταινίας στο model
         movieList.forEach((Movie m) -> {
             String genreText = "";
             String favoriteListText = "";
@@ -408,53 +422,61 @@ public class JInternalFrame_MovieSearch extends javax.swing.JInternalFrame {
             model.addRow(new Object[]{m.getId(), m.getTitle(), m.getRating(), m.getOverview(), m.getGenreId(), m.getFavoriteListId()});
         });
 
-        tblMovieList.setModel(model);
+        tblMovieList.setModel(model); // όρισε το μοντέλο της tblMovieList
 
+        // όρισε τις διαστάσεις του tblMovieList
         tblMovieList.getColumnModel().getColumn(1).setPreferredWidth(300);
         tblMovieList.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblMovieList.getColumnModel().getColumn(3).setPreferredWidth(1000);
+
+        // αφαίρεσε τις παρακάτω στήλες (να μην εμφανίζονται) του tblMovieList
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("ID"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Genre"));
         tblMovieList.getColumnModel().removeColumn(tblMovieList.getColumn("Favorite_List_ID"));
     }
 
+    // αν έχει προστεθεί κείμενο στο "Έτος κυκλοφορίας"
     private void txtYearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtYearKeyReleased
-        doActivateSearchButton();
+        doActivateSearchButton(); // ενεργοποίησε το κουμπί "Αναζήτηση"
     }//GEN-LAST:event_txtYearKeyReleased
 
     private void cbFavoriteListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFavoriteListsActionPerformed
-        addMovieToFavoritesList();
+        // επιλέγοντας favorite list από το combobox FavoriteLists
+        addMovieToFavoritesList(); // πρόσθεσε την ταινία στη λίστα αγαπημένων
     }//GEN-LAST:event_cbFavoriteListsActionPerformed
-    
+
     // Ενεργοποίηση του κουμπιού Αναζήτηση
     private void doActivateSearchButton() {
-        final boolean criteriaOk = areCriteriaOk();
+        final boolean criteriaOk = areCriteriaOk(); // έλεγχος αν υπάρχουν τα κριτήρια για την επιλογή του κουμπιού
         btnSearch.setEnabled(criteriaOk); // αν εκπληρώνονται τα κριτήρια ενεργοποίησε το κουμπί
         // όρισε το κείμενο του JLabel lblWarnCriteria
         lblWarnCriteria.setText(criteriaOk ? "" : "Παρακαλώ εισάγετε τιμές για το είδος της ταινίας(Action, Romance, Science Fiction)  και το έτος κυκλοφορίας(2000 έως σήμερα)");
     }
 
-   //Έλεγχος αν έχει επιλεγεί το είδος τανίας 
+    //Έλεγχος αν έχει επιλεγεί το είδος τανίας 
     private boolean areCriteriaOk() throws NumberFormatException {
         String yearText = txtYear.getText();
         if (cbGenre.getSelectedIndex() < 0) {
-            return false;
+            return false; // επιστροφή false αν δεν έχω επιλέξει genre στο combobox
         }
         if (4 != yearText.length()) {
-            return false;
+            return false; // επιστροφή false αν δεν έχω πληκτρολογήσει 4 ψηφία στο Έτος κυκλοφορίας
         }
-        //Έλεγχος αν έχουν εισαχθεί τέσσερα ψηφία για το έτος κυκλοφορίας
+        //Έλεγχος αν έχουν εισαχθεί τέσσερεις αριθμοί (0 έως 9) για το έτος κυκλοφορίας
         for (int i = 0; i < yearText.length(); i++) {
             char chr = yearText.charAt(i);
             if (chr < '0' || chr > '9') {
-                return false;
+                return false; // επιστροφή false αν έχει πατηθεί άλλο ψηφίο εκτός από αριθμό
             }
         }
+
         //Έλεγχος αν το έτος κυκλοφορίας βρίσκεται εντος του εύρους που καλύπτει η εφαρμογή (2000 έως σήμερα)
         int yearValue = Integer.parseInt(yearText);
         if (yearValue < 2000) {
             return false;
         }
+
+        // Έλεγχος αν έχω εισάγει έτος μελλοντικό
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         if (yearValue > currentYear) {
             return false;
