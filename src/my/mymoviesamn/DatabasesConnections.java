@@ -240,18 +240,8 @@ public class DatabasesConnections {
         f.setVisible(true); // κάνε ορατό το f
 
         // Υπολογίζω τον συνολικό αριθμό των σελίδων του αποτελέσματος
-//        int numberOfPages = 1;
-//        String result = readFromURL(BASE_URL + "discover/movie?with_genres=28|10749|878&primary_release_date.gte=2000-01-01&" + AMN_API_KEY + "&language=el");
-//        try {
-//            JSONObject response = new JSONObject(result);
-//            numberOfPages = response.getInt("total_pages");
-//            System.out.println("numberOfPages= " + numberOfPages);
-//        } catch (JSONException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
-
-        int maxpages = 10; // αριθμός σελίδων (pages) που θα γίνουν download
+        int maxpages = 20; // αριθμός σελίδων (pages) που θα γίνουν download
 
         // βρόγχος διαβάσματος κάθε σελίδας 
         for (int m = 1; m <= maxpages; m++) {

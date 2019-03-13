@@ -27,8 +27,8 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
     public JInternalFrame_Favorites() {
         initComponents();
 
-        jButton2.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Επεξεργασίας
-        jButton3.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Διαγραφής
+        btnModifyFavoriteList.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Επεξεργασίας
+        btnDeleteFavoriteList.setEnabled(false); // Αρχικά απενεργοποιώ το κουμπί της Διαγραφής
 
         // Ελέγχω αν έχουν γίνει μία ή περισσότερες επιλογές στην jList
         // Ενεργοποιώ έναν Listener που "ακούει" αν έχουν επιλεγεί 1 ή περισσότερες FavoriteList
@@ -41,17 +41,17 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
 
                 // Εάν έχω κάνει μία (1) επιλογή
                 if (selectionLength == 1) {
-                    jButton2.setEnabled(true); // ενεργοποιώ κουμπί Επεξεργασία
-                    jButton3.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
+                    btnModifyFavoriteList.setEnabled(true); // ενεργοποιώ κουμπί Επεξεργασία
+                    btnDeleteFavoriteList.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
 
                     showFavoritesListMovies(); // Δείξε τις ταινίες της συγκεκριμένης Favorite List
 
                     // Εάν έχω κάνει περισσότερες από μία επιλογές
                 } else if (selectionLength > 1) {
-                    jButton2.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
-                    jButton3.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
+                    btnModifyFavoriteList.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
+                    btnDeleteFavoriteList.setEnabled(true); // ενεργοποιώ κουμπί Διαγραφή
                 } else {
-                    jButton2.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
+                    btnModifyFavoriteList.setEnabled(false); // απενεργοποιώ κουμπί Επεξεργασία
                 }
             }
 
@@ -59,7 +59,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             private void showFavoritesListMovies() {
 
                 // παίρνω τη λίστα των FavoriteList που έχω επιλέξει
-                List selected = jList1.getSelectedValuesList();
+                List selected = lstFavoriteListView.getSelectedValuesList();
                 DatabasesConnections m = new DatabasesConnections(); // δημιουργώ αντικείμενο DatabasesConnections
                 // διαβάζω τις ταινίες της συγκεκριμένης Favorite List
                 List<Movie> movies = m.loadFavoritesListMovies(selected);
@@ -74,11 +74,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                     model.addRow(new String[]{movie.getTitle(), rating, movie.getOverview()});
                 });
 
-                jTable1.setModel(model); // ορισμός μοντέλου του jTable1
+                tblFavoriteListMovieView.setModel(model); // ορισμός μοντέλου του jTable
             }
 
         };
-        jList1.addListSelectionListener(listSelectionListener); // προσθήκη του listener στην jList1
+        lstFavoriteListView.addListSelectionListener(listSelectionListener); // προσθήκη του listener στην jList
     }
 
     /**
@@ -96,54 +96,54 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         favoriteListList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(favoriteListQuery.getResultList());
         movieTableQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m WHERE m.rating > 8.0");
         movieTableList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(movieTableQuery.getResultList());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scrlpnFavoriteListViewSpane = new javax.swing.JScrollPane();
+        lstFavoriteListView = new javax.swing.JList<>();
+        btnCreateFavoriteList = new javax.swing.JButton();
+        btnModifyFavoriteList = new javax.swing.JButton();
+        btnDeleteFavoriteList = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
+        scrlpnFavoriteListMovieViewSpane = new javax.swing.JScrollPane();
+        tblFavoriteListMovieView = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 102, 102));
         setClosable(true);
         setTitle("Διαχείριση Λιστών Αγαπημένων Ταινιών");
 
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, favoriteListList, jList1);
+        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, favoriteListList, lstFavoriteListView);
         jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
         bindingGroup.addBinding(jListBinding);
 
-        jScrollPane1.setViewportView(jList1);
+        scrlpnFavoriteListViewSpane.setViewportView(lstFavoriteListView);
 
-        jButton1.setText("Δημιουργία");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateFavoriteList.setText("Δημιουργία");
+        btnCreateFavoriteList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCreateFavoriteListActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Επεξεργασία");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnModifyFavoriteList.setText("Επεξεργασία");
+        btnModifyFavoriteList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnModifyFavoriteListActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Διαγραφή");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteFavoriteList.setText("Διαγραφή");
+        btnDeleteFavoriteList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnDeleteFavoriteListActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Επιστροφή");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnClose.setText("Επιστροφή");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnCloseActionPerformed(evt);
             }
         });
 
-        jScrollPane2.setViewportView(jTable1);
+        scrlpnFavoriteListMovieViewSpane.setViewportView(tblFavoriteListMovieView);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,19 +151,19 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrlpnFavoriteListViewSpane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCreateFavoriteList, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModifyFavoriteList, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2)
+                        .addComponent(btnDeleteFavoriteList, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrlpnFavoriteListMovieViewSpane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -173,16 +173,16 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
+                            .addComponent(btnCreateFavoriteList)
+                            .addComponent(btnModifyFavoriteList)
+                            .addComponent(btnDeleteFavoriteList))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(scrlpnFavoriteListMovieViewSpane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnClose)
                         .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                        .addComponent(scrlpnFavoriteListViewSpane, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -191,13 +191,13 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         // πατώντας το κουμπί Επιστροφή και κλείνοντας το παράθυρο
         this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Δημιουργίας
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCreateFavoriteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFavoriteListActionPerformed
 
         // πίνακας κουμπιών μηνύματος
         Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
@@ -222,11 +222,11 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             saveNewFavorite(fvName); // δημιουργία και αποθήκευση νέας Favorite List
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCreateFavoriteListActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Επεξεργασίας
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String oldName = jList1.getSelectedValue(); // διάβασμα ονόματος FavoriteList από την jList1
+    private void btnModifyFavoriteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyFavoriteListActionPerformed
+        String oldName = lstFavoriteListView.getSelectedValue(); // διάβασμα ονόματος FavoriteList από την jList1
 
         // πίνακας κουμπιών μηνύματος
         Object[] options1 = {"Αποθήκευση", "Ακύρωση"};
@@ -249,29 +249,29 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
                 updateFavorite(oldName, fvName); // ενημέρωσε την Favorite List με το νέο όνομα
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnModifyFavoriteListActionPerformed
 
     // Μέθοδος που τρέχει όταν πατηθεί το κουμπί της Διαγραφής
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnDeleteFavoriteListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteFavoriteListActionPerformed
         // πατώντας το κουμπί Διαγραφή
         deleteFavorite();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnDeleteFavoriteListActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnCreateFavoriteList;
+    private javax.swing.JButton btnDeleteFavoriteList;
+    private javax.swing.JButton btnModifyFavoriteList;
     private java.util.List<model.FavoriteList> favoriteListList;
     private javax.persistence.Query favoriteListQuery;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JList<String> lstFavoriteListView;
     private java.util.List<model.Movie> movieTableList;
     private javax.persistence.Query movieTableQuery;
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private javax.swing.JScrollPane scrlpnFavoriteListMovieViewSpane;
+    private javax.swing.JScrollPane scrlpnFavoriteListViewSpane;
+    private javax.swing.JTable tblFavoriteListMovieView;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
@@ -286,7 +286,7 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         mFavoriteList.forEach((favorite) -> {
             listModel.addElement(favorite.getName()); // πρόσθεσε στο μοντέλο το όνομα της favorite
         });
-        jList1.setModel(listModel); // όρισε το μοντέλο της jList1
+        lstFavoriteListView.setModel(listModel); // όρισε το μοντέλο της jList
 
     }
 
@@ -301,15 +301,15 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
         mFavoriteList.forEach((favorite) -> { // διάτρεξε όλη τη λίστα mFavoriteList
             listModel.addElement(favorite.getName()); // πρόσθεσε στο μοντέλο το όνομα της favorite
         });
-        jList1.setModel(listModel); // όρισε το μοντέλο της jList1
+        lstFavoriteListView.setModel(listModel); // όρισε το μοντέλο της jList
 
-        jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
+        btnDeleteFavoriteList.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
     }
 
     // πατώντας το κουμπί Διαγραφή
     private void deleteFavorite() {
         // Λίστα επιλεγμένων ταινιών
-        List selectedNames = jList1.getSelectedValuesList();
+        List selectedNames = lstFavoriteListView.getSelectedValuesList();
 
         // δημιουργία πανελ μηνύματος επιβεβαίωσης Διαγραφής
         Object[] options1 = {"Διαγραφή", "Ακύρωση"};
@@ -336,14 +336,14 @@ public class JInternalFrame_Favorites extends javax.swing.JInternalFrame {
             mFavoriteList.forEach((favorite) -> { // διάτρεξε όλη τη λίστα mFavoriteList
                 listModel.addElement(favorite.getName());// πρόσθεσε στο μοντέλο το όνομα της favorite 
             });
-            jList1.setModel(listModel); // όρισε το μοντέλο της jList1
+            lstFavoriteListView.setModel(listModel); // όρισε το μοντέλο της jList
 
             // Αδειάζοντας τον πίνακα από τις ταινίες αφού εκτελέσαμ Διαγραφή και πλέον δεν είναι καμία favorite list επιλεγμένη
             DefaultTableModel modelEmpty = new DefaultTableModel();
             modelEmpty.setColumnIdentifiers(new String[]{"Τίτλος Ταινίας", "Βαθμολογία", "Περιγραφή"});
-            jTable1.setModel(modelEmpty);
+            tblFavoriteListMovieView.setModel(modelEmpty);
 
-            jButton3.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
+            btnDeleteFavoriteList.setEnabled(false); // Απενεργοποιώ το κουμπί της Διαγραφής
         } else { // διαφορετικά δεν κάνουμε τίποτα - δεν διαγράφουμε κάτι
         }
     }
