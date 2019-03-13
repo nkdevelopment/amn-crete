@@ -252,7 +252,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         tblBestMoviesStatistics.setModel(model);
     }//GEN-LAST:event_btnBestMoviesStatisticsActionPerformed
 
-//ΚΟΥΜΠΙ ΕΞΟΔΟΥ - ΕΠΙΣΤΡΟΦΗΣ
+    //ΚΟΥΜΠΙ ΕΞΟΔΟΥ - ΕΠΙΣΤΡΟΦΗΣ
     private void btncloseStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseStatisticsActionPerformed
         this.dispose();
     }//GEN-LAST:event_btncloseStatisticsActionPerformed
