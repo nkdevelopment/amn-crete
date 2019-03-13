@@ -44,12 +44,12 @@ public class MainFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // Παράθυρο εμφανίζεται στο κέντρο της οθόνης
 
         // ορίζονται τα χρώματα των Labels
-        jLabel1.setBackground(new java.awt.Color(136, 23, 152));
-        jLabel2.setBackground(new java.awt.Color(136, 23, 152));
-        jLabel3.setBackground(new java.awt.Color(136, 23, 152));
-        jLabel1.setForeground(java.awt.Color.white);
-        jLabel2.setForeground(java.awt.Color.white);
-        jLabel3.setForeground(java.awt.Color.white);
+        lblInfoLabel1.setBackground(new java.awt.Color(136, 23, 152));
+        lblInfoLabel2.setBackground(new java.awt.Color(136, 23, 152));
+        lblInfoLabel3.setBackground(new java.awt.Color(136, 23, 152));
+        lblInfoLabel1.setForeground(java.awt.Color.white);
+        lblInfoLabel2.setForeground(java.awt.Color.white);
+        lblInfoLabel3.setForeground(java.awt.Color.white);
 
     }
 
@@ -65,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         myMoviesAMNPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("myMoviesAMNPU").createEntityManager();
         movieQuery = java.beans.Beans.isDesignTime() ? null : myMoviesAMNPUEntityManager.createQuery("SELECT m FROM Movie m");
         movieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(movieQuery.getResultList());
-        jDesktopPane1 = new javax.swing.JDesktopPane(){
+        dsktpMain = new javax.swing.JDesktopPane(){
             @Override
             protected void paintComponent(Graphics grphcs) {
                 super.paintComponent(grphcs);
@@ -77,157 +77,156 @@ public class MainFrame extends javax.swing.JFrame {
                 return new Dimension(img.getWidth(), img.getHeight());
             }
         };
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnLoadDataBase = new javax.swing.JButton();
+        btnMovieSearch = new javax.swing.JButton();
+        btnFavorites = new javax.swing.JButton();
+        btnstatistics = new javax.swing.JButton();
+        btnExitApp = new javax.swing.JButton();
+        pnlInfoPanel = new javax.swing.JPanel();
+        lblInfoLabel1 = new javax.swing.JLabel();
+        lblInfoLabel2 = new javax.swing.JLabel();
+        lblInfoLabel3 = new javax.swing.JLabel();
+        lblInfoLabel4 = new javax.swing.JLabel();
+        lblInfoLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("myMovies");
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/Images/movies.png")));
-        setPreferredSize(new java.awt.Dimension(1100, 750));
         setResizable(false);
 
-        jButton4.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton4.setText("ΑΝΑΚΤΗΣΗ ΚΑΙ ΑΠΟΘΗΚΕΥΣΗ ΔΕΔΟΜΕΝΩΝ ΤΑΙΝΙΩΝ");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnLoadDataBase.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnLoadDataBase.setText("ΑΝΑΚΤΗΣΗ ΚΑΙ ΑΠΟΘΗΚΕΥΣΗ ΔΕΔΟΜΕΝΩΝ ΤΑΙΝΙΩΝ");
+        btnLoadDataBase.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLoadDataBase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnLoadDataBaseActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton5.setText("ΑΝΑΖΗΤΗΣΗ ΤΑΙΝΙΩΝ");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnMovieSearch.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnMovieSearch.setText("ΑΝΑΖΗΤΗΣΗ ΤΑΙΝΙΩΝ");
+        btnMovieSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnMovieSearchActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton6.setText("ΔΙΑΧΕΙΡΙΣΗ ΛΙΣΤΩΝ ΑΓΑΠΗΜΕΝΩΝ ΤΑΙΝΙΩΝ");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnFavorites.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnFavorites.setText("ΔΙΑΧΕΙΡΙΣΗ ΛΙΣΤΩΝ ΑΓΑΠΗΜΕΝΩΝ ΤΑΙΝΙΩΝ");
+        btnFavorites.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnFavoritesActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton7.setText("ΣΤΑΤΙΣΤΙΚΑ");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnstatistics.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnstatistics.setText("ΣΤΑΤΙΣΤΙΚΑ");
+        btnstatistics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnstatisticsActionPerformed(evt);
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jButton8.setForeground(java.awt.Color.red);
-        jButton8.setText("ΕΞΟΔΟΣ");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnExitApp.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        btnExitApp.setForeground(java.awt.Color.red);
+        btnExitApp.setText("ΕΞΟΔΟΣ");
+        btnExitApp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnExitAppActionPerformed(evt);
             }
         });
 
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(btnLoadDataBase, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(btnMovieSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(btnFavorites, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(btnstatistics, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dsktpMain.setLayer(btnExitApp, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+        javax.swing.GroupLayout dsktpMainLayout = new javax.swing.GroupLayout(dsktpMain);
+        dsktpMain.setLayout(dsktpMainLayout);
+        dsktpMainLayout.setHorizontalGroup(
+            dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dsktpMainLayout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(dsktpMainLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4))
+                        .addComponent(btnExitApp, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dsktpMainLayout.createSequentialGroup()
+                        .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnFavorites, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLoadDataBase))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMovieSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnstatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(81, 81, 81))
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+        dsktpMainLayout.setVerticalGroup(
+            dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dsktpMainLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoadDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMovieSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(dsktpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFavorites, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnstatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExitApp, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
         );
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ΠΛΗ 24 - ΗΛΕ 1");
-        jLabel1.setOpaque(true);
+        lblInfoLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfoLabel1.setText("ΠΛΗ 24 - ΗΛΕ 1");
+        lblInfoLabel1.setOpaque(true);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("ΠΟΥΛΙΟΥ ΑΛΕΞΑΝΔΡΑ - ΜΑΚΑΡΩΝΑΣ ΕΜΜΑΝΟΥΗΛ - ΚΟΝΤΟΛΑΙΜΑΚΗΣ ΝΕΚΤΑΡΙΟΣ");
-        jLabel2.setOpaque(true);
+        lblInfoLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfoLabel2.setText("ΠΟΥΛΙΟΥ ΑΛΕΞΑΝΔΡΑ - ΜΑΚΑΡΩΝΑΣ ΕΜΜΑΝΟΥΗΛ - ΚΟΝΤΟΛΑΙΜΑΚΗΣ ΝΕΚΤΑΡΙΟΣ");
+        lblInfoLabel2.setOpaque(true);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("ΗΜ/ΝΙΑ");
-        jLabel3.setOpaque(true);
+        lblInfoLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfoLabel3.setText("ΗΜ/ΝΙΑ");
+        lblInfoLabel3.setOpaque(true);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("This product uses the TMDb API but is not endorsed or certified by TMDb.");
+        lblInfoLabel4.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
+        lblInfoLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfoLabel4.setText("This product uses the TMDb API but is not endorsed or certified by TMDb.");
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/126x50-powered-by-rectangle.png"))); // NOI18N
+        lblInfoLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfoLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/126x50-powered-by-rectangle.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlInfoPanelLayout = new javax.swing.GroupLayout(pnlInfoPanel);
+        pnlInfoPanel.setLayout(pnlInfoPanelLayout);
+        pnlInfoPanelLayout.setHorizontalGroup(
+            pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlInfoPanelLayout.createSequentialGroup()
+                        .addComponent(lblInfoLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblInfoLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblInfoLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblInfoLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                    .addComponent(lblInfoLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlInfoPanelLayout.setVerticalGroup(
+            pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblInfoLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblInfoLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblInfoLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblInfoLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblInfoLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -238,34 +237,34 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDesktopPane1))
+                    .addComponent(pnlInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dsktpMain))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDesktopPane1)
+                .addComponent(dsktpMain)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnMovieSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovieSearchActionPerformed
         // Πατώντας το κουμπί "Αναζήτηση ταινιών"
         movieSearchForm();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnMovieSearchActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnLoadDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadDataBaseActionPerformed
         // Πατώντας το κουμπί "Ανάκτηση και αποθήκευση δεδομένων ταινιών"
         loadTables();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnLoadDataBaseActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnExitAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitAppActionPerformed
         // Πατώντας το κουμπί "Έξοδος"
         String message = "Τερματισμός της εφαρμογής;";
         String title = "Μήνυμα επιβεβαίωσης";
@@ -275,17 +274,17 @@ public class MainFrame extends javax.swing.JFrame {
             System.exit(0); // Τερματισμός εφαρμογής
         } else {
         }
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnExitAppActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnFavoritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritesActionPerformed
         // Πατώντας το κουμπί "Διαχείριση λιστών αγαπημένων
         favoritesForm();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnFavoritesActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnstatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnstatisticsActionPerformed
         // Πατώντας το κουμπί "Στατιστικά"
         statisticsForm();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnstatisticsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,21 +320,21 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnExitApp;
+    private javax.swing.JButton btnFavorites;
+    private javax.swing.JButton btnLoadDataBase;
+    private javax.swing.JButton btnMovieSearch;
+    private javax.swing.JButton btnstatistics;
+    private javax.swing.JDesktopPane dsktpMain;
+    private javax.swing.JLabel lblInfoLabel1;
+    private javax.swing.JLabel lblInfoLabel2;
+    private javax.swing.JLabel lblInfoLabel3;
+    private javax.swing.JLabel lblInfoLabel4;
+    private javax.swing.JLabel lblInfoLabel5;
     private java.util.List<model.Movie> movieList;
     private javax.persistence.Query movieQuery;
     private javax.persistence.EntityManager myMoviesAMNPUEntityManager;
+    private javax.swing.JPanel pnlInfoPanel;
     // End of variables declaration//GEN-END:variables
 
     private void connectToDb() {
@@ -358,12 +357,12 @@ public class MainFrame extends javax.swing.JFrame {
         JInternalFrame_Favorites fFavorites = new JInternalFrame_Favorites();
 
         // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
-        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension desktopSize = dsktpMain.getSize();
         Dimension jInternalFrameSize = fFavorites.getSize();
         fFavorites.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         fFavorites.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(fFavorites); // προσθήκη φόρμας
+        dsktpMain.add(fFavorites); // προσθήκη φόρμας
         fFavorites.setVisible(true); // κάνε ορατή τη φόρμα
     }
 
@@ -373,12 +372,12 @@ public class MainFrame extends javax.swing.JFrame {
         JInternalFrame_Statistics fStatistics = new JInternalFrame_Statistics();
 
         // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
-        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension desktopSize = dsktpMain.getSize();
         Dimension jInternalFrameSize = fStatistics.getSize();
         fStatistics.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         fStatistics.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(fStatistics); // προσθήκη φόρμας
+        dsktpMain.add(fStatistics); // προσθήκη φόρμας
         fStatistics.setVisible(true); // κάνε ορατή τη φόρμα
 
     }
@@ -389,12 +388,12 @@ public class MainFrame extends javax.swing.JFrame {
         JInternalFrame_MovieSearch mSearch = new JInternalFrame_MovieSearch();
 
         // Τοποθέτηση της νέας φόρμας jDesktopPane1 στη μέση
-        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension desktopSize = dsktpMain.getSize();
         Dimension jInternalFrameSize = mSearch.getSize();
         mSearch.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
         mSearch.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        jDesktopPane1.add(mSearch); // προσθήκη φόρμας
+        dsktpMain.add(mSearch); // προσθήκη φόρμας
         mSearch.setVisible(true); // κάνε ορατή τη φόρμα
     }
 

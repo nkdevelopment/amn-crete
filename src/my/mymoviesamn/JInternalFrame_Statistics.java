@@ -40,32 +40,32 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        button1 = new java.awt.Button();
+        pnlBestMoviesStatistics = new javax.swing.JPanel();
+        btnBestMoviesStatistics = new javax.swing.JButton();
+        scrlpnBestMoviesStatistics = new javax.swing.JScrollPane();
+        tblBestMoviesStatistics = new javax.swing.JTable();
+        pnlBestFavoriteMoviesStatistics = new javax.swing.JPanel();
+        btnBestFavoriteMoviesStatistics = new javax.swing.JButton();
+        scrlpnBestFavoriteMoviesStatistics = new javax.swing.JScrollPane();
+        tblBestFavoriteMoviesStatistics = new javax.swing.JTable();
+        btncloseStatistics = new java.awt.Button();
 
         setClosable(true);
         setTitle("ΣΤΑΤΙΣΤΙΚΑ");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnlBestMoviesStatistics.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton1.setText("Οι καλύτερες 10 Ταινίες");
-        jButton1.setMaximumSize(new java.awt.Dimension(200, 35));
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 35));
-        jButton1.setPreferredSize(new java.awt.Dimension(220, 35));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBestMoviesStatistics.setText("Οι καλύτερες 10 Ταινίες");
+        btnBestMoviesStatistics.setMaximumSize(new java.awt.Dimension(200, 35));
+        btnBestMoviesStatistics.setMinimumSize(new java.awt.Dimension(200, 35));
+        btnBestMoviesStatistics.setPreferredSize(new java.awt.Dimension(220, 35));
+        btnBestMoviesStatistics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBestMoviesStatisticsActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblBestMoviesStatistics.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -83,42 +83,42 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        scrlpnBestMoviesStatistics.setViewportView(tblBestMoviesStatistics);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBestMoviesStatisticsLayout = new javax.swing.GroupLayout(pnlBestMoviesStatistics);
+        pnlBestMoviesStatistics.setLayout(pnlBestMoviesStatisticsLayout);
+        pnlBestMoviesStatisticsLayout.setHorizontalGroup(
+            pnlBestMoviesStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBestMoviesStatisticsLayout.createSequentialGroup()
                 .addGap(102, 102, 102)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBestMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(pnlBestMoviesStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(scrlpnBestMoviesStatistics)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlBestMoviesStatisticsLayout.setVerticalGroup(
+            pnlBestMoviesStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBestMoviesStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBestMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrlpnBestMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnlBestFavoriteMoviesStatistics.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton2.setText("Οι καλύτερες Ταινίες ανα Λίστα");
-        jButton2.setPreferredSize(new java.awt.Dimension(220, 35));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBestFavoriteMoviesStatistics.setText("Οι καλύτερες Ταινίες ανα Λίστα");
+        btnBestFavoriteMoviesStatistics.setPreferredSize(new java.awt.Dimension(220, 35));
+        btnBestFavoriteMoviesStatistics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBestFavoriteMoviesStatisticsActionPerformed(evt);
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblBestFavoriteMoviesStatistics.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
             },
@@ -126,43 +126,43 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        scrlpnBestFavoriteMoviesStatistics.setViewportView(tblBestFavoriteMoviesStatistics);
 
-        button1.setLabel("Επιστροφή");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btncloseStatistics.setLabel("Επιστροφή");
+        btncloseStatistics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btncloseStatisticsActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBestFavoriteMoviesStatisticsLayout = new javax.swing.GroupLayout(pnlBestFavoriteMoviesStatistics);
+        pnlBestFavoriteMoviesStatistics.setLayout(pnlBestFavoriteMoviesStatisticsLayout);
+        pnlBestFavoriteMoviesStatisticsLayout.setHorizontalGroup(
+            pnlBestFavoriteMoviesStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBestFavoriteMoviesStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
+                .addGroup(pnlBestFavoriteMoviesStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBestFavoriteMoviesStatisticsLayout.createSequentialGroup()
+                        .addComponent(scrlpnBestFavoriteMoviesStatistics)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBestFavoriteMoviesStatisticsLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBestFavoriteMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(109, 109, 109))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBestFavoriteMoviesStatisticsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btncloseStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlBestFavoriteMoviesStatisticsLayout.setVerticalGroup(
+            pnlBestFavoriteMoviesStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBestFavoriteMoviesStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBestFavoriteMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(scrlpnBestFavoriteMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btncloseStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -172,9 +172,9 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBestMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBestFavoriteMoviesStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -182,15 +182,15 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlBestFavoriteMoviesStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBestMoviesStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 //ΚΟΥΜΠΙ: ΟΙ ΚΑΛΥΤΕΡΕΣ ΤΑΙΝΙΕΣ ΑΝΑ ΛΙΣΤΑ
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnBestFavoriteMoviesStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBestFavoriteMoviesStatisticsActionPerformed
         /* Περιγραφή: Όταν πατηθεί, θα εμφανίζεται ένας πίνακας (jTable2) με μία
         στήλη (Όνομα Ταινίας) και τόσες γραμμές όσες οι λίστες αγαπημένων που 
         έχουν οριστεί στη ΒΔ. Αυτός θα περιέχει τις ταινίες με την υψηλότερη
@@ -235,10 +235,10 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         }
         
         //Κι ενημερώνω το jTable2
-        jTable2.setModel(model);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        tblBestFavoriteMoviesStatistics.setModel(model);
+    }//GEN-LAST:event_btnBestFavoriteMoviesStatisticsActionPerformed
 //ΚΟΥΜΠΙ: ΟΙ ΚΑΛΥΤΕΡΕΣ 10 ΤΑΙΝΙΕΣ
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBestMoviesStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBestMoviesStatisticsActionPerformed
         /* Περιγραφή: Όταν πατηθεί, θα εμφανίζεται ένας πίνακας (jTable1) με 2
         στήλες και 10 γραμμές, που θα περιέχει τις 10 ταινίες με την υψηλότερη
         βαθμολογία ανεξαρτήτου είδους ταινίας.*/
@@ -261,24 +261,24 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
             model.addRow(new String[]{movie.getTitle(), rating});
         });
         //Κι ενημερώνω το jTable1 1
-        jTable1.setModel(model);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        tblBestMoviesStatistics.setModel(model);
+    }//GEN-LAST:event_btnBestMoviesStatisticsActionPerformed
 
 //ΚΟΥΜΠΙ ΕΞΟΔΟΥ - ΕΠΙΣΤΡΟΦΗΣ
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btncloseStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseStatisticsActionPerformed
         this.dispose();
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btncloseStatisticsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JButton btnBestFavoriteMoviesStatistics;
+    private javax.swing.JButton btnBestMoviesStatistics;
+    private java.awt.Button btncloseStatistics;
+    private javax.swing.JPanel pnlBestFavoriteMoviesStatistics;
+    private javax.swing.JPanel pnlBestMoviesStatistics;
+    private javax.swing.JScrollPane scrlpnBestFavoriteMoviesStatistics;
+    private javax.swing.JScrollPane scrlpnBestMoviesStatistics;
+    private javax.swing.JTable tblBestFavoriteMoviesStatistics;
+    private javax.swing.JTable tblBestMoviesStatistics;
     // End of variables declaration//GEN-END:variables
 }
