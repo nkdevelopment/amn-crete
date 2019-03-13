@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package my.mymoviesamn;
 
 import java.util.List;
@@ -196,14 +191,7 @@ public class JInternalFrame_Statistics extends javax.swing.JInternalFrame {
         έχουν οριστεί στη ΒΔ. Αυτός θα περιέχει τις ταινίες με την υψηλότερη
         βαθμολογία από την κάθε λίστα αγαπημένων.*/
 
-        /*Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Ταινίες των
-        Αγαπημένων Λιστών ταξινομημένες ανά Βαθμολογία*/
-        Query q1 = em.createQuery("SELECT m FROM Movie m WHERE m.favoriteListId.id>0 ORDER BY m.rating DESC");
-
-        //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 1
-        List<Movie> movies = q1.getResultList();
-
-        //Δημιουργία νέου ερωτήματος (query) που μου επιστρέφει τις Λίστες Αγαπημένων
+        //Δημιουργία ερωτήματος (query) που μου επιστρέφει τις Λίστες Αγαπημένων
         Query q2 = em.createQuery("SELECT f FROM FavoriteList f");
 
         //Εισαγωγή των αποτελεσμάτων σε μία Λίστα 2
